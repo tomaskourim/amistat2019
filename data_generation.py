@@ -41,6 +41,9 @@ def next_probability(walk_type: str, c_lambdas: List[float], steps: List[int], p
     elif walk_type == 'success_punished_two_lambdas':
         return 0.5 * ((1 + steps[i]) * c_lambdas[0] * probabilities[i - 1] + (1 - steps[i]) * (
                 1 - c_lambdas[1] * (1 - probabilities[i - 1])))
+    elif walk_type == 'success_rewarded_two_lambdas':
+        return 0.5 * ((1 - steps[i]) * c_lambdas[0] * probabilities[i - 1] + (1 + steps[i]) * (
+                1 - c_lambdas[1] * (1 - probabilities[i - 1])))
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
 
@@ -73,12 +76,11 @@ def main():
     steps = 10
     repetitions = 3
 
-    walks = generate_rw('success_punished', p0, c_lambdas, steps, repetitions)
-    print(walks)
-    walks = generate_rw('success_rewarded', p0, c_lambdas, steps, repetitions)
-    print(walks)
+    # walks = generate_rw('success_punished', p0, c_lambdas, steps, repetitions)
+    # walks = generate_rw('success_rewarded', p0, c_lambdas, steps, repetitions)
     c_lambdas = [0.5, 0.1]
-    walks = generate_rw('success_punished_two_lambdas', p0, c_lambdas, steps, repetitions)
+    # walks = generate_rw('success_punished_two_lambdas', p0, c_lambdas, steps, repetitions)
+    walks = generate_rw('success_rewarded_two_lambdas', p0, c_lambdas, steps, repetitions)
     print(walks)
 
 
