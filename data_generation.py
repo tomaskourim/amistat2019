@@ -64,6 +64,8 @@ def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[flo
 def main():
     # try different Random Walk with Varying Transition Probabilities definitions
     # different lambdas, starting probability, number of steps, multiple times with same starting variables
+    # iterate over lambdas, starting probability, number of steps (reward might lead to floating point errors),
+    # repetitions
     # save into .csv?
 
     c_lambdas = [0.5]
