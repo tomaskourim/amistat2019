@@ -17,7 +17,7 @@ def ising(bernoulli: int) -> int:
     elif bernoulli == 0:
         return -1
     else:
-        raise Exception('Unexpected value of Bernouli distribution')
+        raise Exception('Unexpected value of Bernoulli distribution')
 
 
 def generate_rw_success_punished(starting_probability: float, c_lambda: float, walk_steps: int, repetitions: int) -> \
@@ -35,6 +35,20 @@ def generate_rw_success_punished(starting_probability: float, c_lambda: float, w
     return walks
 
 
+def generate_rw_success_rewarded(starting_probability: float, c_lambda: float, walk_steps: int, repetitions: int) -> \
+        List[List[int]]:
+    walks = []
+    for j in range(0, repetitions):
+        steps = ['']
+        probabilities = [starting_probability]
+        for i in range(1, walk_steps + 1):
+            steps.append(ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
+            probabilities.append(
+                c_lambda * probabilities[i - 1] + 0.5 * (1 - c_lambda) * (1 + steps[i]))  # as in Definition
+        walks.append(steps)
+    return walks
+
+
 def main():
     # try different Random Walk with Varying Transition Probabilities definitions
     # different lambdas, starting probability, number of steps, multiple times with same starting variables
@@ -43,9 +57,9 @@ def main():
     c_lambda = 0.5
     p0 = 0.5
     steps = 10
-    repetitions = 3
+    repetitions = 8
 
-    walks = generate_rw_success_punished(p0, c_lambda, steps, repetitions)
+    walks = generate_rw_success_rewarded(p0, c_lambda, steps, repetitions)
     print(walks)
 
 
