@@ -1,9 +1,53 @@
 # code used to generate data using theoretical models.
 
-# try different Random Walk with Varying Transition Probabilities definitions
-# different lambdas, starting probability, number of steps, multiple times with same starting variables
-# save into .csv?
 import logging
+from typing import List
+
+import numpy as np
+
+
+def ising(bernoulli: int) -> int:
+    """
+    Transfers variable form Bernoulli random to Ising random; see
+    https://en.wikipedia.org/wiki/Bernoulli_distribution
+    https://en.wikipedia.org/wiki/Ising_model
+    """
+    if bernoulli == 1:
+        return 1
+    elif bernoulli == 0:
+        return -1
+    else:
+        raise Exception('Unexpected value of Bernouli distribution')
+
+
+def generate_rw_success_punished(starting_probability: float, c_lambda: float, walk_steps: int, repetitions: int) -> \
+        List[List[int]]:
+    walks = []
+    for j in range(0, repetitions):
+        steps = ['']
+        probabilities = [starting_probability]
+        for i in range(1, walk_steps + 1):
+            steps.append(ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
+            probabilities.append(
+                c_lambda * probabilities[i - 1] + 0.5 * (1 - c_lambda) * (1 - steps[i]))  # as in Definition
+        walks.append(steps)
+
+    return walks
+
+
+def main():
+    # try different Random Walk with Varying Transition Probabilities definitions
+    # different lambdas, starting probability, number of steps, multiple times with same starting variables
+    # save into .csv?
+
+    c_lambda = 0.5
+    p0 = 0.5
+    steps = 10
+    repetitions = 3
+
+    walks = generate_rw_success_punished(p0, c_lambda, steps, repetitions)
+    print(walks)
+
 
 if __name__ == '__main__':
     # Create a custom logger
@@ -33,3 +77,5 @@ if __name__ == '__main__':
     logger.addHandler(info_handler)
     logger.addHandler(error_handler)
     logger.addHandler(stdout_handler)
+
+    main()
