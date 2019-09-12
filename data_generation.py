@@ -1,9 +1,13 @@
 # code used to generate data using theoretical models.
 
 import logging
+import os
+import pickle
 from typing import List
 
 import numpy as np
+
+from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME
 
 
 def ising(bernoulli: int) -> int:
@@ -53,15 +57,22 @@ def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[flo
         List[List[int]]:
     walks = []
     for j in range(0, repetitions):
-        steps = ['']
+        steps = ['']  # in the model, probabilities start with p0, but steps with x1
         probabilities = [starting_probability]
         for i in range(1, walk_steps + 1):
             steps.append(ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
             probabilities.append(next_probability(walk_type, c_lambdas, steps, probabilities, i))
         walks.append(steps)
-        print(probabilities)
-        print(steps)
     return walks
+
+
+def save_walks(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambdas: List[float],
+               step_count: int):
+    if not os.path.exists(DATA_DIRNAME):
+        os.mkdir(DATA_DIRNAME)
+    filename = f"{DATA_DIRNAME}/{walk_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}.pkl"
+    with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
+        pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count], f)
 
 
 def main():
@@ -71,17 +82,28 @@ def main():
     # repetitions
     # save into .csv?
 
-    c_lambdas = [0.5]
-    p0 = 0.5
-    steps = 10
-    repetitions = 3
+    repetitions = 100
 
-    # walks = generate_rw('success_punished', p0, c_lambdas, steps, repetitions)
-    # walks = generate_rw('success_rewarded', p0, c_lambdas, steps, repetitions)
-    c_lambdas = [0.5, 0.1]
-    # walks = generate_rw('success_punished_two_lambdas', p0, c_lambdas, steps, repetitions)
-    walks = generate_rw('success_rewarded_two_lambdas', p0, c_lambdas, steps, repetitions)
-    print(walks)
+    for index, c_lambda in enumerate(C_LAMBDAS):
+        for starting_probability in START_PROBABILITIES:
+            for step_count in STEP_COUNTS:
+                c_lambdas = [c_lambda]
+                walk_type = 'success_punished'
+                walks = generate_rw(walk_type, starting_probability, c_lambdas, step_count, repetitions)
+                save_walks(walks, walk_type, starting_probability, c_lambdas, step_count)
+
+                walk_type = 'success_rewarded'
+                walks = generate_rw(walk_type, starting_probability, c_lambdas, step_count, repetitions)
+                save_walks(walks, walk_type, starting_probability, c_lambdas, step_count)
+
+                c_lambdas = C_LAMBDA_PAIRS[index]
+                walk_type = 'success_punished_two_lambdas'
+                walks = generate_rw(walk_type, starting_probability, c_lambdas, step_count, repetitions)
+                save_walks(walks, walk_type, starting_probability, c_lambdas, step_count)
+
+                walk_type = 'success_rewarded_two_lambdas'
+                walks = generate_rw(walk_type, starting_probability, c_lambdas, step_count, repetitions)
+                save_walks(walks, walk_type, starting_probability, c_lambdas, step_count)
 
 
 if __name__ == '__main__':
