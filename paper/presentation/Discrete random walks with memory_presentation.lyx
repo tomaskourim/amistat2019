@@ -260,9 +260,11 @@ A man starts from a point
 
 \size footnotesize
 \lang english
-\begin_inset VSpace smallskip
+\begin_inset VSpace medskip
 \end_inset
 
+
+\emph on
 [Karl Pearson: The problem of the random walk.
  (1905)]
 \end_layout
@@ -272,10 +274,38 @@ A man starts from a point
 
 \end_layout
 
-\begin_layout Definition
+\begin_deeper
+\begin_layout Description
+``Drunken sailor?''
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Random walk
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
 \begin_layout Definition
 Let
 \begin_inset Formula ${\{X_{k}\}}_{k=1}^{\infty}$
@@ -323,6 +353,10 @@ be a sequence of independent, identically distributed discrete random variables.
 .
 \end_layout
 
+\begin_layout Definition
+
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -345,10 +379,6 @@ Random walk properties
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-``Drunken sailor''
-\end_layout
-
 \begin_layout Itemize
 \begin_inset Formula $n-$
 \end_inset
@@ -475,6 +505,10 @@ Alternative definitions
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+definice 4 ruznych prochazek
+\end_layout
+
 \begin_layout Itemize
 ``Success rewarded''
 \end_layout
@@ -1135,6 +1169,10 @@ RWWM Properties
 
 \begin_deeper
 \begin_layout Itemize
+tabulka 4x3 s vlastnostmi jednotlivych prochazek
+\end_layout
+
+\begin_layout Itemize
 Expected prob
 \end_layout
 
@@ -1146,28 +1184,6 @@ Expected position
 Expected variance
 \end_layout
 
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-RWWM Properties - comparision
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
 \begin_layout Itemize
 Comparision of the previous properties aplied for different model types
 \end_layout
@@ -1202,6 +1218,10 @@ Asymptotic behaivor
 Convergence to standard RW??
 \end_layout
 
+\begin_layout Itemize
+predchozi tabulka s hodnotami v nekonecnu
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1226,6 +1246,10 @@ Data generation
 \begin_deeper
 \begin_layout Itemize
 Ways to generate data, different conditions, number of repetitions
+\end_layout
+
+\begin_layout Itemize
+popis jaka data generuju
 \end_layout
 
 \end_deeper
