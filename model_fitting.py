@@ -21,16 +21,21 @@ from config import DATA_DIRNAME
 # get lambda and p0
 
 
+def get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, walk_type):
+    for i in range(2, len(walk)):
+        current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
+        result = ising2bernoulli(walk[i])
+        log_likelihood = log_likelihood + np.log(
+            current_probability * result + (1 - current_probability) * (1 - result))
+    return log_likelihood
+
+
 def negative_log_likelihood_single_lambda(c_lambda: float, walk_type: str, starting_probability: float,
                                           walks: List[List[int]]) -> float:
     log_likelihood = 0
     for walk in walks:
         current_probability = starting_probability
-        for i in range(2, len(walk)):
-            current_probability = get_current_probability([c_lambda], current_probability, walk[i - 1], walk_type)
-            result = ising2bernoulli(walk[i])
-            log_likelihood = log_likelihood + np.log(
-                current_probability * result + (1 - current_probability) * (1 - result))
+        log_likelihood = get_walk_likelihood(log_likelihood, [c_lambda], current_probability, walk, walk_type)
     return -log_likelihood
 
 
@@ -42,11 +47,7 @@ def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_la
         result = ising2bernoulli(walk[1])
         log_likelihood = log_likelihood + np.log(
             current_probability * result + (1 - current_probability) * (1 - result))
-        for i in range(2, len(walk)):
-            current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
-            result = ising2bernoulli(walk[i])
-            log_likelihood = log_likelihood + np.log(
-                current_probability * result + (1 - current_probability) * (1 - result))
+        log_likelihood = get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, walk_type)
     return -log_likelihood
 
 
@@ -80,14 +81,14 @@ def main():
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             # p0 known, get lambda
             if walk_type == 'success_punished':
-                # estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                # if abs(starting_probability - estimated_p0 > 0.01):
-                #     i = i + 1
-                #     print(i, starting_probability, estimated_p0, step_count, c_lambdas)
-                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                if abs(starting_probability - estimated_p0 > 0.01):
                     i = i + 1
-                    print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
+                    print(i, starting_probability, estimated_p0, step_count, c_lambdas)
+                # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                # if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                #     i = i + 1
+                #     print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
             elif walk_type == 'success_rewarded':
                 continue
 
