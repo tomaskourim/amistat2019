@@ -30,7 +30,7 @@ def ising(bernoulli: int) -> int:
 def next_probability(walk_type: str, c_lambdas: List[float], steps: List[int], probabilities: List[float],
                      i: int) -> float:
     """
-        Computes the next step transition probability according to the definition of given :param walk_type
+    Computes the next step transition probability according to the definition of given :param walk_type
     :param walk_type: str
     :param c_lambdas: List[float]
     :param steps: List[int]
