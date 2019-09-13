@@ -1,1 +1,6 @@
 .idea/
+logfile_error.log
+logfile_info.log
+logfile_total.log
+generated_walks
+__pycache__/
