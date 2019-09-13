@@ -16,7 +16,7 @@ from config import DATA_DIRNAME
 # try different possible models
 # find the best suitable model & parameter values
 # compare with reality
-# lambda known, get p0
+
 # first estimate p0, then get lambda
 # get lambda and p0
 
@@ -51,6 +51,7 @@ def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_la
     return -log_likelihood
 
 
+# p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]):
     opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                      args=(walk_type, starting_probability, walks))
@@ -62,6 +63,7 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
     pass
 
 
+# lambda known, get p0
 def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int]]):
     opt_result = opt.minimize_scalar(negative_log_likelihood_p0, bounds=(0, 1), method='bounded',
                                      args=(walk_type, c_lambdas, walks))
@@ -79,7 +81,6 @@ def main():
     for datafile in generated_data:  # iterate over all generated cases
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
-            # p0 known, get lambda
             if walk_type == 'success_punished':
                 estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
                 if abs(starting_probability - estimated_p0 > 0.01):
