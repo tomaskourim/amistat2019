@@ -7,24 +7,8 @@ from typing import List
 
 import numpy as np
 
+from common import ising
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME
-
-
-def ising(bernoulli: int) -> int:
-    """
-    Transfers variable form Bernoulli random to Ising random; see
-    https://en.wikipedia.org/wiki/Bernoulli_distribution
-    https://en.wikipedia.org/wiki/Ising_model
-
-    :param bernoulli: int
-    :return:
-    """
-    if bernoulli == 1:
-        return 1
-    elif bernoulli == 0:
-        return -1
-    else:
-        raise Exception(f'Unexpected value of Bernoulli distribution: {bernoulli}')
 
 
 def next_probability(walk_type: str, c_lambdas: List[float], steps: List[int], probabilities: List[float],
