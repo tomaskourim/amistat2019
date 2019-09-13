@@ -41,7 +41,7 @@ def get_current_probability(c_lambdas: List[float], last_probability: float, ste
     Computes the transition probability for the next step according to the respective definition as in the paper.
     :param c_lambdas:
     :param last_probability:
-    :param step:
+    :param step: as Ising variable
     :param walk_type:
     :return:
     """

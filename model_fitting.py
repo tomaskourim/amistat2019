@@ -82,19 +82,19 @@ def main():
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             if walk_type == 'success_punished':
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                if abs(starting_probability - estimated_p0 > 0.01):
-                    i = i + 1
-                    print(i, starting_probability, estimated_p0, step_count, c_lambdas)
+                continue
                 # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
                 # if abs(c_lambdas[0] - estimated_lambda > 0.01):
                 #     i = i + 1
                 #     print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
             elif walk_type == 'success_rewarded':
                 continue
-
             elif walk_type == 'success_punished_two_lambdas':
-                continue
+                # continue
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                if abs(starting_probability - estimated_p0 > 0.01):
+                    i = i + 1
+                    print(i, starting_probability, estimated_p0, step_count, c_lambdas)
             elif walk_type == 'success_rewarded_two_lambdas':
                 continue
             else:
