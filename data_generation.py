@@ -7,33 +7,8 @@ from typing import List
 
 import numpy as np
 
-from common import ising
+from common import bernoulli2ising, get_current_probability
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME
-
-
-def next_probability(walk_type: str, c_lambdas: List[float], steps: List[int], probabilities: List[float],
-                     i: int) -> float:
-    """
-    Computes the next step transition probability according to the definition of given :param walk_type
-    :param walk_type: str
-    :param c_lambdas: List[float]
-    :param steps: List[int]
-    :param probabilities: List[float]
-    :param i: int
-    :return:
-    """
-    if walk_type == 'success_punished':
-        return c_lambdas[0] * probabilities[i - 1] + 0.5 * (1 - c_lambdas[0]) * (1 - steps[i])
-    elif walk_type == 'success_rewarded':
-        return c_lambdas[0] * probabilities[i - 1] + 0.5 * (1 - c_lambdas[0]) * (1 + steps[i])
-    elif walk_type == 'success_punished_two_lambdas':
-        return 0.5 * ((1 + steps[i]) * c_lambdas[0] * probabilities[i - 1] + (1 - steps[i]) * (
-                1 - c_lambdas[1] * (1 - probabilities[i - 1])))
-    elif walk_type == 'success_rewarded_two_lambdas':
-        return 0.5 * ((1 - steps[i]) * c_lambdas[0] * probabilities[i - 1] + (1 + steps[i]) * (
-                1 - c_lambdas[1] * (1 - probabilities[i - 1])))
-    else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
 
 
 def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int,
@@ -44,8 +19,8 @@ def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[flo
         steps = ['']  # in the model, probabilities start with p0, but steps with x1
         probabilities = [starting_probability]
         for i in range(1, walk_steps + 1):
-            steps.append(ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
-            probabilities.append(next_probability(walk_type, c_lambdas, steps, probabilities, i))
+            steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
+            probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], walk_type))
         walks.append(steps)
     return walks
 
