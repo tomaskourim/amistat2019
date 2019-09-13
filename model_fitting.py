@@ -4,27 +4,67 @@ import logging
 import pickle
 from os import listdir
 from os.path import isfile, join
+from typing import List
 
+import numpy as np
+import scipy.optimize as opt
+
+from common import ising2bernoulli, get_current_probability
 from config import DATA_DIRNAME
 
 
-# iterate over all generated cases
-# load data
 # try different possible models
 # find the best suitable model & parameter values
 # compare with reality
-# p0 known, get lambda
-# lambda known, get p)
+# lambda known, get p0
 # first estimate p0, then get lambda
 # get lambda and p0
 
 
+def negative_log_likelihood(c_lambda: float, walk_type: str, starting_probability: float,
+                            walks: List[List[int]]) -> float:
+    log_likelihood = 0
+    for walk in walks:
+        current_probability = starting_probability
+        for i in range(2, len(walk)):
+            current_probability = get_current_probability([c_lambda], current_probability, walk[i - 1], walk_type)
+            result = ising2bernoulli(walk[i])
+            log_likelihood = log_likelihood + np.log(
+                current_probability * result + (1 - current_probability) * (1 - result))
+    return -log_likelihood
+
+
+def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]):
+    opt_result = opt.minimize_scalar(negative_log_likelihood, bounds=(0, 1), method='bounded',
+                                     args=(walk_type, starting_probability, walks))
+    if opt_result.success:
+        logging.info("Fitted successfully.")
+        return opt_result.x
+    else:
+        return None
+    pass
+
+
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
-    for datafile in generated_data:
-        with open(join(DATA_DIRNAME, datafile), 'rb') as f:  # Python 3: open(..., 'rb')
-            walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)
-            print(walks, walk_type, starting_probability, c_lambdas, step_count)
+    i = 0
+    for datafile in generated_data:  # iterate over all generated cases
+        with open(join(DATA_DIRNAME, datafile), 'rb') as f:
+            walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
+            # p0 known, get lambda
+            if walk_type == 'success_punished':
+                continue
+            elif walk_type == 'success_rewarded':
+                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                    i = i + 1
+                    print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
+            elif walk_type == 'success_punished_two_lambdas':
+                continue
+            elif walk_type == 'success_rewarded_two_lambdas':
+                continue
+            else:
+                raise Exception(f'Unexpected walk type: {walk_type}')
 
 
 if __name__ == '__main__':
