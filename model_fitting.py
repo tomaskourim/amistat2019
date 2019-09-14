@@ -25,8 +25,8 @@ def get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, wa
     for i in range(2, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
         result = ising2bernoulli(walk[i])
-        log_likelihood = log_likelihood + np.log(
-            current_probability * result + (1 - current_probability) * (1 - result))
+        log_likelihood = log_likelihood + result * np.log(current_probability) + (1 - result) * np.log(
+            1 - current_probability)
     return log_likelihood
 
 
@@ -45,8 +45,8 @@ def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_la
     for walk in walks:
         current_probability = starting_probability
         result = ising2bernoulli(walk[1])
-        log_likelihood = log_likelihood + np.log(
-            current_probability * result + (1 - current_probability) * (1 - result))
+        log_likelihood = log_likelihood + result * np.log(current_probability) + (1 - result) * np.log(
+            1 - current_probability)
         log_likelihood = get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, walk_type)
     return -log_likelihood
 
