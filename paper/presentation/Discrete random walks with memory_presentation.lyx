@@ -357,7 +357,27 @@ be a sequence of independent, identically distributed discrete random variables.
 
 \end_layout
 
+\begin_layout Standard
+
+\size footnotesize
+\lang english
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \end_deeper
+\begin_layout Frame
+
+\lang english
+With 
+\begin_inset Formula $X_{k}\sim B(p=\frac{1}{2})$
+\end_inset
+
+ it is called the standard random walk.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -380,14 +400,14 @@ Random walk properties
 
 \begin_deeper
 \begin_layout Itemize
+Discrete random process
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $n-$
 \end_inset
 
 dimensional, on a matrix, graph, finite or infinite set
-\end_layout
-
-\begin_layout Itemize
-Discrete random process
 \end_layout
 
 \begin_layout Itemize
@@ -407,60 +427,76 @@ Brownian motion, polymer creation, games simulation, sports simulation
 \end_layout
 
 \begin_layout Frame
+
+\lang czech
 \begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-Random walks with varying transition probabilities
+Random walk 
+\lang czech
+with memory
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Frame
 
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Random walk with memory
+
+\lang czech
+Based on standard random walk (Bernoulli distribution with 
+\begin_inset Formula $p=0.5$
+\end_inset
+
+, discrete time).
 \end_layout
 
 \begin_layout Itemize
-Memory coefficient 
+
+\lang czech
+Constant total step size:
+\begin_inset Formula 
+\[
+l_{i}^{+}+l_{i}^{-}=2\ \forall i\in\mathbb{N}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+At the beginning the step sizes are equal (
+\begin_inset Formula $l_{1}^{+}=l_{1}^{-}=1$
+\end_inset
+
+) and further for 
+\begin_inset Formula $t>1$
+\end_inset
+
+ evolve using a memory parameter 
 \begin_inset Formula $\lambda\in(0,\,1)$
 \end_inset
 
- affecting the transition probabilities
-\end_layout
-
-\begin_layout Itemize
-First step of the walk 
-\begin_inset Formula $X_{1}$
-\end_inset
-
- depends on an initial transition probability 
-\begin_inset Formula $p_{1}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Further steps depending on a transition probability 
-\begin_inset Formula $p_{t}$
-\end_inset
-
- evolving as
+:
 \begin_inset Formula 
 \[
-X_{t-1}=1\rightarrow p_{t}=\lambda p_{t-1}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-X_{t-1}=0\rightarrow p_{t}=1-\lambda(1-p_{t-1})
+X_{t-1}=1\rightarrow\begin{cases}
+l_{t}^{+}=\lambda l_{t-1}^{+}\\
+l_{t}^{-}=2-\lambda l_{t-1}^{+}
+\end{cases}X_{t-1}=-1\rightarrow\begin{cases}
+l_{t}^{+}=2-\lambda l_{t-1}^{-}\\
+l_{t}^{-}=\lambda l_{t-1}^{-}
+\end{cases}
 \]
 
 \end_inset
@@ -469,14 +505,107 @@ X_{t-1}=0\rightarrow p_{t}=1-\lambda(1-p_{t-1})
 \end_layout
 
 \begin_layout Itemize
-``Success punished''
-\begin_inset Argument item:2
+
+\size footnotesize
+\lang czech
+Loïc Turban.
+ 
+\emph on
+On a random walk with memory and its relation with markovian processes.
+ 
+\emph default
+Journal of Physics A: Mathematical
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-2-
+
+\backslash
+newline
 \end_layout
+
+\end_inset
+
+ and Theoretical (2010).
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\lang czech
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\lang czech
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\lang czech
+Random walk with varying transition probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\lang czech
+Based on standard random walk (Bernoulli distribution with 
+\begin_inset Formula $p=0.5$
+\end_inset
+
+, discrete time).
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+Step size remains constant, transition probability changes
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+First step realized according to starting probability 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ which then for 
+\begin_inset Formula $t>1$
+\end_inset
+
+ evolve using a memory parameter 
+\begin_inset Formula $\lambda\in(0,\,1)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+X_{t}=1\rightarrow p_{t}=\lambda p_{t-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+X_{t}=-1\rightarrow p_{t}=1-\lambda(1-p_{t-1})
+\]
 
 \end_inset
 
@@ -484,6 +613,38 @@ status open
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+
+\lang czech
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - RW evolution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename examples_p0=0.50.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -496,7 +657,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Alternative definitions
+Example - Expected position of the walker
 \end_layout
 
 \end_inset
@@ -504,43 +665,29 @@ Alternative definitions
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-definice 4 ruznych prochazek
-\end_layout
+\begin_layout Frame
+\begin_inset Graphics
+	filename EXt.pdf
+	width 100text%
 
-\begin_layout Itemize
-``Success rewarded''
-\end_layout
-
-\begin_layout Itemize
-Different coefficients for different events
-\end_layout
-
-\begin_layout Itemize
-Generally 
-\begin_inset Formula $n$
 \end_inset
 
- possible steps and 
-\begin_inset Formula $m$
-\end_inset
 
- different coefficients 
-\begin_inset Formula $\lambda$
-\end_inset
-
- affecting the transition probabilities
 \end_layout
 
-\begin_layout Itemize
-Possible applications in
-\begin_inset Argument item:2
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-
-0
+Example - Expected transition probability
 \end_layout
 
 \end_inset
@@ -548,15 +695,29 @@ status open
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-sports modeling
-\begin_inset Argument item:2
+\begin_layout Frame
+\begin_inset Graphics
+	filename Ept.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-
-0
+Example - Transition probability variance
 \end_layout
 
 \end_inset
@@ -564,14 +725,29 @@ status open
 
 \end_layout
 
-\begin_layout Itemize
-reliability and survival analysis
-\begin_inset Argument item:2
+\begin_layout Frame
+\begin_inset Graphics
+	filename Varpt.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-
-0
+Example - Walker's position variance
 \end_layout
 
 \end_inset
@@ -579,38 +755,16 @@ status open
 
 \end_layout
 
-\begin_layout Itemize
-medical research
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
+\begin_layout Frame
+\begin_inset Graphics
+	filename VarXt.pdf
+	width 100text%
 
 \end_inset
 
 
 \end_layout
 
-\end_deeper
-\begin_layout Itemize
-Discrete alternative to random processes with memory
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
