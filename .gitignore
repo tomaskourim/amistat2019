@@ -7,3 +7,4 @@ __pycache__/
 *.lyx#
 *.lyx~
 paper/presentation/Discrete random walks with memory_presentation.synctex.gz
+test.py
