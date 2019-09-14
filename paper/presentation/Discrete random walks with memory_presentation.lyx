@@ -327,7 +327,7 @@ Let
 \begin_inset Formula ${\{X_{k}\}}_{k=1}^{\infty}$
 \end_inset
 
-be a sequence of independent, identically distributed discrete random variables.
+be a sequence of discrete random variables.
  For each positive integer 
 \begin_inset Formula $n$
 \end_inset
@@ -387,11 +387,15 @@ be a sequence of independent, identically distributed discrete random variables.
 \begin_layout Frame
 
 \lang english
-For 
+If for 
+\begin_inset Formula $\forall k;\;$
+\end_inset
+
+
 \begin_inset Formula $X_{k}\sim B(p=\frac{1}{2})$
 \end_inset
 
- it is called the standard random walk.
+, the walk is called the standard random walk.
 \end_layout
 
 \begin_layout Standard
@@ -662,6 +666,116 @@ Example - RW evolution
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\lang czech
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\lang czech
+Random walk with varying transition probability - properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $P_{t}=\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t})$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1-X_{i})$
+\end_inset
+
+
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}$
+\end_inset
+
+
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\lang czech
 \begin_inset Separator plain
 \end_inset
 
@@ -1007,11 +1121,130 @@ Data generation
 
 \begin_deeper
 \begin_layout Itemize
-Ways to generate data, different conditions, number of repetitions
+Using Python & Numpy package
 \end_layout
 
 \begin_layout Itemize
-popis jaka data generuju
+Different parameters:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\lambda\in\{0.01,\,0.1,\,0.25,\,0.5,\,0.6,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bar{\lambda}=\{[0.1,\,0.2],\,[0.2,\,0.5],\,[0.5,\,0.8],\,[0.6,\,0.9],\newline[0.1,\,0.9],\,[0.5,\,0.99],\,[0.8,\,0.01],\,[0.99,\,0.9]\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p_{0}=\{0.01,\,0.1,\,0.25,\,0.5,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n=\{2,\,3,\,4,\,5,\,10,\,50,\,100,\,1000\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $100$
+\end_inset
+
+ walks for each combination
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Fitting parameters on generated data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Find 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+ with known 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+, model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ with known 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+, model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0},\,\bar{\lambda}$
+\end_inset
+
+ with known model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0},\,\bar{\lambda}$
+\end_inset
+
+ and model type
 \end_layout
 
 \end_deeper
@@ -1027,7 +1260,7 @@ popis jaka data generuju
 status open
 
 \begin_layout Plain Layout
-Fitting on generated data
+Parameter fitting evaluation
 \end_layout
 
 \end_inset
@@ -1041,15 +1274,7 @@ Fitting on generated data
 
 \begin_deeper
 \begin_layout Itemize
-Which types are detectable and predictable from the data
-\end_layout
-
-\begin_layout Itemize
-Error rates
-\end_layout
-
-\begin_layout Itemize
-Grafy?
+?????
 \end_layout
 
 \end_deeper
@@ -1065,7 +1290,7 @@ Grafy?
 status open
 
 \begin_layout Plain Layout
-Real life examples
+Real life applications
 \end_layout
 
 \end_inset
@@ -1079,13 +1304,27 @@ Real life examples
 
 \begin_deeper
 \begin_layout Itemize
-Kratce popsat co jsem delal do Aten
+Reliability analysis, medical data analysis
 \end_layout
 
 \begin_layout Itemize
-Zminit, ze jsem desne vydelal na US Open
+Sport modelling
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Tennis with model ``Success rewarded''
+\end_layout
+
+\begin_layout Itemize
+Applied for live betting on US Open against Tipsport bookmaker
+\end_layout
+
+\begin_layout Itemize
+Source code and paper available at https://github.com/tomaskourim/mathsport2019
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1109,11 +1348,23 @@ Results
 
 \begin_deeper
 \begin_layout Itemize
-Zajimavy nastroj s possible implementations
+New models of Random walk described
 \end_layout
 
 \begin_layout Itemize
-link na github kam neco nahraju
+Properties derived
+\end_layout
+
+\begin_layout Itemize
+Strenght of the models shown using simulated data
+\end_layout
+
+\begin_layout Itemize
+Possible real life applications shown
+\end_layout
+
+\begin_layout Itemize
+Source code and paper available at https://github.com/tomaskourim/amistat2019
 \end_layout
 
 \end_deeper
@@ -1129,7 +1380,7 @@ link na github kam neco nahraju
 status open
 
 \begin_layout Plain Layout
-Next steps
+Next steps????
 \end_layout
 
 \end_inset
@@ -1252,7 +1503,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-Bbetting module for more bookmakers
+Betting module for more bookmakers
 \begin_inset Argument item:2
 status open
 
