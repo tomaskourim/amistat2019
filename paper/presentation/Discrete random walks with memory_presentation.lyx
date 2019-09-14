@@ -21,6 +21,7 @@ Ing. Tomáš Kouřim\selectlanguage{czech}%
 ]{Ing. Tomáš~Kouřim \and }
 \newcommand{\nologo}{\setbeamertemplate{logo}{}} % command to set the logo to nothing
 \usepackage[czech]{babel}
+\setbeamertemplate{itemize subsubitem}[circle]
 \setbeamercovered{transparent}
 \end_preamble
 \use_default_options true
@@ -276,7 +277,22 @@ A man starts from a point
 
 \begin_deeper
 \begin_layout Description
-``Drunken sailor?''
+Where is the 
+\emph on
+``Drunken sailor''
+\emph default
+?
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -371,7 +387,7 @@ be a sequence of independent, identically distributed discrete random variables.
 \begin_layout Frame
 
 \lang english
-With 
+For 
 \begin_inset Formula $X_{k}\sim B(p=\frac{1}{2})$
 \end_inset
 
@@ -785,508 +801,25 @@ Alternative definitions
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-``Success rewarded''
-\begin_inset Formula 
-\[
-X_{t-1}=1\rightarrow p_{t}=1-\lambda(1-p_{t-1})
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-X_{t-1}=0\rightarrow p_{t}=\lambda p_{t-1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Different coefficients for different events
-\end_layout
-
-\begin_layout Itemize
-Generally 
-\begin_inset Formula $n$
-\end_inset
-
- possible steps and 
-\begin_inset Formula $m$
-\end_inset
-
- different coefficients 
-\begin_inset Formula $\lambda$
-\end_inset
-
- affecting the transition probabilities
-\end_layout
-
-\begin_layout Itemize
-Possible applications in
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-sports modeling
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-reliability and survival analysis
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-medical research
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Discrete alternative to random processes with memory
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Alternative definitions
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-``Success rewarded''
-\end_layout
-
-\begin_layout Itemize
-Different coefficients for different events
-\begin_inset Formula 
-\[
-X_{t-1}=1\rightarrow p_{t}=\lambda_{1}p_{t-1}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-X_{t-1}=0\rightarrow p_{t}=1-\lambda_{2}(1-p_{t-1})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Generally 
-\begin_inset Formula $n$
-\end_inset
-
- possible steps and 
-\begin_inset Formula $m$
-\end_inset
-
- different coefficients 
-\begin_inset Formula $\lambda$
-\end_inset
-
- affecting the transition probabilities
-\end_layout
-
-\begin_layout Itemize
-Possible applications in
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-sports modeling
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-reliability and survival analysis
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-medical research
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Discrete alternative to random processes with memory
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Alternative definitions
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-``Success rewarded''
-\end_layout
-
-\begin_layout Itemize
-Different coefficients for different events
-\end_layout
-
-\begin_layout Itemize
-Generally 
-\begin_inset Formula $n$
-\end_inset
-
- possible steps and 
-\begin_inset Formula $m$
-\end_inset
-
- different coefficients 
-\begin_inset Formula $\lambda$
-\end_inset
-
- affecting the transition probabilities
-\begin_inset Formula 
-\[
-p_{t}=f(p_{t-1},\,X_{t-1},\,\lambda_{1},\dots,\,\lambda_{m})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Possible applications in
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-sports modeling
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-reliability and survival analysis
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-medical research
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Discrete alternative to random processes with memory
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-0
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Frame
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_deeper
+\begin_layout Itemize
+Formulas to obtain next transition probability 
+\begin_inset Formula $P_{i}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Alternative definitions
-\end_layout
-
-\end_inset
-
-
+:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-``Success rewarded''
-\end_layout
-
-\begin_layout Itemize
-Different coefficients for different events
-\end_layout
-
-\begin_layout Itemize
-Generally 
-\begin_inset Formula $n$
-\end_inset
-
- possible steps and 
-\begin_inset Formula $m$
-\end_inset
-
- different coefficients 
-\begin_inset Formula $\lambda$
-\end_inset
-
- affecting the transition probabilities
-\end_layout
-
-\begin_layout Itemize
-Possible applications in
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-1-
-\end_layout
-
+\begin_inset Formula $\frac{1}{2}[(1+X_{i})\lambda P_{i-1}+(1-X_{i})(1-\lambda(1-P_{i-1}))]$
 \end_inset
 
 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-sports modeling
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-1-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-reliability and survival analysis
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-1-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-medical research
-\begin_inset Argument item:2
-status open
-
-\begin_layout Plain Layout
-
-1-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Discrete alternative to random processes with memory
 \begin_inset Argument item:2
 status open
 
@@ -1300,7 +833,158 @@ status open
 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Success punished
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
 \end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1-X_{i})\lambda P_{i-1}+(1+X_{i})(1-\lambda(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+4-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success rewarded
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+5-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+6-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success punished with multiple 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+6-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+7-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success rewarded with multiple 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+7-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
