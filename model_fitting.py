@@ -16,7 +16,7 @@ from config import DATA_DIRNAME
 # try different possible models
 # find the best suitable model & parameter values
 # compare with reality
-
+# estimate p0 only from first steps
 # first estimate p0, then get lambda
 # get lambda and p0
 
@@ -90,13 +90,14 @@ def main():
             elif walk_type == 'success_rewarded':
                 continue
             elif walk_type == 'success_punished_two_lambdas':
+                continue
+
+            elif walk_type == 'success_rewarded_two_lambdas':
                 # continue
                 estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
                 if abs(starting_probability - estimated_p0 > 0.01):
                     i = i + 1
                     print(i, starting_probability, estimated_p0, step_count, c_lambdas)
-            elif walk_type == 'success_rewarded_two_lambdas':
-                continue
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
 
