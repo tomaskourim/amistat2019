@@ -274,7 +274,6 @@ def main():
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
-            print(walk_type, starting_probability, c_lambdas, step_count)
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 c_lambda = c_lambdas[0]
                 c_lambda0 = ""
