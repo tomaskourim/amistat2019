@@ -6,9 +6,10 @@ import sys
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
+import pandas as pd
 import scipy.optimize as opt
 
 from common import get_current_probability
@@ -74,7 +75,7 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 
 
 # p0 known, get lambda
-def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]):
+def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(walk_type, starting_probability, walks))
@@ -86,27 +87,25 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
         raise Exception(f'Unexpected walk type: {walk_type}')
 
     if opt_result.success:
-        logging.info("Fitted successfully.")
+        logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return None
-    pass
+        return -10000
 
 
 # lambda known, get p0
-def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int]]):
+def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int]]) -> float:
     opt_result = opt.minimize_scalar(negative_log_likelihood_p0, bounds=(0, 1), method='bounded',
                                      args=(walk_type, c_lambdas, walks))
     if opt_result.success:
-        logging.info("Fitted successfully.")
+        logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return None
-    pass
+        return -10000
 
 
 # get lambda and p0
-def get_parameters_estimate(walk_type, walks):
+def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[float]:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
         guess = np.array([0.5, 0.5])
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
@@ -116,14 +115,17 @@ def get_parameters_estimate(walk_type, walks):
 
     opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(walk_type, walks))
     if opt_result.success:
-        logging.info("Fitted successfully.")
+        logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return None
+        if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+            return [-10000, -10000]
+        elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+            return [-10000, -10000, -10000]
 
 
 # find the best suitable model & parameter values
-def get_model_estimate(walks):
+def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     result = None
     current_model = ''
     min_log_likelihood = sys.float_info.max
@@ -163,70 +165,84 @@ def get_model_estimate(walks):
     return result, current_model
 
 
+def analyze_result(result: pd.DataFrame):
+    print(result)
+    # CI parametru
+
+    pass
+
+
+def analyze_results(results: pd.DataFrame):
+    model_types = results['model_type'].unique()
+    prediction_types = results['prediction_type'].unique()
+    for model_type in model_types:
+        for prediction_type in prediction_types:
+            analyze_result(results[results.model_type == model_type & results.prediction_type == prediction_type])
+
+
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
+    results = pd.DataFrame(
+        columns=["model_type", "lambda", "p0", "step_count", "prediction_type", "predicted_model", "predicted_lambda",
+                 "predicted_p0"])
     start_time_loop = datetime.now()
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
-        print('---------------------------------------------------------')
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
-            if walk_type == 'success_punished':
-                # print(i)
-                # continue
-                print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                print(estimated_lambda)
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                print(estimated_p0)
-                estimated_params = get_parameters_estimate(walk_type, walks)
-                print(estimated_params)
-                estimated_params, estimated_model = get_model_estimate(walks)
-                print(estimated_model, estimated_params)
+            print(walk_type, starting_probability, c_lambdas, step_count)
+            for walk in walks:
+                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, [walk])
+                current_result = {"model_type": walk_type,
+                                  "lambda": c_lambdas,
+                                  "p0": starting_probability,
+                                  "step_count": step_count,
+                                  "prediction_type": "only_lambda",
+                                  "predicted_model": "",
+                                  "predicted_lambda": estimated_lambda,
+                                  "predicted_p0": ""}
+                results = results.append(current_result, ignore_index=True)
 
-            elif walk_type == 'success_rewarded':
-                print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                print(estimated_lambda)
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                print(estimated_p0)
-                estimated_params = get_parameters_estimate(walk_type, walks)
-                print(estimated_params)
-                estimated_params, estimated_model = get_model_estimate(walks)
-                print(estimated_model, estimated_params)
-                # continue
-            elif walk_type == 'success_punished_two_lambdas':
-                # print(i)
-                # continue
-                print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
-                print(estimated_lambdas)
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                print(estimated_p0)
-                estimated_params = get_parameters_estimate(walk_type, walks)
-                print(estimated_params)
-                estimated_params, estimated_model = get_model_estimate(walks)
-                print(estimated_model, estimated_params)
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, [walk])
+                current_result = {"model_type": walk_type,
+                                  "lambda": c_lambdas,
+                                  "p0": starting_probability,
+                                  "step_count": step_count,
+                                  "prediction_type": "only_p0",
+                                  "predicted_model": "",
+                                  "predicted_lambda": "",
+                                  "predicted_p0": estimated_p0}
+                results = results.append(current_result, ignore_index=True)
 
-            elif walk_type == 'success_rewarded_two_lambdas':
-                # print(i)
-                print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
-                print(estimated_lambdas)
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                print(estimated_p0)
-                estimated_params = get_parameters_estimate(walk_type, walks)
-                print(estimated_params)
-                estimated_params, estimated_model = get_model_estimate(walks)
-                print(estimated_model, estimated_params)
-                # continue
-            else:
-                raise Exception(f'Unexpected walk type: {walk_type}')
+                estimated_params = get_parameters_estimate(walk_type, [walk])
+                current_result = {"model_type": walk_type,
+                                  "lambda": c_lambdas,
+                                  "p0": starting_probability,
+                                  "step_count": step_count,
+                                  "prediction_type": "all_parameters",
+                                  "predicted_model": "",
+                                  "predicted_lambda": estimated_params[1:],
+                                  "predicted_p0": estimated_params[0]}
+                results = results.append(current_result, ignore_index=True)
+
+                estimated_params, estimated_model = get_model_estimate([walk])
+                current_result = {"model_type": walk_type,
+                                  "lambda": c_lambdas,
+                                  "p0": starting_probability,
+                                  "step_count": step_count,
+                                  "prediction_type": "everything",
+                                  "predicted_model": estimated_model,
+                                  "predicted_lambda": estimated_params[1:],
+                                  "predicted_p0": estimated_params[0]}
+                results = results.append(current_result, ignore_index=True)
+
             end_time_iter = datetime.now()
             time_curr = end_time_iter - start_time_iter
             time_per_iter = (end_time_iter - start_time_loop) / (i + 1)
             eta = (len(generated_data) - i - 1) * time_per_iter
-            print(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
+            logging.info(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
+
+    analyze_results(results)
 
 
 if __name__ == '__main__':
@@ -244,7 +260,7 @@ if __name__ == '__main__':
     total_handler.setLevel(logging.DEBUG)
     info_handler.setLevel(logging.INFO)
     error_handler.setLevel(logging.WARNING)
-    stdout_handler.setLevel(logging.WARNING)
+    stdout_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
     logging_format = logging.Formatter('%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(message)s')
