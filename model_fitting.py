@@ -9,7 +9,7 @@ from typing import List
 import numpy as np
 import scipy.optimize as opt
 
-from common import ising2bernoulli, get_current_probability
+from common import get_current_probability
 from config import DATA_DIRNAME
 
 
@@ -26,9 +26,8 @@ def get_single_walk_likelihood(log_likelihood: float, c_lambdas: List[float], st
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
-        result = ising2bernoulli(walk[i])
-        log_likelihood = log_likelihood + result * np.log(current_probability) + (1 - result) * np.log(
-            1 - current_probability)
+        log_likelihood = log_likelihood + 0.5 * ((1 + walk[i]) * np.log(current_probability) + (1 - walk[i]) * np.log(
+            1 - current_probability))
     return log_likelihood
 
 
@@ -88,14 +87,14 @@ def main():
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             if walk_type == 'success_punished':
-                # estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                # if abs(starting_probability - estimated_p0 > 0.01):
-                #     i = i + 1
-                #     print(i, starting_probability, estimated_p0, step_count, c_lambdas)
-                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                if abs(starting_probability - estimated_p0 > 0.01):
                     i = i + 1
-                    print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
+                    print(i, starting_probability, estimated_p0, step_count, c_lambdas)
+                # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                # if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                #     i = i + 1
+                #     print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
 
             elif walk_type == 'success_rewarded':
                 continue

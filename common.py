@@ -2,23 +2,6 @@
 from typing import List
 
 
-def ising2bernoulli(ising: int) -> int:
-    """
-    Transfers variable form Ising random to Bernoulli random; see
-    https://en.wikipedia.org/wiki/Bernoulli_distribution
-    https://en.wikipedia.org/wiki/Ising_model
-
-    :param ising: int
-    :return:
-    """
-    if ising == 1:
-        return 1
-    elif ising == -1:
-        return 0
-    else:
-        raise Exception(f'Unexpected value of Ising distribution: {ising}')
-
-
 def bernoulli2ising(bernoulli: int) -> int:
     """
     Transfers variable form Bernoulli random to Ising random; see
