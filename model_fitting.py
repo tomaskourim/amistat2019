@@ -15,12 +15,9 @@ from common import get_current_probability
 from config import DATA_DIRNAME
 
 
-# try different possible models
-# find the best suitable model & parameter values
 # compare with reality
-# estimate p0 only from first steps
-# first estimate p0, then get lambda
-# get lambda and p0
+# TODO estimate p0 only from first steps
+# TODO first estimate p0, then get lambda
 
 
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
@@ -78,25 +75,22 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]):
-    opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
-                                     args=(walk_type, starting_probability, walks))
+    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
+                                         args=(walk_type, starting_probability, walks))
+    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        guess = np.array([0.5, 0.5])
+        opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='Nelder-Mead',
+                                  args=(walk_type, starting_probability, walks))
+    else:
+        raise Exception(f'Unexpected walk type: {walk_type}')
+
     if opt_result.success:
         logging.info("Fitted successfully.")
         return opt_result.x
     else:
         return None
     pass
-
-
-def get_lambdas_estimate(walk_type, starting_probability, walks):
-    guess = np.array([0.5, 0.5])
-    opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='Nelder-Mead',
-                              args=(walk_type, starting_probability, walks))
-    if opt_result.success:
-        logging.info("Fitted successfully.")
-        return opt_result.x
-    else:
-        return None
 
 
 # lambda known, get p0
@@ -111,6 +105,7 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
     pass
 
 
+# get lambda and p0
 def get_parameters_estimate(walk_type, walks):
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
         guess = np.array([0.5, 0.5])
@@ -127,6 +122,7 @@ def get_parameters_estimate(walk_type, walks):
         return None
 
 
+# find the best suitable model & parameter values
 def get_model_estimate(walks):
     result = None
     current_model = ''
@@ -203,7 +199,7 @@ def main():
                 # print(i)
                 # continue
                 print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
+                estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
                 print(estimated_lambdas)
                 estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
                 print(estimated_p0)
@@ -215,7 +211,7 @@ def main():
             elif walk_type == 'success_rewarded_two_lambdas':
                 # print(i)
                 print(walk_type, step_count, starting_probability, c_lambdas)
-                estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
+                estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
                 print(estimated_lambdas)
                 estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
                 print(estimated_p0)
