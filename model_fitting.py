@@ -129,59 +129,47 @@ def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
     i = 0
     for datafile in generated_data:  # iterate over all generated cases
+        i = i+1
+        print('---------------------------------------------------------')
+        print(i)
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             if walk_type == 'success_punished':
-                # estimated_params = get_parameters_estimate(walk_type, walks)
+                print(walk_type, step_count, starting_probability, c_lambdas)
+                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                print(estimated_lambda)
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                print(estimated_p0)
+                estimated_params = get_parameters_estimate(walk_type, walks)
+                print(estimated_params)
                 continue
-                # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                # if abs(c_lambdas[0] - estimated_lambda > 0.01):
-                # i = i + 1
-                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
-
             elif walk_type == 'success_rewarded':
-                # estimated_params = get_parameters_estimate(walk_type, walks)
-                # # continue
-                # # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                # # if abs(c_lambdas[0] - estimated_lambda > 0.01):
-                # i = i + 1
-                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
+                print(walk_type, step_count, starting_probability, c_lambdas)
+                estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                print(estimated_lambda)
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                print(estimated_p0)
+                estimated_params = get_parameters_estimate(walk_type, walks)
+                print(estimated_params)
                 continue
             elif walk_type == 'success_punished_two_lambdas':
-                # estimated_params = get_parameters_estimate(walk_type, walks)
-                # # continue
-                # # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                # # if abs(c_lambdas[0] - estimated_lambda > 0.01):
-                # i = i + 1
-                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
-                # for walk in walks:
-                #     estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, [walk])
-                #
-                #     if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
-                #         print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
-                # i = i + 1
-                # print(i)
-                continue
-
-            elif walk_type == 'success_rewarded_two_lambdas':
+                print(walk_type, step_count, starting_probability, c_lambdas)
+                estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
+                print(estimated_lambdas)
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                print(estimated_p0)
                 estimated_params = get_parameters_estimate(walk_type, walks)
-                # continue
-                # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
-                # if abs(c_lambdas[0] - estimated_lambda > 0.01):
-                i = i + 1
-                print(i, step_count, starting_probability, c_lambdas, estimated_params)
-                # for walk in walks:
-                # estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
-
-                # if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
-                # print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
-                # i = i + 1
-                # print(i)
+                print(estimated_params)
                 continue
-                # estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                # if abs(starting_probability - estimated_p0 > 0.01):
-                #     i = i + 1
-                #     print(i, starting_probability, estimated_p0, step_count, c_lambdas)
+            elif walk_type == 'success_rewarded_two_lambdas':
+                print(walk_type, step_count, starting_probability, c_lambdas)
+                estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
+                print(estimated_lambdas)
+                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                print(estimated_p0)
+                estimated_params = get_parameters_estimate(walk_type, walks)
+                print(estimated_params)
+                continue
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
 
