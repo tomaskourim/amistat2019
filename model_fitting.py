@@ -2,6 +2,7 @@
 
 import logging
 import pickle
+import sys
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
@@ -22,8 +23,8 @@ from config import DATA_DIRNAME
 # get lambda and p0
 
 
-def get_single_walk_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
-                               walk: List[int], walk_type: str, starting_index: int) -> float:
+def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
+                                   walk: List[int], walk_type: str, starting_index: int) -> float:
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
@@ -36,8 +37,9 @@ def get_multiple_walks_log_likelihood(c_lambdas: List[float], starting_probabili
                                       walk_type: str, starting_index: int):
     log_likelihood = 0
     for walk in walks:
-        log_likelihood = get_single_walk_likelihood(log_likelihood, c_lambdas, starting_probability, walk, walk_type,
-                                                    starting_index)
+        log_likelihood = get_single_walk_log_likelihood(log_likelihood, c_lambdas, starting_probability, walk,
+                                                        walk_type,
+                                                        starting_index)
     return log_likelihood
 
 
@@ -125,16 +127,57 @@ def get_parameters_estimate(walk_type, walks):
         return None
 
 
+def get_model_estimate(walks):
+    result = None
+    current_model = ''
+    min_log_likelihood = sys.float_info.max
+
+    # single lambda models
+    guess = np.array([0.5, 0.5])
+    model = 'success_punished'
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
+    if opt_result.success and opt_result.fun < min_log_likelihood:
+        min_log_likelihood = opt_result.fun
+        current_model = model
+        result = opt_result.x
+
+    model = 'success_rewarded'
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
+    if opt_result.success and opt_result.fun < min_log_likelihood:
+        min_log_likelihood = opt_result.fun
+        current_model = model
+        result = opt_result.x
+
+    # two lambdas models
+    guess = np.array([0.5, 0.5, 0.5])
+    model = 'success_punished_two_lambdas'
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
+    if opt_result.success and opt_result.fun < min_log_likelihood:
+        min_log_likelihood = opt_result.fun
+        current_model = model
+        result = opt_result.x
+
+    model = 'success_rewarded_two_lambdas'
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
+    if opt_result.success and opt_result.fun < min_log_likelihood:
+        min_log_likelihood = opt_result.fun
+        current_model = model
+        result = opt_result.x
+
+    return result, current_model
+
+
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
-    i = 0
-    for datafile in generated_data:  # iterate over all generated cases
-        i = i+1
+    start_time_loop = datetime.now()
+    for i, datafile in enumerate(generated_data):  # iterate over all generated cases
+        start_time_iter = datetime.now()
         print('---------------------------------------------------------')
-        print(i)
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             if walk_type == 'success_punished':
+                # print(i)
+                # continue
                 print(walk_type, step_count, starting_probability, c_lambdas)
                 estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
                 print(estimated_lambda)
@@ -142,7 +185,9 @@ def main():
                 print(estimated_p0)
                 estimated_params = get_parameters_estimate(walk_type, walks)
                 print(estimated_params)
-                continue
+                estimated_params, estimated_model = get_model_estimate(walks)
+                print(estimated_model, estimated_params)
+
             elif walk_type == 'success_rewarded':
                 print(walk_type, step_count, starting_probability, c_lambdas)
                 estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
@@ -151,8 +196,12 @@ def main():
                 print(estimated_p0)
                 estimated_params = get_parameters_estimate(walk_type, walks)
                 print(estimated_params)
-                continue
+                estimated_params, estimated_model = get_model_estimate(walks)
+                print(estimated_model, estimated_params)
+                # continue
             elif walk_type == 'success_punished_two_lambdas':
+                # print(i)
+                # continue
                 print(walk_type, step_count, starting_probability, c_lambdas)
                 estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
                 print(estimated_lambdas)
@@ -160,8 +209,11 @@ def main():
                 print(estimated_p0)
                 estimated_params = get_parameters_estimate(walk_type, walks)
                 print(estimated_params)
-                continue
+                estimated_params, estimated_model = get_model_estimate(walks)
+                print(estimated_model, estimated_params)
+
             elif walk_type == 'success_rewarded_two_lambdas':
+                # print(i)
                 print(walk_type, step_count, starting_probability, c_lambdas)
                 estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
                 print(estimated_lambdas)
@@ -169,9 +221,16 @@ def main():
                 print(estimated_p0)
                 estimated_params = get_parameters_estimate(walk_type, walks)
                 print(estimated_params)
-                continue
+                estimated_params, estimated_model = get_model_estimate(walks)
+                print(estimated_model, estimated_params)
+                # continue
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
+            end_time_iter = datetime.now()
+            time_curr = end_time_iter - start_time_iter
+            time_per_iter = (end_time_iter - start_time_loop) / (i + 1)
+            eta = (len(generated_data) - i - 1) * time_per_iter
+            print(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
 
 
 if __name__ == '__main__':
