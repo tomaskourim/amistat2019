@@ -1,0 +1,1654 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{Szeged}
+\usecolortheme{beaver}
+\title
+{Discrete random walks with memory: Models and applications}
+%\subtitle{Teze dizertační práce}
+%\logo{\includegraphics[height=1.3cm]{../../../fjfi.pdf}}
+\institute[\selectlanguage{czech}%
+UTIA\selectlanguage{czech}%
+]{Institute of Information Theory and Automation, AS CR Prague}
+\date{16.9.2019}
+\author[\selectlanguage{czech}%
+Ing. Tomáš Kouřim\selectlanguage{czech}%
+]{Ing. Tomáš~Kouřim \and }
+\newcommand{\nologo}{\setbeamertemplate{logo}{}} % command to set the logo to nothing
+\usepackage[czech]{babel}
+\setbeamertemplate{itemize subsubitem}[circle]
+\setbeamercovered{transparent}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language american
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\lang english
+Discrete random walks with memory: Models and applications
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Outline
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+
+\size larger
+Prepare mathematical model
+\size default
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+1-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+Describe its properties
+\size default
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\size larger
+Apply it on data
+\size default
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Random walk
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+
+\lang english
+A man starts from a point 
+\begin_inset Formula $O$
+\end_inset
+
+ and walks 
+\begin_inset Formula $l$
+\end_inset
+
+ yards in a straight line; he then turns through any angle whatever and
+ walks another 
+\begin_inset Formula $l$
+\end_inset
+
+ yards in a second straight line.
+ He repeats this process 
+\begin_inset Formula $n$
+\end_inset
+
+ times.
+ I require the probability that after these 
+\begin_inset Formula $n$
+\end_inset
+
+ stretches he is at a distance between 
+\begin_inset Formula $r$
+\end_inset
+
+ and 
+\begin_inset Formula $r+\delta r$
+\end_inset
+
+ from his starting point, 
+\begin_inset Formula $O.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\size footnotesize
+\lang english
+\begin_inset VSpace medskip
+\end_inset
+
+
+\emph on
+[Karl Pearson: The problem of the random walk.
+ (1905)]
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+Where is the 
+\emph on
+``Drunken sailor''
+\emph default
+?
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Random walk
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Definition
+Let
+\begin_inset Formula ${\{X_{k}\}}_{k=1}^{\infty}$
+\end_inset
+
+be a sequence of discrete random variables.
+ For each positive integer 
+\begin_inset Formula $n$
+\end_inset
+
+, let 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+ denote the sum 
+\begin_inset Formula $X_{1}+X_{2}+\cdot\cdot\cdot+X_{n}$
+\end_inset
+
+, with 
+\begin_inset Formula $S_{0}=0$
+\end_inset
+
+.
+ The sequence 
+\begin_inset Formula $\{{S_{n}}\}{}_{n=1}^{\infty}$
+\end_inset
+
+ is called a random walk.
+ If the common range of the 
+\begin_inset Formula $X_{k}$
+\end_inset
+
+’s is 
+\begin_inset Formula $\mathbb{R}_{m}$
+\end_inset
+
+, then 
+\begin_inset Formula ${\{S_{n}\}}$
+\end_inset
+
+ is a random walk in 
+\begin_inset Formula $\mathbb{R}_{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+
+\end_layout
+
+\begin_layout Standard
+
+\size footnotesize
+\lang english
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\lang english
+If for 
+\begin_inset Formula $\forall k;\;$
+\end_inset
+
+
+\begin_inset Formula $X_{k}\sim B(p=\frac{1}{2})$
+\end_inset
+
+, the walk is called the standard random walk.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Random walk properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Discrete random process
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n-$
+\end_inset
+
+dimensional, on a matrix, graph, finite or infinite set
+\end_layout
+
+\begin_layout Itemize
+Self avoiding, reinforced
+\end_layout
+
+\begin_layout Itemize
+Brownian motion, polymer creation, games simulation, sports simulation
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\lang czech
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Random walk 
+\lang czech
+with memory
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\lang czech
+Based on standard random walk (Bernoulli distribution with 
+\begin_inset Formula $p=0.5$
+\end_inset
+
+, discrete time).
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+Constant total step size:
+\begin_inset Formula 
+\[
+l_{i}^{+}+l_{i}^{-}=2\ \forall i\in\mathbb{N}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+At the beginning the step sizes are equal (
+\begin_inset Formula $l_{1}^{+}=l_{1}^{-}=1$
+\end_inset
+
+) and further for 
+\begin_inset Formula $t>1$
+\end_inset
+
+ evolve using a memory parameter 
+\begin_inset Formula $\lambda\in(0,\,1)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+X_{t-1}=1\rightarrow\begin{cases}
+l_{t}^{+}=\lambda l_{t-1}^{+}\\
+l_{t}^{-}=2-\lambda l_{t-1}^{+}
+\end{cases}X_{t-1}=-1\rightarrow\begin{cases}
+l_{t}^{+}=2-\lambda l_{t-1}^{-}\\
+l_{t}^{-}=\lambda l_{t-1}^{-}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\size footnotesize
+\lang czech
+Loïc Turban.
+ 
+\emph on
+On a random walk with memory and its relation with markovian processes.
+ 
+\emph default
+Journal of Physics A: Mathematical
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newline
+\end_layout
+
+\end_inset
+
+ and Theoretical (2010).
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\lang czech
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\lang czech
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\lang czech
+Random walk with varying transition probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\lang czech
+Based on standard random walk (Bernoulli distribution with 
+\begin_inset Formula $p=0.5$
+\end_inset
+
+, discrete time).
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+Step size remains constant, transition probability changes
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+First step realized according to starting probability 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ which then for 
+\begin_inset Formula $t>1$
+\end_inset
+
+ evolve using a memory parameter 
+\begin_inset Formula $\lambda\in(0,\,1)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+X_{t}=1\rightarrow p_{t}=\lambda p_{t-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+X_{t}=-1\rightarrow p_{t}=1-\lambda(1-p_{t-1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\lang czech
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - RW evolution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename examples_p0=0.50.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\lang czech
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+
+\lang czech
+Random walk with varying transition probability - properties
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\lang english
+\begin_inset Formula $P_{t}=\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t})$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1-X_{i})$
+\end_inset
+
+
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}$
+\end_inset
+
+
+\lang american
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang czech
+\begin_inset Formula $ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\lang czech
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - Expected position of the walker
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename EXt.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - Expected transition probability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename Ept.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - Transition probability variance
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename Varpt.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example - Walker's position variance
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename VarXt.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Alternative definitions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Formulas to obtain next transition probability 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1+X_{i})\lambda P_{i-1}+(1-X_{i})(1-\lambda(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success punished
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1-X_{i})\lambda P_{i-1}+(1+X_{i})(1-\lambda(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+4-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success rewarded
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+5-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+6-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success punished with multiple 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+6-
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+7-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Success rewarded with multiple 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+7-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Data generation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Using Python & Numpy package
+\end_layout
+
+\begin_layout Itemize
+Different parameters:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\lambda\in\{0.01,\,0.1,\,0.25,\,0.5,\,0.6,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bar{\lambda}=\{[0.1,\,0.2],\,[0.2,\,0.5],\,[0.5,\,0.8],\,[0.6,\,0.9],\newline[0.1,\,0.9],\,[0.5,\,0.99],\,[0.8,\,0.01],\,[0.99,\,0.9]\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p_{0}=\{0.01,\,0.1,\,0.25,\,0.5,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n=\{2,\,3,\,4,\,5,\,10,\,50,\,100,\,1000\}$
+\end_inset
+
+
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $100$
+\end_inset
+
+ walks for each combination
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Fitting parameters on generated data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Find 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+ with known 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+, model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ with known 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+, model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0},\,\bar{\lambda}$
+\end_inset
+
+ with known model type
+\end_layout
+
+\begin_layout Itemize
+Find 
+\begin_inset Formula $p_{0},\,\bar{\lambda}$
+\end_inset
+
+ and model type
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Parameter fitting evaluation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+?????
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Real life applications
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reliability analysis, medical data analysis
+\end_layout
+
+\begin_layout Itemize
+Sport modelling
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Tennis with model ``Success rewarded''
+\end_layout
+
+\begin_layout Itemize
+Applied for live betting on US Open against Tipsport bookmaker
+\end_layout
+
+\begin_layout Itemize
+Source code and paper available at https://github.com/tomaskourim/mathsport2019
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Results
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+New models of Random walk described
+\end_layout
+
+\begin_layout Itemize
+Properties derived
+\end_layout
+
+\begin_layout Itemize
+Strenght of the models shown using simulated data
+\end_layout
+
+\begin_layout Itemize
+Possible real life applications shown
+\end_layout
+
+\begin_layout Itemize
+Source code and paper available at https://github.com/tomaskourim/amistat2019
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Next steps????
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Model implementation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\lambda$
+\end_inset
+
+ optimization
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ optimization
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Model improvement
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Other versions of random walk with memory
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Combination with other approaches
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+2-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Model testing
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Model evaluation granularity
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Performance on a larger dataset
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Betting module for more bookmakers
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Application of the model to 
+\emph on
+best-of-three
+\emph default
+ matches
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+3-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Application in other domains
+\begin_inset Argument item:2
+status open
+
+\begin_layout Plain Layout
+
+4-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{frame}[plain] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{quote}%{} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+huge{Thank you.} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{10mm} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+large{tom@skourim.com} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{quote}%{} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{frame}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
