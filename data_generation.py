@@ -3,6 +3,7 @@
 import logging
 import os
 import pickle
+from datetime import datetime
 from typing import List
 
 import numpy as np
@@ -67,6 +68,7 @@ def main():
 
 
 if __name__ == '__main__':
+    start_time = datetime.now()
     # Create a custom logger
     logger = logging.getLogger()
     logger.setLevel('DEBUG')
@@ -96,3 +98,5 @@ if __name__ == '__main__':
     logger.addHandler(stdout_handler)
 
     main()
+    end_time = datetime.now()
+    logging.info(f"\nDuration: {(end_time - start_time)}")
