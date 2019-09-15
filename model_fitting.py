@@ -197,7 +197,8 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
                     tries = tries + 1
                     if result_of_test.predicted_model.values[0] == model_type:
                         successes = successes + 1
-    print(f"Model type: {model_type}, prediction type: {prediction_type}. Success rate: {successes / tries}")
+    print(
+        f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
 
 
 def analyze_result_multiple_lambda(result, prediction_type, model_type):
@@ -214,6 +215,8 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                     result_of_test = result[
                         result.c_lambda0.isin([c_lambda0]) & result.c_lambda1.isin([c_lambda1]) & result.p0.isin(
                             [p0]) & result.step_count.isin([step_size])]
+                    if len(result_of_test) == 0:
+                        continue
                     if len(result_of_test) > 1:
                         raise Exception(f"Result is supposed to be of size 1, but is of size {len(result)}")
                     if prediction_type in ["only_lambda", "all_parameters"]:
@@ -237,7 +240,8 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                         tries = tries + 1
                         if result_of_test.predicted_model.values[0] == model_type:
                             successes = successes + 1
-    print(f"Model type: {model_type}, prediction type: {prediction_type}. Success rate: {successes / tries}")
+    print(
+        f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
 
 
 def analyze_results(results: pd.DataFrame):
