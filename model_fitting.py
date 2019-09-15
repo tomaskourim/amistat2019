@@ -48,6 +48,14 @@ def negative_log_likelihood_single_lambda(c_lambda: float, walk_type: str, start
     return -log_likelihood
 
 
+def negative_log_likelihood_multiple_lambda(c_lambdas: List[float], walk_type: str, starting_probability: float,
+                                            walks: List[List[int]]) -> float:
+    starting_index = 2
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+                                                       starting_index)
+    return -log_likelihood
+
+
 def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_lambdas: List[float],
                                walks: List[List[int]]) -> float:
     starting_index = 1
@@ -66,6 +74,17 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
     else:
         return None
     pass
+
+
+def get_lambdas_estimate(walk_type, starting_probability, walks):
+    guess = np.array([0.5, 0.5])
+    opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='Nelder-Mead',
+                              args=(walk_type, starting_probability, walks))
+    if opt_result.success:
+        logging.info("Fitted successfully.")
+        return opt_result.x
+    else:
+        return None
 
 
 # lambda known, get p0
@@ -96,14 +115,21 @@ def main():
             elif walk_type == 'success_rewarded':
                 continue
             elif walk_type == 'success_punished_two_lambdas':
-                continue
+                for walk in walks:
+                    estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, [walk])
+
+                    if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
+                        print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
+                i = i + 1
+                print(i)
+                # continue
 
             elif walk_type == 'success_rewarded_two_lambdas':
-                # continue
-                estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-                if abs(starting_probability - estimated_p0 > 0.01):
-                    i = i + 1
-                    print(i, starting_probability, estimated_p0, step_count, c_lambdas)
+                continue
+                # estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+                # if abs(starting_probability - estimated_p0 > 0.01):
+                #     i = i + 1
+                #     print(i, starting_probability, estimated_p0, step_count, c_lambdas)
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
 
