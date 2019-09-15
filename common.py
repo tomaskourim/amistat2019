@@ -45,6 +45,8 @@ def get_current_probability(c_lambdas: List[float], last_probability: float, ste
     :param walk_type:
     :return:
     """
+    if step == '':  # at the beginning of the walk just return p0
+        return last_probability
     if walk_type == 'success_punished':
         return c_lambdas[0] * last_probability + 0.5 * (1 - c_lambdas[0]) * (1 - step)
     elif walk_type == 'success_rewarded':
