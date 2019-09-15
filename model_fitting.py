@@ -9,7 +9,7 @@ from typing import List
 import numpy as np
 import scipy.optimize as opt
 
-from common import ising2bernoulli, get_current_probability
+from common import get_current_probability
 from config import DATA_DIRNAME
 
 
@@ -21,33 +21,38 @@ from config import DATA_DIRNAME
 # get lambda and p0
 
 
-def get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, walk_type):
-    for i in range(2, len(walk)):
+def get_single_walk_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
+                               walk: List[int], walk_type: str, starting_index: int) -> float:
+    current_probability = starting_probability
+    for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
-        result = ising2bernoulli(walk[i])
-        log_likelihood = log_likelihood + np.log(
-            current_probability * result + (1 - current_probability) * (1 - result))
+        log_likelihood = log_likelihood + 0.5 * ((1 + walk[i]) * np.log(current_probability) + (1 - walk[i]) * np.log(
+            1 - current_probability))
+    return log_likelihood
+
+
+def get_multiple_walks_log_likelihood(c_lambdas: List[float], starting_probability: float, walks: List[List[int]],
+                                      walk_type: str, starting_index: int):
+    log_likelihood = 0
+    for walk in walks:
+        log_likelihood = get_single_walk_likelihood(log_likelihood, c_lambdas, starting_probability, walk, walk_type,
+                                                    starting_index)
     return log_likelihood
 
 
 def negative_log_likelihood_single_lambda(c_lambda: float, walk_type: str, starting_probability: float,
                                           walks: List[List[int]]) -> float:
-    log_likelihood = 0
-    for walk in walks:
-        current_probability = starting_probability
-        log_likelihood = get_walk_likelihood(log_likelihood, [c_lambda], current_probability, walk, walk_type)
+    starting_index = 2
+    log_likelihood = get_multiple_walks_log_likelihood([c_lambda], starting_probability, walks, walk_type,
+                                                       starting_index)
     return -log_likelihood
 
 
 def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_lambdas: List[float],
                                walks: List[List[int]]) -> float:
-    log_likelihood = 0
-    for walk in walks:
-        current_probability = starting_probability
-        result = ising2bernoulli(walk[1])
-        log_likelihood = log_likelihood + np.log(
-            current_probability * result + (1 - current_probability) * (1 - result))
-        log_likelihood = get_walk_likelihood(log_likelihood, c_lambdas, current_probability, walk, walk_type)
+    starting_index = 1
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+                                                       starting_index)
     return -log_likelihood
 
 
@@ -87,6 +92,7 @@ def main():
                 # if abs(c_lambdas[0] - estimated_lambda > 0.01):
                 #     i = i + 1
                 #     print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
+
             elif walk_type == 'success_rewarded':
                 continue
             elif walk_type == 'success_punished_two_lambdas':
