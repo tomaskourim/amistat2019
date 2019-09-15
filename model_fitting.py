@@ -2,6 +2,7 @@
 
 import logging
 import pickle
+from datetime import datetime
 from os import listdir
 from os.path import isfile, join
 from typing import List
@@ -64,6 +65,15 @@ def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_la
     return -log_likelihood
 
 
+def negative_log_likelihood_params(params: List[float], walk_type: str, walks: List[List[int]]) -> float:
+    starting_probability = params[0]
+    c_lambdas = params[1:]
+    starting_index = 1
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+                                                       starting_index)
+    return -log_likelihood
+
+
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]):
     opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
@@ -99,6 +109,22 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
     pass
 
 
+def get_parameters_estimate(walk_type, walks):
+    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        guess = np.array([0.5, 0.5])
+    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        guess = np.array([0.5, 0.5, 0.5])
+    else:
+        raise Exception(f'Unexpected walk type: {walk_type}')
+
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(walk_type, walks))
+    if opt_result.success:
+        logging.info("Fitted successfully.")
+        return opt_result.x
+    else:
+        return None
+
+
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
     i = 0
@@ -106,25 +132,51 @@ def main():
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
             if walk_type == 'success_punished':
+                # estimated_params = get_parameters_estimate(walk_type, walks)
                 continue
                 # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
                 # if abs(c_lambdas[0] - estimated_lambda > 0.01):
-                #     i = i + 1
-                #     print(i, starting_probability, step_count, estimated_lambda, c_lambdas)
+                # i = i + 1
+                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
 
             elif walk_type == 'success_rewarded':
+                # estimated_params = get_parameters_estimate(walk_type, walks)
+                # # continue
+                # # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                # # if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                # i = i + 1
+                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
                 continue
             elif walk_type == 'success_punished_two_lambdas':
-                for walk in walks:
-                    estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, [walk])
-
-                    if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
-                        print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
-                i = i + 1
-                print(i)
-                # continue
+                # estimated_params = get_parameters_estimate(walk_type, walks)
+                # # continue
+                # # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                # # if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                # i = i + 1
+                # print(i, step_count, starting_probability, c_lambdas, estimated_params)
+                # for walk in walks:
+                #     estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, [walk])
+                #
+                #     if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
+                #         print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
+                # i = i + 1
+                # print(i)
+                continue
 
             elif walk_type == 'success_rewarded_two_lambdas':
+                estimated_params = get_parameters_estimate(walk_type, walks)
+                # continue
+                # estimated_lambda = get_lambda_estimate(walk_type, starting_probability, walks)
+                # if abs(c_lambdas[0] - estimated_lambda > 0.01):
+                i = i + 1
+                print(i, step_count, starting_probability, c_lambdas, estimated_params)
+                # for walk in walks:
+                # estimated_lambdas = get_lambdas_estimate(walk_type, starting_probability, walks)
+
+                # if max(estimated_lambdas) >= 1 or min(estimated_lambdas) <= 0:
+                # print(i, starting_probability, step_count, estimated_lambdas, c_lambdas)
+                # i = i + 1
+                # print(i)
                 continue
                 # estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
                 # if abs(starting_probability - estimated_p0 > 0.01):
@@ -135,6 +187,7 @@ def main():
 
 
 if __name__ == '__main__':
+    start_time = datetime.now()
     # Create a custom logger
     logger = logging.getLogger()
     logger.setLevel('DEBUG')
@@ -164,3 +217,5 @@ if __name__ == '__main__':
     logger.addHandler(stdout_handler)
 
     main()
+    end_time = datetime.now()
+    logging.info(f"\nDuration: {(end_time - start_time)}")
