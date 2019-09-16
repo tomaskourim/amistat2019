@@ -14,8 +14,14 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
     tries = 0
     successes = 0
     for p0 in p0s:
+        if p0 < 0.5:
+            continue
         for step_count in step_counts:
+            if step_count < 5:
+                continue
             for c_lambda in lambdas:
+                if c_lambda < 0.5:
+                    continue
                 result_of_test = result[
                     result.c_lambda.isin([c_lambda]) & result.p0.isin([p0]) & result.step_count.isin([step_count])]
                 if len(result_of_test) > 1:
@@ -48,9 +54,17 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
     tries = 0
     successes = 0
     for p0 in p0s:
+        if p0 < 0.5:
+            continue
         for step_count in step_counts:
+            if step_count < 5:
+                continue
             for c_lambda0 in lambdas0:
+                if c_lambda0 < 0.5:
+                    continue
                 for c_lambda1 in lambdas1:
+                    if c_lambda1 < 0.5:
+                        continue
                     result_of_test = result[
                         result.c_lambda0.isin([c_lambda0]) & result.c_lambda1.isin([c_lambda1]) & result.p0.isin(
                             [p0]) & result.step_count.isin([step_count])]
