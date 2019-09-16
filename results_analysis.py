@@ -40,7 +40,7 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
                         successes = successes + 1
                 if prediction_type in ["everything"]:
                     tries = tries + 1
-                    if result_of_test.predicted_model.values[0] == model_type:
+                    if model_type in result_of_test.predicted_model.values[0]:
                         successes = successes + 1
     print(
         f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
@@ -91,7 +91,7 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                             successes = successes + 1
                     if prediction_type in ["everything"]:
                         tries = tries + 1
-                        if result_of_test.predicted_model.values[0] == model_type:
+                        if result_of_test.predicted_model.values[0] in model_type:
                             successes = successes + 1
     print(
         f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
