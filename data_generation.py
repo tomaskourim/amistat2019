@@ -3,6 +3,7 @@
 import logging
 import os
 import pickle
+from datetime import datetime
 from typing import List
 
 import numpy as np
@@ -19,7 +20,8 @@ def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[flo
         steps = ['']  # in the model, probabilities start with p0, but steps with x1
         probabilities = [starting_probability]
         for i in range(1, walk_steps + 1):
-            steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))  # next step using actual probability
+            # next step using actual probability
+            steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))
             probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], walk_type))
         walks.append(steps)
     return walks
@@ -66,6 +68,7 @@ def main():
 
 
 if __name__ == '__main__':
+    start_time = datetime.now()
     # Create a custom logger
     logger = logging.getLogger()
     logger.setLevel('DEBUG')
@@ -95,3 +98,5 @@ if __name__ == '__main__':
     logger.addHandler(stdout_handler)
 
     main()
+    end_time = datetime.now()
+    logging.info(f"\nDuration: {(end_time - start_time)}")
