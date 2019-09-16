@@ -323,11 +323,11 @@ Random walk
 
 \begin_deeper
 \begin_layout Definition
-Let
+Let 
 \begin_inset Formula ${\{X_{k}\}}_{k=1}^{\infty}$
 \end_inset
 
-be a sequence of discrete random variables.
+ be a sequence of discrete random variables.
  For each positive integer 
 \begin_inset Formula $n$
 \end_inset
@@ -1165,7 +1165,7 @@ Different parameters:
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $\lambda\in\{0.01,\,0.1,\,0.25,\,0.5,\,0.8,\,0.9,\,0.99\}$
+\begin_inset Formula $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
 \end_inset
 
 
@@ -1176,7 +1176,7 @@ Different parameters:
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\bar{\lambda}=\{[0.1,\,0.2],\,[0.2,\,0.5],\,[0.5,\,0.8],\,[0.1,\,0.9],\newline[0.5,\,0.99],\,[0.8,\,0.01],\,[0.99,\,0.9]\}$
+\begin_inset Formula $\bar{\lambda}=\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
 \end_inset
 
 
@@ -1187,7 +1187,7 @@ Different parameters:
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $p_{0}=\{0.01,\,0.1,\,0.25,\,0.5,\,0.8,\,0.9,\,0.99\}$
+\begin_inset Formula $p_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$
 \end_inset
 
 
@@ -1198,7 +1198,7 @@ Different parameters:
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $n=\{2,\,3,\,4,\,5,\,10,\,50,\,100\}$
+\begin_inset Formula $n=\{5,\,10,\,50,\,100\}$
 \end_inset
 
 
@@ -1275,11 +1275,7 @@ Find
 \end_layout
 
 \begin_layout Itemize
-Find 
-\begin_inset Formula $p_{0},\,\text{\overrightarrow{\lambda}}$
-\end_inset
-
- and model type
+Find model type without any prior knowledge
 \end_layout
 
 \end_deeper
@@ -1393,7 +1389,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+96.9 %
 \end_layout
 
 \end_inset
@@ -1402,7 +1398,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+34.4 %
 \end_layout
 
 \end_inset
@@ -1411,7 +1407,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+80.2 %
 \end_layout
 
 \end_inset
@@ -1420,7 +1416,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+77.1 %
 \end_layout
 
 \end_inset
@@ -1444,7 +1440,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+92.2 %
 \end_layout
 
 \end_inset
@@ -1453,7 +1449,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+82.8 %
 \end_layout
 
 \end_inset
@@ -1462,7 +1458,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+89.6 %
 \end_layout
 
 \end_inset
@@ -1471,7 +1467,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+93.8 %
 \end_layout
 
 \end_inset
@@ -1495,7 +1491,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+91.4 %
 \end_layout
 
 \end_inset
@@ -1504,7 +1500,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+84.4 %
 \end_layout
 
 \end_inset
@@ -1513,7 +1509,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+83.3 %
 \end_layout
 
 \end_inset
@@ -1522,7 +1518,7 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+79.9 %
 \end_layout
 
 \end_inset
@@ -1533,15 +1529,85 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
-Find 
-\begin_inset Formula $\overrightarrow{\lambda},\,p_{0}$
-\end_inset
-
- and type
+Find model type
 \end_layout
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+87.5 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+89.6 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Parameter fitting evaluation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -1555,6 +1621,10 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
+SP - 1
+\begin_inset Formula $\lambda$
+\end_inset
+
 
 \end_layout
 
@@ -1564,6 +1634,23 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
+SR - 1
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SP - 2
+\begin_inset Formula $\lambda$
+\end_inset
+
 
 \end_layout
 
@@ -1573,7 +1660,211 @@ Find
 \begin_inset Text
 
 \begin_layout Plain Layout
+SR - 2
+\begin_inset Formula $\lambda$
+\end_inset
 
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Find 
+\begin_inset Formula $\overrightarrow{\lambda}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+96.9 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80.2 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+77.1 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Find 
+\begin_inset Formula $p_{o}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+92.2 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+82.8 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+89.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+93.8 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Find 
+\begin_inset Formula $\overrightarrow{\lambda},\,p_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+91.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+84.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+83.3 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+79.9 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Find model type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+93.8 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+87.5 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+89.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+89.6 %
 \end_layout
 
 \end_inset
@@ -1753,11 +2044,11 @@ More detailed model description
 
 \begin_deeper
 \begin_layout Itemize
-asymptotic behaivor
+Asymptotic behavior
 \end_layout
 
 \begin_layout Itemize
-multidimensional models
+Multidimensional models
 \end_layout
 
 \end_deeper
