@@ -159,6 +159,10 @@ Random walk with varying transition probability - alternatives
 Pripomenuti alternativnich definic z tezi
 \end_layout
 
+\begin_layout Standard
+vytvorit nove simulace a obrazky - pozor na floating point zaokrouhlovani
+\end_layout
+
 \begin_layout Subsection
 Basic properties
 \end_layout
