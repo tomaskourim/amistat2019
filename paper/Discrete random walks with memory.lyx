@@ -6,6 +6,9 @@
 \origin unavailable
 \textclass article
 \use_default_options true
+\begin_modules
+theorems-ams-bytype
+\end_modules
 \maintain_unincluded_children false
 \language english
 \language_package default
@@ -29,6 +32,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +48,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -178,11 +183,183 @@ in-play
 \end_layout
 
 \begin_layout Section
-Random walk with varying transition probability
+Random walk with varying probabilities
 \end_layout
 
 \begin_layout Standard
-Definice prochazky, pripomenuti veci z tezi
+The random walk with varying probabilities is based on a standard Bernoulli
+ (zdroj) random walk with some starting transition probability 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+.
+ This probability is then altered after each step of the walk using a coefficien
+t 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ so that the repetition of the same step becomes less probable.
+ Formally, it can be defined 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2019teze}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "success_punished"
+
+\end_inset
+
+Let 
+\begin_inset Formula ${\{X_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula ${\{P_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ be sequences of discrete random variables, and 
+\begin_inset Formula $p_{0}\in[0,\,1]$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda\in(0,\,1)$
+\end_inset
+
+ constant parameters, such that the first random variable 
+\begin_inset Formula $X_{1}$
+\end_inset
+
+ is given by
+\begin_inset Formula 
+\[
+P(X_{1}=1)=p_{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P(X_{1}=-1)=1-p_{0}.
+\]
+
+\end_inset
+
+Further 
+\begin_inset Formula 
+\begin{equation}
+P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1-X_{1})\label{eq:P!1_def}
+\end{equation}
+
+\end_inset
+
+and for 
+\begin_inset Formula $i\geq2$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P(X_{i}=1|P_{i-1}=p_{i-1})=p_{i-1}
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+P(X_{i}=-1|P_{i-1}=p_{i-1})=1-p_{i-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1-X_{i}).\label{eq:Pi_def}
+\end{equation}
+
+\end_inset
+
+The sequence 
+\begin_inset Formula ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, with 
+\begin_inset Formula $S_{0}\in\mathbb{R}$
+\end_inset
+
+ some given starting position, is called a 
+\emph on
+random walk with varying probabilities
+\emph default
+, with 
+\begin_inset Formula ${\{X_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ being the steps of the walker and 
+\begin_inset Formula ${\{P_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ transition probabilities.
+\end_layout
+
+\begin_layout Definition
+From 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2019teze}
+\end_layout
+
+\end_inset
+
+, it can be further derived that at each step 
+\begin_inset Formula $t+k,\;t,\,k>0$
+\end_inset
+
+ the value of a transition probability 
+\begin_inset Formula $P_{t+k}$
+\end_inset
+
+ can be computed from the knowledge of transition probability 
+\begin_inset Formula $P_{t}$
+\end_inset
+
+ and the realization of the walk 
+\begin_inset Formula $X_{t+1},\,\dots,\,X_{t+k}$
+\end_inset
+
+ using formula 
+\begin_inset Formula 
+\[
+P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i}).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
