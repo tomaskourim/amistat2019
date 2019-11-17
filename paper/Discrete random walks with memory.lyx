@@ -116,7 +116,65 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Proc to studovat a proc se tim zabyvat
+Random wak is a well described mathematicall object first introduced by
+ K.Pearson in 1905 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{pearson1905problem}
+\end_layout
+
+\end_inset
+
+.
+ Since then many variations of a random walk have been derived and described
+ and it was applied on many reali life problems (zdroje).
+ Yet there are still new posibilities and options how to alter and improve
+ the classical random walk and present yet another new model representing
+ different real life events.
+ One of such modifications is the random walk with varying step size indroduced
+ in 2010 by Turban 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{turban2010random}
+\end_layout
+
+\end_inset
+
+ which served as an inspiration to the random walk with varying probabilities
+ introduced by Kouřim 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2017ddny, ja2019teze}
+\end_layout
+
+\end_inset
+
+.
+ It was later shown that such a random walk can be sucesfully applied to
+ predict 
+\emph on
+in-play
+\emph default
+ odds and used for actual betting against one of the comercial bookmakers
+ (zdroj Ateny, work in progress).
+ In this paper, the theoretical properties of the model are described and
+ furher examined and the results are tested on generated data.
+ The rest of the paper is organized as follows....
 \end_layout
 
 \begin_layout Section
@@ -206,6 +264,18 @@ Results
 \begin_layout Standard
 Zhodnoceni prace, ze je to vlastne skvele, ze neco takoveho je, a na co
  vsechno by se to vlastne dalo pouzit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "doktknih"
+options "plain"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
