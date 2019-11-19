@@ -8,6 +8,7 @@
 \use_default_options true
 \begin_modules
 theorems-ams-bytype
+theorems-named
 \end_modules
 \maintain_unincluded_children false
 \language english
@@ -524,37 +525,273 @@ TODO
 Random walk with varying transition probability - alternatives
 \end_layout
 
-\begin_layout Standard
-Pripomenuti alternativnich definic z tezi
+\begin_layout Subsection
+Success rewarded
 \end_layout
 
 \begin_layout Standard
-vytvorit nove simulace a obrazky - pozor na floating point zaokrouhlovani
+The basic definition of the random walk (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "success_punished"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) presents a model, where the ``success is punished'', meaning the probability
+ of an event is decreased every time that event occurs.
+ Opposite situation can be considered, where the probability of an event
+ is increased every time that event occurs.
+ Formally, such a random walk is defined in a following manner 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2019teze}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "succes_rewarded"
+
+\end_inset
+
+Let 
+\begin_inset Formula ${\{X_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+, 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ be as in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "success_punished"
+
+\end_inset
+
+.
+ Further let 
+\begin_inset Formula ${\{P_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ be a sequence of discrete random variables given by
+\begin_inset Formula 
+\begin{equation}
+P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1})\label{eq:P!1_def-1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{eq:Pi_def-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This version of the random walk presents a model where ``success is rewarded''.
+ For the sake of clarity let us denote all variables connected with the
+ ``success punished'' model from Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "success_punished"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with the subscript 
+\begin_inset Formula $P$
+\end_inset
+
+ (as 
+\begin_inset Formula $_{P}P$
+\end_inset
+
+, 
+\begin_inset Formula $_{P}S$
+\end_inset
+
+) and the ``success rewarded'' version from Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "succes_rewarded"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with subscript 
+\begin_inset Formula $R$
+\end_inset
+
+ (as 
+\begin_inset Formula $_{R}P$
+\end_inset
+
+, 
+\begin_inset Formula $_{R}S$
+\end_inset
+
+).
+ For the reward version it is easy to prove similar proposition as for the
+ punish version.
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+_{R}P_{t}=opsat
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To uz mam nekde na papire.
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula $E(_{R}P_{t})=\lambda_{0}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To uz mam na papire
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+_{R}S_{t}=opsat
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+mam
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+E(_{R}S_{t})=\begin{cases}
+ & \lambda_{0}>\frac{1}{2}\\
+S_{0} & \lambda_{0}=\frac{1}{2}\\
+ & \lambda_{0}<\frac{1}{2}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+opsat
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula $Var(_{R}P_{t})=E(Var(_{R}P_{t})=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Bych tak tipoval
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ 
+\begin_inset Formula $Var(_{R}S_{t})=E(_{R}P_{t})=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Tipuju
+\end_layout
+
+\begin_layout Proof
+^^tohle jsou vsechno nove veci, v tezich se o nich jenom zminuju, ale nedavam
+ dukazy.
+ Mozna by se to mohlo nejakym zpusobem sjednotit.
+ Treba vyrknout vetu, ktera by rikala tohle vsechno, a pak to dokazat naraz.
+\end_layout
+
+\begin_layout Standard
+vytvorit nove simulace a obrazky ukazani jednotlivych hodnot, protovnani
+ - pozor na floating point zaokrouhlovani
 \end_layout
 
 \begin_layout Subsection
-Basic properties
+Two lambdas
 \end_layout
 
 \begin_layout Standard
-odvozeni expected value prsti a pozice - to uz je nova vec, to v tezich
- nebylo
-\end_layout
 
-\begin_layout Subsection
-More properties
-\end_layout
-
-\begin_layout Standard
-odvozeni novych veci pro alternativni definice RW
-\end_layout
-
-\begin_layout Standard
--> stredni hodnoty rozptulu prsti a pozice
-\end_layout
-
-\begin_layout Standard
--> ocekavane hodnoty po t krocich, kdyz uz jsem v pozici t
 \end_layout
 
 \begin_layout Section
