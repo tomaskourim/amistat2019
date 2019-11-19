@@ -363,27 +363,161 @@ P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-
 \end_layout
 
 \begin_layout Subsection
-Basic properties
+Properties
 \end_layout
 
 \begin_layout Standard
-pripomenuti veci odvozenych v tezich - expected value prsti a pozice
+Basic properties of the random walk with varying are described in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2019teze}
 \end_layout
 
-\begin_layout Subsection
-More properties
+\end_inset
+
+, namely that 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
+\]
+
+\end_inset
+
+ 
+for 
+\begin_inset Formula $\forall t\geq1$
+\end_inset
+
+.
+ This further yields 
+\begin_inset Formula $EP_{t}\rightarrow\frac{1}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $ES_{t}\rightarrow S_{0}+\frac{2p_{0}-1}{2(1-\lambda)}$
+\end_inset
+
+ for 
+\begin_inset Formula $t\rightarrow+\infty$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-odvozeni novych veci
+Now to describe the variance of the transition probability, let us proove
+ the following propositions.
 \end_layout
 
-\begin_layout Standard
--> stredni hodnoty rozptulu prsti a pozice
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ it holds that 
+\begin_inset Formula 
+\[
+Var(P_{t})=TODO
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
--> ocekavane hodnoty po t krocich, kdyz uz jsem v pozici t
+\begin_layout Proof
+TODO
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ it holds that 
+\begin_inset Formula 
+\[
+E(Var(P_{t}))=TODO
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+TODO
+\end_layout
+
+\begin_layout Proof
+And similarly for the variance of the position of the walker, following
+ statements can be proved.
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ it holds that 
+\begin_inset Formula 
+\[
+Var(S_{t})=TODO
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+TODO
+\end_layout
+
+\begin_layout Proposition
+For 
+\begin_inset Formula $\forall t\geq1,$
+\end_inset
+
+ it holds that 
+\begin_inset Formula 
+\[
+E(Var(S_{t}))=TODO
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+TODO
 \end_layout
 
 \begin_layout Section
