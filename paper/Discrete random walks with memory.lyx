@@ -610,6 +610,22 @@ P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{e
 
 \end_layout
 
+\begin_layout Definition
+The sequence 
+\begin_inset Formula ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, with 
+\begin_inset Formula $S_{0}\in\mathbb{R}$
+\end_inset
+
+ some given starting position, is a random walk with varying probabilities.
+\end_layout
+
 \begin_layout Standard
 This version of the random walk presents a model where ``success is rewarded''.
  For the sake of clarity let us denote all variables connected with the
@@ -791,6 +807,165 @@ Two lambdas
 \end_layout
 
 \begin_layout Standard
+Another level of complexity can be added by using separate 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameters for each direction of the walk.
+ Again, two ways of handling success are available.
+ The success punished version is defined as follows.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "2lambdas"
+
+\end_inset
+
+Let 
+\begin_inset Formula ${\{X_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ be as in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "success_punished"
+
+\end_inset
+
+.
+ Further let 
+\begin_inset Formula $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
+\end_inset
+
+ be constant coefficients and 
+\begin_inset Formula ${\{P_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ be a sequence of discrete random variables given by
+\begin_inset Formula 
+\begin{equation}
+P_{1}=\frac{1}{2}[(1+X_{1})\lambda_{0}p_{0}+(1-X_{1})(1-\lambda_{1}(1-p_{0}))]\label{eq:P!1_def-1-1}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+P_{i}=\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.\label{eq:Pi_def-1-1}
+\end{equation}
+
+\end_inset
+
+The sequence 
+\begin_inset Formula ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, with 
+\begin_inset Formula $S_{0}\in\mathbb{R}$
+\end_inset
+
+ some given starting position, is a random walk with varying probabilities.
+\end_layout
+
+\begin_layout Standard
+And the success rewarded version as
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "2lambdas-1"
+
+\end_inset
+
+Let 
+\begin_inset Formula ${\{X_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ be as in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "success_punished"
+
+\end_inset
+
+.
+ Further let 
+\begin_inset Formula $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
+\end_inset
+
+ be constant coefficients and 
+\begin_inset Formula ${\{P_{n}\}}_{n=1}^{\infty}$
+\end_inset
+
+ be a sequence of discrete random variables given by
+\begin_inset Formula 
+\[
+P_{1}=\frac{1}{2}[(1-X_{1})\lambda_{0}p_{0}+(1+X_{1})(1-\lambda_{1}(1-p_{0}))]
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.
+\]
+
+\end_inset
+
+The sequence 
+\begin_inset Formula ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, with 
+\begin_inset Formula $S_{0}\in\mathbb{R}$
+\end_inset
+
+ some given starting position, is a random walk with varying probabilities.
+\end_layout
+
+\begin_layout Definition
+TODO mel bych to rovnou nejak znacit 
+\begin_inset Formula $_{R}^{1}P$
+\end_inset
+
+ a 
+\begin_inset Formula $_{S}^{2}P$
+\end_inset
+
+ jako reward s 1 lambda a success s 2 lambda? Abych se zas neuindexoval
+\end_layout
+
+\begin_layout Definition
+Let us prove the following propositions describing the properties of a random
+ walk affected by two coefficients lambda.
+\end_layout
+
+\begin_layout Definition
+TODO stejne veci opet dokazat pro tuhle variantu
+\end_layout
+
+\begin_layout Definition
 
 \end_layout
 
