@@ -410,8 +410,7 @@ ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
 
 \end_inset
 
- 
-for 
+ for 
 \begin_inset Formula $\forall t\geq1$
 \end_inset
 
@@ -456,26 +455,6 @@ Var(P_{t})=TODO
 TODO
 \end_layout
 
-\begin_layout Proposition
-For 
-\begin_inset Formula $\forall t\geq1,$
-\end_inset
-
- it holds that 
-\begin_inset Formula 
-\[
-E(Var(P_{t}))=TODO
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-TODO
-\end_layout
-
 \begin_layout Proof
 And similarly for the variance of the position of the walker, following
  statements can be proved.
@@ -490,26 +469,6 @@ For
 \begin_inset Formula 
 \[
 Var(S_{t})=TODO
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-TODO
-\end_layout
-
-\begin_layout Proposition
-For 
-\begin_inset Formula $\forall t\geq1,$
-\end_inset
-
- it holds that 
-\begin_inset Formula 
-\[
-E(Var(S_{t}))=TODO
 \]
 
 \end_inset
@@ -680,13 +639,40 @@ noprefix "false"
 
 \begin_layout Proposition
 For 
-\begin_inset Formula $\forall t\geq1,$
+\begin_inset Formula $\forall t\geq2,$
 \end_inset
 
  
 \begin_inset Formula 
+\begin{equation}
+_{R}P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i})\label{eq:propSuccess1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The proposition is proved using induction.
+ For 
+\begin_inset Formula $t=2$
+\end_inset
+
+ using 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:P!1_def"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ it holds that
+\begin_inset Formula 
 \[
-_{R}P_{t}=opsat
+_{R}P_{2}=\lambda_{R}P_{1}+\frac{1}{2}(1-\lambda)(1+_{R}X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+_{R}X_{2})=
 \]
 
 \end_inset
@@ -695,10 +681,72 @@ _{R}P_{t}=opsat
 \end_layout
 
 \begin_layout Proof
-To uz mam nekde na papire.
+\begin_inset Formula 
+\[
+=p_{0}\lambda^{2}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{2}\lambda^{2-i}(1+X_{i}),
+\]
+
+\end_inset
+
+which is in accordance with 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:propSuccess1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Now for the induction step 
+\begin_inset Formula $t\rightarrow t+1$
+\end_inset
+
+ we obtain from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Pi_def"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the induction assumption
+\begin_inset Formula 
+\[
+_{R}P_{t+1}=\lambda_{R}P_{t}+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t+1}\lambda^{t+1-i}(1+X_{i}).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "PropReward2"
+
+\end_inset
+
 For 
 \begin_inset Formula $\forall t\geq1,$
 \end_inset
@@ -711,7 +759,67 @@ For
 \end_layout
 
 \begin_layout Proof
-To uz mam na papire
+Using 
+\begin_inset Formula $E(_{R}X_{t}|_{R}P_{t-1})=2_{R}P_{t-1}-1$
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Pi_def-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we obtain
+\begin_inset Formula 
+\[
+E_{R}P_{t}=E[E(_{R}P_{t}|_{R}P_{t-1})]=E[E(\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|_{R}P_{t-1})]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=E[\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lambda)(1+2_{R}P_{t-1}-1)]=E[\lambda_{R}P_{t-1}+(1-\lambda){}_{R}P_{t-1})=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=E_{R}P_{t-1}.
+\]
+
+\end_inset
+
+Recursively we get 
+\begin_inset Formula 
+\[
+E_{R}P_{t}=Ep_{0}=p_{0}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now to calculate the position of the walker at a given step 
+\begin_inset Formula $t\geq1$
+\end_inset
+
+, it is easy to see that 
+\begin_inset Formula $_{R}S_{t}={}_{R}S_{t-1}+2_{R}P_{t-1}-1$
+\end_inset
+
+.
+ From this, we can prove the following statement about the expected position
+ of the walker.
 \end_layout
 
 \begin_layout Proposition
@@ -722,7 +830,7 @@ For
  
 \begin_inset Formula 
 \[
-_{R}S_{t}=opsat
+E(_{R}S_{t})=_{R}S_{0}+t(2p_{0}-1).
 \]
 
 \end_inset
@@ -731,31 +839,33 @@ _{R}S_{t}=opsat
 \end_layout
 
 \begin_layout Proof
-mam
-\end_layout
+Using the result of Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropReward2"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Proposition
-For 
-\begin_inset Formula $\forall t\geq1,$
 \end_inset
 
- 
+ we get 
 \begin_inset Formula 
 \[
-E(_{R}S_{t})=\begin{cases}
- & \lambda_{0}>\frac{1}{2}\\
-S_{0} & \lambda_{0}=\frac{1}{2}\\
- & \lambda_{0}<\frac{1}{2}
-\end{cases}
+E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+E(2_{R}P_{t-1}-1)]=
 \]
 
 \end_inset
 
 
-\end_layout
+\begin_inset Formula 
+\[
+=E_{R}S_{t}+(2p_{0}-1)]
+\]
 
-\begin_layout Proof
-opsat
+\end_inset
+
+which recursively proves the statement.
 \end_layout
 
 \begin_layout Proposition
@@ -764,7 +874,7 @@ For
 \end_inset
 
  
-\begin_inset Formula $Var(_{R}P_{t})=E(Var(_{R}P_{t})=0$
+\begin_inset Formula $Var(_{R}P_{t})=0$
 \end_inset
 
 .
@@ -780,7 +890,7 @@ For
 \end_inset
 
  
-\begin_inset Formula $Var(_{R}S_{t})=E(_{R}P_{t})=0$
+\begin_inset Formula $Var(_{R}S_{t})=0$
 \end_inset
 
 .
@@ -885,7 +995,7 @@ And the success rewarded version as
 \begin_layout Definition
 \begin_inset CommandInset label
 LatexCommand label
-name "2lambdas-1"
+name "2lambdas-reward"
 
 \end_inset
 
