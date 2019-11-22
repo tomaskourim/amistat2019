@@ -1124,6 +1124,494 @@ Simulations
 \end_layout
 
 \begin_layout Standard
+Testing dataset was generated in order to validate the quality of the model
+ and its ability to be fitted on a real life problem.
+ The data generation was performed using the Python programming language
+ and its package Numpy.
+ Following values of input parameters were chosen.
+ The memory coefficient values varied in 
+\begin_inset Formula $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+ and similarly the pair of memory coefficients 
+\begin_inset Formula $\bar{\lambda}=\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
+\end_inset
+
+.
+ The starting transition probability was chosen from the set 
+\begin_inset Formula $p_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$
+\end_inset
+
+ and the length of the walk was 
+\series bold
+
+\begin_inset Formula $n=\{5,\,10,\,50,\,100\}$
+\end_inset
+
+
+\series default
+.
+ For each permutation of the parameters 
+\begin_inset Formula $100$
+\end_inset
+
+ walks were generated.
+\end_layout
+
+\begin_layout Standard
+Four different fitting tasks were performed on the generated dataset.
+ Using the maximum likelihood estimate and again Python language with Numpy
+ package the fitting tasks were>
+\end_layout
+
+\begin_layout Itemize
+
+\lang american
+Find 
+\begin_inset Formula $\overrightarrow{\lambda}$
+\end_inset
+
+ with known 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ and model type
+\end_layout
+
+\begin_layout Itemize
+
+\lang american
+Find 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ with known 
+\begin_inset Formula $\overrightarrow{\lambda}$
+\end_inset
+
+ and model type
+\end_layout
+
+\begin_layout Itemize
+
+\lang american
+Find 
+\begin_inset Formula $p_{0},\,\overrightarrow{\lambda}$
+\end_inset
+
+ with known model type
+\end_layout
+
+\begin_layout Itemize
+
+\lang american
+Find model type without any prior knowledge
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Fitting-results"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the results of the model & parameter fitting algorithms.
+ Ctvrty ukol bych mohl udela pomoci AIC, tam by to treba dopadlo lepe.
+ Uvidim, jak budu stihat.
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\lang american
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+SP - 1
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+SR - 1
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+SP - 2
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+SR - 2
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+Find 
+\begin_inset Formula $\overrightarrow{\lambda}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+96.9 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+34.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+80.2 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+77.1 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+Find 
+\begin_inset Formula $p_{o}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+92.2 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+82.8 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+89.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+93.8 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+Find 
+\begin_inset Formula $\overrightarrow{\lambda},\,p_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+91.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+84.4 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+83.3 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+79.9 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+Find model type
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+1.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+1.6 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+87.5 %
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\lang american
+89.6 %
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\lang english
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fitting-results"
+
+\end_inset
+
+Fitting results.
+ 
+\emph on
+SP 
+\emph default
+stands for success punished.
+ 
+\emph on
+SR
+\emph default
+ for success rewarded.
+ 
+\begin_inset Formula $1\lambda$
+\end_inset
+
+ vs.
+ 
+\begin_inset Formula $2\lambda$
+\end_inset
+
+ distinguish between the basic model with a single 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameter and the more advanced model with two 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameters.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Nasimulovani ruznych druhu prochazky s ruznymi parametry.
  Nasledne pokus o zpetne odhaleni druhu prochazky a jejich paramteru.
  Budu to delat zrejme podle MLE, vyhodnocovat asi podle te nejvetsi verohodnosti
@@ -1131,7 +1619,11 @@ Nasimulovani ruznych druhu prochazky s ruznymi parametry.
 \end_layout
 
 \begin_layout Section
-Results
+Conclusion
+\end_layout
+
+\begin_layout Standard
+This work 
 \end_layout
 
 \begin_layout Standard
