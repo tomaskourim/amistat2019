@@ -830,7 +830,7 @@ For
  
 \begin_inset Formula 
 \[
-E(_{R}S_{t})=_{R}S_{0}+t(2p_{0}-1).
+E(_{R}S_{t})={}_{R}S_{0}+t(2p_{0}-1).
 \]
 
 \end_inset
@@ -852,7 +852,7 @@ noprefix "false"
  we get 
 \begin_inset Formula 
 \[
-E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+E(2_{R}P_{t-1}-1)]=
+E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+(2_{R}P_{t-1}-1)]=
 \]
 
 \end_inset
@@ -1630,7 +1630,12 @@ al mathematical device available to the study of the novel type of a random
  walk.
  The study also show the quality of the described model by successfully
  fitting it on a set of randomly generated data.
- 
+\end_layout
+
+\begin_layout Standard
+The source code containing all functionality mentioned in this article is
+ freely available as open source at GitHub (https://github.com/tomaskourim/amista
+t2019).
 \end_layout
 
 \begin_layout Standard
