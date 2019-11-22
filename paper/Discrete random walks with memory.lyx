@@ -1623,7 +1623,14 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-This work 
+This work follows up on the recents results on random walks with varying
+ probabilities.
+ It describes and proves more properties of such a walk, enhancing the theoretic
+al mathematical device available to the study of the novel type of a random
+ walk.
+ The study also show the quality of the described model by successfully
+ fitting it on a set of randomly generated data.
+ 
 \end_layout
 
 \begin_layout Standard
