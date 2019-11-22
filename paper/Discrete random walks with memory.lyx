@@ -82,7 +82,7 @@ theorems-named
 \begin_body
 
 \begin_layout Title
-Discrete random walks with memory: Models and applications
+Discrete random processes with memory: Models and applications
 \end_layout
 
 \begin_layout Author
@@ -122,8 +122,76 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Random walk is a well described mathematical object first introduced by
- K.Pearson in 1905 
+Random process is one of the most important object of mathematics.
+ It is well described theoretically and has real life representations in
+ almost every aspect of human life, from physics and biology to economy
+ and social sciences.The random process itself is merely a series of realizations
+ of random variables.
+ Depending on the types of the random variables and their mutual interactions
+ random processes can be splitted into a large nuber of different categories.
+ The processes vary in the way of development, their memory, underlying
+ domain and many other aspects.
+ One example of a random process can be found in reliability analysis, where
+ complex, non-homogeneous non-Markov random processes play an important
+ role 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{kalbfleisch2011statistical}
+\end_layout
+
+\end_inset
+
+.
+ Such processes help to model failure times in complex reliability systems,
+ incorporating their corrective maintenance and preventive maintenance and
+ their predictions and simulations 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{christer1984operational,jack2002new,cox1966statistical,meeker2014statistica
+l}
+\end_layout
+
+\end_inset
+
+.
+ A most prominent model in reliability analysis is the Cox's model using
+ a so called 
+\emph on
+hazard rate 
+\emph default
+or 
+\emph on
+intensity of failure
+\emph default
+ as a key parameter describing the process 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{cox1972regression}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Most common type of a discrete random process is a random walk, a mathematical
+ object first introduced by K.Pearson in 1905 
 \begin_inset ERT
 status open
 
@@ -137,8 +205,22 @@ cite{pearson1905problem}
 \end_inset
 
 .
- Since then many variations of a random walk have been derived and described
- and it was applied on many real life problems (zdroje).
+ Similarly to random processes in general, there exist many well described
+ variations of a random walk with various applications to real life problems
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{turban2010random,schutz2004elephants}
+\end_layout
+
+\end_inset
+
+.
  Yet there are still new possibilities and options how to alter and improve
  the classical random walk and present yet another new model representing
  different real life events.
@@ -156,7 +238,8 @@ cite{turban2010random}
 
 \end_inset
 
- which served as an inspiration to the random walk with varying probabilities
+ which togehter with the Cox's model and the reliability analysis in general
+ served as an inspiration to the random walk with varying probabilities
  introduced by Kouřim 
 \begin_inset ERT
 status open
@@ -171,20 +254,26 @@ cite{ja2017ddny, ja2019teze}
 \end_inset
 
 .
- It was later shown that such a random walk can be successfully applied
- to predict 
-\emph on
-in-play
-\emph default
- odds and used for actual betting against one of the commercial bookmakers
- (zdroj Ateny, work in progress).
- In this paper, the theoretical properties of the model are described and
+ This novel variant of a random walk presents a discrete alternative to
+ a Cox's model and has possible aplications in reliability analysis and
+ many other real life problems.
+\end_layout
+
+\begin_layout Standard
+In this paper, the theoretical properties of the model are described and
  further examined and the results are tested on generated data.
  The rest of the paper is organized as follows....
 \end_layout
 
 \begin_layout Section
 Random walk with varying probabilities
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Random-walk-with"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -482,6 +571,13 @@ TODO
 
 \begin_layout Section
 Random walk with varying transition probability - alternatives
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Random-walk-aternatives"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1121,6 +1217,13 @@ success punished
 
 \begin_layout Section
 Simulations
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Simulations"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1620,6 +1723,13 @@ Nasimulovani ruznych druhu prochazky s ruznymi parametry.
 
 \begin_layout Section
 Conclusion
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusion"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1651,11 +1761,6 @@ in-play
 The source code containing all functionality mentioned in this article is
  freely available as open source at GitHub (https://github.com/tomaskourim/amista
 t2019).
-\end_layout
-
-\begin_layout Standard
-Zhodnoceni prace, ze je to vlastne skvele, ze neco takoveho je, a na co
- vsechno by se to vlastne dalo pouzit.
 \end_layout
 
 \begin_layout Standard
