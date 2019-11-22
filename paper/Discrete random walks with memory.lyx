@@ -122,7 +122,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Random wak is a well described mathematicall object first introduced by
+Random walk is a well described mathematical object first introduced by
  K.Pearson in 1905 
 \begin_inset ERT
 status open
@@ -138,11 +138,11 @@ cite{pearson1905problem}
 
 .
  Since then many variations of a random walk have been derived and described
- and it was applied on many reali life problems (zdroje).
- Yet there are still new posibilities and options how to alter and improve
+ and it was applied on many real life problems (zdroje).
+ Yet there are still new possibilities and options how to alter and improve
  the classical random walk and present yet another new model representing
  different real life events.
- One of such modifications is the random walk with varying step size indroduced
+ One of such modifications is the random walk with varying step size introduced
  in 2010 by Turban 
 \begin_inset ERT
 status open
@@ -171,15 +171,15 @@ cite{ja2017ddny, ja2019teze}
 \end_inset
 
 .
- It was later shown that such a random walk can be sucesfully applied to
- predict 
+ It was later shown that such a random walk can be successfully applied
+ to predict 
 \emph on
 in-play
 \emph default
- odds and used for actual betting against one of the comercial bookmakers
+ odds and used for actual betting against one of the commercial bookmakers
  (zdroj Ateny, work in progress).
  In this paper, the theoretical properties of the model are described and
- furher examined and the results are tested on generated data.
+ further examined and the results are tested on generated data.
  The rest of the paper is organized as follows....
 \end_layout
 
@@ -431,7 +431,7 @@ ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
 \end_layout
 
 \begin_layout Standard
-Now to describe the variance of the transition probability, let us proove
+Now to describe the variance of the transition probability, let us prove
  the following propositions.
 \end_layout
 
@@ -1623,13 +1623,28 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-This work follows up on the recents results on random walks with varying
+This work follows up on the recent results on random walks with varying
  probabilities.
  It describes and proves more properties of such a walk, enhancing the theoretic
 al mathematical device available to the study of the novel type of a random
  walk.
  The study also show the quality of the described model by successfully
  fitting it on a set of randomly generated data.
+ The presented model has also many possible uses in real life application.
+ It is a discrete alternative of a non-Markov random process, i.e.
+ a process with memory.
+ The modified random walk describes especially well processes where either
+ a single or just a small number of events can significantly affect future
+ development of the process.
+ Such processes can be found in reliability analysis, medical studies and
+ very often in sports modeling.
+ The authors recently published a study where the success rewarded model
+ was applied to predict the 
+\emph on
+in-play
+\emph default
+ development of a Grand Slam tennis matches with compelling results when
+ used for live betting against a bookmaker (zdroj Ateny).
 \end_layout
 
 \begin_layout Standard
