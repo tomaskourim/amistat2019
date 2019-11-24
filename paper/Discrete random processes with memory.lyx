@@ -525,6 +525,12 @@ Now to describe the variance of the transition probability, let us firstprove
 \end_layout
 
 \begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "PropVarP-succes"
+
+\end_inset
+
 For 
 \begin_inset Formula $\forall t\geq1,$
 \end_inset
@@ -1210,7 +1216,7 @@ Now to calculate the position of the walker at a given step
 \end_inset
 
 , it is easy to see that 
-\begin_inset Formula $_{R}S_{t}={}_{R}S_{t-1}+2_{R}P_{t-1}-1$
+\begin_inset Formula $E(_{R}S_{t})={}_{R}S_{t-1}+2_{R}P_{t-1}-1$
 \end_inset
 
 .
@@ -1256,7 +1262,7 @@ E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+(2_{R}P_{t-1}-1)]=
 
 \begin_inset Formula 
 \[
-=E_{R}S_{t}+(2p_{0}-1)]
+=E_{R}S_{t}+(2p_{0}-1)
 \]
 
 \end_inset
@@ -1270,14 +1276,192 @@ For
 \end_inset
 
  
-\begin_inset Formula $Var(_{R}P_{t})=0$
+\begin_inset Formula 
+\begin{equation}
+Var(P_{t})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}-p_{0}^{2}.\label{eq:VarPt-reward-prop}
+\end{equation}
+
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Proof
-Bych tak tipoval
+The proof will be done in several steps similar as in Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropVarP-succes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ It is based on the definition of variance 
+\begin_inset Formula 
+\begin{equation}
+Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarPtreward}
+\end{equation}
+
+\end_inset
+
+From Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropReward2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ follows 
+\begin_inset Formula $E(P_{t})=p_{0}$
+\end_inset
+
+ and it is thus sufficient to prove that 
+\begin_inset Formula 
+\begin{equation}
+E(P_{t}^{2})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}.\label{eq:Ept2-finalvzorec-reward}
+\end{equation}
+
+\end_inset
+
+The proof will be done using induction again.
+ First observe that
+\begin_inset Formula 
+\[
+E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1}^{2})]=E[E(P_{t}^{2}|P_{t-1})]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t}))^{2}|P_{t-1}]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=EP_{t-1}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2},\label{eq:EPt-EPt-1-reward}
+\end{equation}
+
+\end_inset
+
+where the facts that 
+\begin_inset Formula $E[(1+X_{t})^{2}|P_{t-1}]=4P_{t-1}$
+\end_inset
+
+, 
+\begin_inset Formula $E[(1+X_{t})|P_{t-1}]=2P_{t-1}$
+\end_inset
+
+ and Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropReward2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ were used.
+ Now for 
+\begin_inset Formula $t=1$
+\end_inset
+
+ we get 
+\begin_inset Formula 
+\[
+EP_{1}=p_{0}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=(2\lambda-\lambda^{2})^{1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{1}(2\lambda-\lambda^{2})^{1-i}
+\]
+
+\end_inset
+
+and the induction assumption holds.
+ For the induction step 
+\begin_inset Formula $t\rightarrow t+1$
+\end_inset
+
+ we get from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt-EPt-1-reward"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the induction assumption 
+\begin_inset Formula 
+\[
+E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=((2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i})\cdot(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
+\]
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+=(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i+1}+p_{0}(1-\lambda)^{2}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t+1}(2\lambda-\lambda^{2})^{t+1-i}.
+\]
+
+\end_inset
+
+The Proposition statement is then obtained by substituing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropReward2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Ept2-finalvzorec-reward"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VarPtreward"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proposition
@@ -1294,13 +1478,6 @@ For
 
 \begin_layout Proof
 Tipuju
-\end_layout
-
-\begin_layout Proof
-^^tohle jsou vsechno nove veci, v tezich se o nich jenom zminuju, ale nedavam
- dukazy.
- Mozna by se to mohlo nejakym zpusobem sjednotit.
- Treba vyrknout vetu, ktera by rikala tohle vsechno, a pak to dokazat naraz.
 \end_layout
 
 \begin_layout Standard
