@@ -485,9 +485,9 @@ cite{ja2019teze}
 \color none
 
 \begin_inset Formula 
-\[
-EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}
-\]
+\begin{equation}
+EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
+\end{equation}
 
 \end_inset
 
@@ -520,8 +520,8 @@ ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
 \end_layout
 
 \begin_layout Standard
-Now to describe the variance of the transition probability, let us prove
- the following propositions.
+Now to describe the variance of the transition probability, let us firstprove
+ the following suport propositions.
 \end_layout
 
 \begin_layout Proposition
@@ -531,8 +531,24 @@ For
 
  it holds that 
 \begin_inset Formula 
+\begin{equation}
+Var(P_{t})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}-k(t)^{2},\label{eq:VarP-proposition}
+\end{equation}
+
+\end_inset
+
+ where 
+\begin_inset Formula 
 \[
-Var(P_{t})=TODO
+k(t)=EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}
+\]
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+K(t)=k(t)\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.
 \]
 
 \end_inset
@@ -541,10 +557,294 @@ Var(P_{t})=TODO
 \end_layout
 
 \begin_layout Proof
-TODO
+To prove the proposition several support formulas has to be derived first.
+ From the definition of variance follows 
+\begin_inset Formula 
+\begin{equation}
+Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $E(P_{t})$
+\end_inset
+
+ is given by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in order to prove the proposition it is sufficient to prove the following
+ statememt
+\begin_inset Formula 
+\begin{equation}
+E(P_{t}^{2})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}.\label{eq:EPt2-finalvzorec}
+\end{equation}
+
+\end_inset
+
+To do so, let us first express the relation between 
+\begin_inset Formula $E(P_{t}^{2})$
+\end_inset
+
+ and 
+\begin_inset Formula $E(P_{t-1}^{2})$
+\end_inset
+
+ and 
+\begin_inset Formula $E(P_{t-1}).$
+\end_inset
+
+ From the definition of the expected value and the definition of the walk
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Pi_def"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ follows
+\begin_inset Formula 
+\[
+E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1}^{2})]=E[E(P_{t}^{2}|P_{t-1})]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t}))^{2}|P_{t-1}].\label{eq:EPt2-zaklad}
+\end{equation}
+
+\end_inset
+
+Using that 
+\begin_inset Formula $E(X_{t}|P_{t-1})=2P_{t-1}-1,$
+\end_inset
+
+
+\begin_inset Formula $E(X_{t}^{2})=1$
+\end_inset
+
+ and further that 
+\begin_inset Formula 
+\[
+E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]=E[(2-2X_{t})|P_{t-1}]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=4(1-P_{t-1}),
+\]
+
+\end_inset
+
+equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-zaklad"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ further yields
+\begin_inset Formula 
+\[
+E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]
+\]
+
+\end_inset
+
+ and finally
+\begin_inset Formula 
+\begin{equation}
+E(P_{t}^{2})=E(P_{t-1}^{2})(3\lambda^{2}-2\lambda)+EP_{t-1}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.\label{eq:EPt2-pokrocile}
+\end{equation}
+
+\end_inset
+
+Now 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-finalvzorec"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be proved using induction.
+ Based on the trivial fact that 
+\begin_inset Formula $Ep_{0}=p_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $E(p_{0})^{2}=p_{0}^{2}$
+\end_inset
+
+, for 
+\begin_inset Formula $t=1$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^{2}-2\lambda)^{1-i}=(3\lambda^{2}-2\lambda)p_{0}^{2}+K(0)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=(3\lambda^{2}-2\lambda)p_{0}^{2}+((2\lambda-1)^{0}p_{0}+\frac{1-(2\lambda-1)^{0}}{2})\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},
+\]
+
+\end_inset
+
+and from 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-pokrocile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ follows that the induction assumption holds.
+ Now for the induction step 
+\begin_inset Formula $t\rightarrow t+1$
+\end_inset
+
+ we get by substituing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-finalvzorec"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-pokrocile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=((3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i})\cdot(3\lambda^{2}-2\lambda)+K(t)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}+K(t)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t+1}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}
+\]
+
+\end_inset
+
+and the formula thus holds.
+ Now substituing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:EPt2-finalvzorec"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VarP-definition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ yields 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VarP-proposition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and proves the Proposition.
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 And similarly for the variance of the position of the walker, following
  statements can be proved.
 \end_layout
