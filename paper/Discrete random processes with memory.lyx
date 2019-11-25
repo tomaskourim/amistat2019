@@ -979,9 +979,23 @@ The sequence
 \end_layout
 
 \begin_layout Standard
-This version of the random walk presents a model where ``success is rewarded''.
- For the sake of clarity let us denote all variables connected with the
- ``success punished'' model from Definition 
+This version of the random walk presents a ``success rewarded'' model.
+ In this section, all variables are considered to be related to this model,
+ whereas the variables with the same notations (
+\begin_inset Formula $P,\,X,\,S$
+\end_inset
+
+) from previous section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Random-walk-with"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are considered to be related to the model from Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "success_punished"
@@ -991,43 +1005,13 @@ noprefix "false"
 
 \end_inset
 
- with the subscript 
-\begin_inset Formula $P$
-\end_inset
+.
+\end_layout
 
- (as 
-\begin_inset Formula $_{P}P$
-\end_inset
-
-, 
-\begin_inset Formula $_{P}S$
-\end_inset
-
-) and the ``success rewarded'' version from Definition 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "succes_rewarded"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- with subscript 
-\begin_inset Formula $R$
-\end_inset
-
- (as 
-\begin_inset Formula $_{R}P$
-\end_inset
-
-, 
-\begin_inset Formula $_{R}S$
-\end_inset
-
-).
- For the reward version it is easy to prove similar proposition as for the
- punish version.
+\begin_layout Standard
+The ``success rewarded'' version of the model behaves differently than the
+ ``success punished'' version, which can be observed with the help of the
+ following propositions.
 \end_layout
 
 \begin_layout Proposition
@@ -1038,7 +1022,7 @@ For
  
 \begin_inset Formula 
 \begin{equation}
-_{R}P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i})\label{eq:propSuccess1}
+P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i})\label{eq:propSuccess1}
 \end{equation}
 
 \end_inset
@@ -1065,7 +1049,7 @@ noprefix "false"
  it holds that
 \begin_inset Formula 
 \[
-_{R}P_{2}=\lambda_{R}P_{1}+\frac{1}{2}(1-\lambda)(1+_{R}X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+_{R}X_{2})=
+P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=
 \]
 
 \end_inset
@@ -1109,7 +1093,7 @@ noprefix "false"
  and the induction assumption
 \begin_inset Formula 
 \[
-_{R}P_{t+1}=\lambda_{R}P_{t}+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=
+P_{t+1}=\lambda P_{t}+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
 \]
 
 \end_inset
@@ -1117,7 +1101,15 @@ _{R}P_{t+1}=\lambda_{R}P_{t}+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=\lambda(p_{0}
 
 \begin_inset Formula 
 \[
-=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+_{R}X_{t+1})=
+=\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
 \]
 
 \end_inset
@@ -1145,7 +1137,7 @@ For
 \end_inset
 
  
-\begin_inset Formula $E(_{R}P_{t})=p_{0}.$
+\begin_inset Formula $E(P_{t})=p_{0}.$
 \end_inset
 
 
@@ -1153,7 +1145,7 @@ For
 
 \begin_layout Proof
 Using 
-\begin_inset Formula $E(_{R}X_{t}|_{R}P_{t-1})=2_{R}P_{t-1}-1$
+\begin_inset Formula $E(X_{t}|P_{t-1})=2P_{t-1}-1$
 \end_inset
 
  and 
@@ -1169,7 +1161,7 @@ noprefix "false"
  we obtain
 \begin_inset Formula 
 \[
-E_{R}P_{t}=E[E(_{R}P_{t}|_{R}P_{t-1})]=E[E(\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|_{R}P_{t-1})]=
+EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=
 \]
 
 \end_inset
@@ -1177,7 +1169,7 @@ E_{R}P_{t}=E[E(_{R}P_{t}|_{R}P_{t-1})]=E[E(\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lam
 
 \begin_inset Formula 
 \[
-=E[\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lambda)(1+2_{R}P_{t-1}-1)]=E[\lambda_{R}P_{t-1}+(1-\lambda){}_{R}P_{t-1})=
+=E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})=
 \]
 
 \end_inset
@@ -1185,7 +1177,7 @@ E_{R}P_{t}=E[E(_{R}P_{t}|_{R}P_{t-1})]=E[E(\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lam
 
 \begin_inset Formula 
 \[
-=E_{R}P_{t-1}.
+=EP_{t-1}.
 \]
 
 \end_inset
@@ -1193,7 +1185,7 @@ E_{R}P_{t}=E[E(_{R}P_{t}|_{R}P_{t-1})]=E[E(\lambda_{R}P_{t-1}+\frac{1}{2}(1-\lam
 Recursively we get 
 \begin_inset Formula 
 \[
-E_{R}P_{t}=Ep_{0}=p_{0}.
+EP_{t}=Ep_{0}=p_{0}.
 \]
 
 \end_inset
@@ -1207,7 +1199,7 @@ Now to calculate the position of the walker at a given step
 \end_inset
 
 , it is easy to see that 
-\begin_inset Formula $E(_{R}S_{t})={}_{R}S_{t-1}+2_{R}P_{t-1}-1$
+\begin_inset Formula $E(S_{t})=S_{t-1}+2P_{t-1}-1$
 \end_inset
 
 .
@@ -1223,7 +1215,7 @@ For
  
 \begin_inset Formula 
 \[
-E(_{R}S_{t})={}_{R}S_{0}+t(2p_{0}-1).
+E(S_{t})=S_{0}+t(2p_{0}-1).
 \]
 
 \end_inset
@@ -1245,7 +1237,7 @@ noprefix "false"
  we get 
 \begin_inset Formula 
 \[
-E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+(2_{R}P_{t-1}-1)]=
+E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{t-1}-1)]=
 \]
 
 \end_inset
@@ -1253,7 +1245,7 @@ E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+(2_{R}P_{t-1}-1)]=
 
 \begin_inset Formula 
 \[
-=E_{R}S_{t}+(2p_{0}-1)
+=ES_{t}+(2p_{0}-1)
 \]
 
 \end_inset
@@ -1528,7 +1520,7 @@ Another level of complexity can be added by using separate
 
  parameters for each direction of the walk.
  Again, two ways of handling success are available.
- The success punished version is defined as follows.
+ The ``success punished'' version is defined as follows.
 \end_layout
 
 \begin_layout Definition
@@ -1594,7 +1586,7 @@ The sequence
 \end_layout
 
 \begin_layout Standard
-And the success rewarded version as
+And the ``success rewarded'' version as
 \end_layout
 
 \begin_layout Definition
@@ -1660,24 +1652,12 @@ The sequence
 \end_layout
 
 \begin_layout Definition
-TODO mel bych to rovnou nejak znacit 
-\begin_inset Formula $_{R}^{1}P$
-\end_inset
-
- a 
-\begin_inset Formula $_{S}^{2}P$
-\end_inset
-
- jako reward s 1 lambda a success s 2 lambda? Abych se zas neuindexoval
-\end_layout
-
-\begin_layout Definition
 Let us prove the following propositions describing the properties of a random
  walk affected by two coefficients lambda.
 \end_layout
 
 \begin_layout Definition
-TODO stejne veci opet dokazat pro tuhle variantu
+TODO stejne veci opet dokazat pro tuhle variantu nebo jenom obrazky
 \end_layout
 
 \begin_layout Subsection
