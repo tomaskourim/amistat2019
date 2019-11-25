@@ -2194,32 +2194,50 @@ name "sec:Conclusion"
 \begin_layout Standard
 This work follows up on the recent results on random walks with varying
  probabilities.
- It describes and proves more properties of such a walk, enhancing the theoretic
-al mathematical device available to the study of the novel type of a random
- walk.
- The study also show the quality of the described model by successfully
- fitting it on a set of randomly generated data.
+ It describes and proves certain properties of such a walk, other properties
+ have been studied numerical methods.
+ The study also shows the results of the maximum likelihood estimation of
+ parameters using numerical optimization procedures.
+ The method has been tested successfully on a set of randomly generated
+ data.
  The presented model has also many possible uses in real life application.
- It is a discrete alternative of a non-Markov random process, i.e.
- a process with memory.
- The modified random walk describes especially well processes where either
- a single or just a small number of events can significantly affect future
- development of the process.
- Such processes can be found in reliability analysis, medical studies and
- very often in sports modeling.
+ Such a type of random walk describes especially well processes where either
+ a single or just a small number of events can significantly affect the
+ future development of the process.
+ Such processes can be found in reliability analysis, medical as well as
+ econometric studies, and very often in sports modeling.
  The authors recently published a study where the success rewarded model
  was applied to predict the 
 \emph on
 in-play
 \emph default
  development of a Grand Slam tennis matches with compelling results when
- used for live betting against a bookmaker (zdroj Ateny).
+ used for live betting against a bookmaker 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{ja2019imam}
+\end_layout
+
+\end_inset
+
+.
+ The source code containing all functionality mentioned in this article
+ is freely available as open source at GitHub (https://github.com/tomaskourim/ami
+stat2019).
+\end_layout
+
+\begin_layout Section*
+Acknowledgement
 \end_layout
 
 \begin_layout Standard
-The source code containing all functionality mentioned in this article is
- freely available as open source at GitHub (https://github.com/tomaskourim/amista
-t2019).
+The research was supported by the grant No.
+ 18-02739S of the Grant Agency of the Czech Republic.
 \end_layout
 
 \begin_layout Standard
