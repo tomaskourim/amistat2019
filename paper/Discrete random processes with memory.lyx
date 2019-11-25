@@ -87,34 +87,62 @@ Discrete random processes with memory: Models and applications
 
 \begin_layout Author
 Tomáš Kouřim
+\begin_inset Formula $^{1,2}$
+\end_inset
+
+, Petr Volf
+\begin_inset Formula $^{2}$
+\end_inset
+
+ 
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula $^{1}$
+\end_inset
+
+ Faculty of Nuclear Sciences and Physical Engineering, 
+\begin_inset Newline newline
+\end_inset
+
+Czech Technical University in Prague
+\begin_inset Newline newline
+\end_inset
+
+ 
+\begin_inset Formula $^{2}$
+\end_inset
+
+Institute of Information Theory and Automation,
+\begin_inset Newline newline
+\end_inset
+
+ Academy of Sciences of the Czech Republic
 \end_layout
 
 \begin_layout Abstract
-The contribution focuses on non-Markov random processes, i.e.
- processes with memory, and is especially concerned with random processes
- where either one or just a small number of events significantly affects
- its future development.
- Reliability analysis, medical studies or sport statistics provide many
- real-life examples of such processes.
- This paper focuses on statistical event-history analysis with discretized
- time, where the role of the hazard rate can be substituted by different
- variants of transition probabilities.
- In the simplest case the Bernoulli scheme is used.
-\end_layout
-
-\begin_layout Abstract
-The main concern of the paper is the formulation of models describing the
- dependence of transition probabilities on the process development, as well
- as on exogenous factors – covariates.
+The contribution focuses on non-Markov discrete-time random processes, i.e.
+ processes with memory, and in particular, on Bernoulli-like random walks
+ where the past events affect significantly the future development.
+ The main concern of the paper is therefore the formulation of models describing
+ the dependence of transition probabilities on the process development.
  Such an impact can be incorporated explicitly and transition probabilities
  modulated using a few parameters reflecting the current state of the walk
  as well as the information about the past path.
- In more complicated cases, as well as in the presence of exogenous covariates,
- the changes of probabilities are modeled via a regression model, for instance
- the logistic one.
- The behavior of proposed random walks is studied both theoretically and
- with the aid of simulations.
- Finally, the approach is illustrated on several real data examples.
+ The behavior of proposed random walks, as well as the task of their parameters
+ estimation, are studied both theoretically and with the aid of simulations.
+ 
+\end_layout
+
+\begin_layout Abstract
+
+\series bold
+\emph on
+Key words:
+\series default
+\emph default
+ Random walk, transitions dependent on history,
 \end_layout
 
 \begin_layout Section
@@ -129,68 +157,7 @@ Random process is one of the most important object of mathematics.
  of random variables.
  Depending on the types of the random variables and their mutual interactions
  random processes can be splitted into a large nuber of different categories.
- The processes vary in the way of development, their memory, underlying
- domain and many other aspects.
- One example of a random process can be found in reliability analysis, where
- complex, non-homogeneous non-Markov random processes play an important
- role 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite{kalbfleisch2011statistical}
-\end_layout
-
-\end_inset
-
-.
- Such processes help to model failure times in complex reliability systems,
- incorporating their corrective maintenance and preventive maintenance and
- their predictions and simulations 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite{christer1984operational,jack2002new,cox1966statistical,meeker2014statistica
-l}
-\end_layout
-
-\end_inset
-
-.
- A most prominent model in reliability analysis is the Cox's model using
- a so called 
-\emph on
-hazard rate 
-\emph default
-or 
-\emph on
-intensity of failure
-\emph default
- as a key parameter describing the process 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite{cox1972regression}
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Most common type of a discrete random process is a random walk, a mathematical
+ Most common type of a discrete random process is a random walk, a mathematical
  object first introduced by K.Pearson in 1905 
 \begin_inset ERT
 status open
@@ -225,7 +192,11 @@ cite{turban2010random,schutz2004elephants}
  the classical random walk and present yet another new model representing
  different real life events.
  One of such modifications is the random walk with varying step size introduced
- in 2010 by Turban 
+ in 
+\begin_inset Formula $2010$
+\end_inset
+
+ by Turban 
 \begin_inset ERT
 status open
 
@@ -238,9 +209,22 @@ cite{turban2010random}
 
 \end_inset
 
- which togehter with the Cox's model and the reliability analysis in general
- served as an inspiration to the random walk with varying probabilities
- introduced by Kouřim 
+ which togehter with the idea of ``self-exciting point processes'' 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{hawkes1971spectra}
+\end_layout
+
+\end_inset
+
+ and the perspective of model's applications in reliability analysis and
+ also in sports statistics, served as an inspiration to the random walk
+ with varying probabilities introduced by Kouřim 
 \begin_inset ERT
 status open
 
@@ -254,15 +238,13 @@ cite{ja2017ddny, ja2019teze}
 \end_inset
 
 .
- This novel variant of a random walk presents a discrete alternative to
- a Cox's model and has possible aplications in reliability analysis and
- many other real life problems.
+ In this paper, the theoretical properties of the model are described and
+ further examined, numerical procedures of model parameters estimation are
+ specified and the results are tested on generated data.
 \end_layout
 
 \begin_layout Standard
-In this paper, the theoretical properties of the model are described and
- further examined and the results are tested on generated data.
- The rest of the paper is organized as follows....
+The rest of the paper is organized as follows....
 \end_layout
 
 \begin_layout Section
