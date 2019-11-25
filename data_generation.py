@@ -11,6 +11,9 @@ import numpy as np
 from common import bernoulli2ising, get_current_probability
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME
 
+min_probabilities = []
+max_probabilities = []
+
 
 def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int,
                 repetitions: int) -> \
@@ -20,10 +23,14 @@ def generate_rw(walk_type: str, starting_probability: float, c_lambdas: List[flo
         steps = ['']  # in the model, probabilities start with p0, but steps with x1
         probabilities = [starting_probability]
         for i in range(1, walk_steps + 1):
+            if probabilities[i - 1] > 1 or probabilities[i - 1] <= 0:
+                print()
             # next step using actual probability
             steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))
             probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], walk_type))
         walks.append(steps)
+        min_probabilities.append(min(probabilities))
+        max_probabilities.append(max(probabilities))
     return walks
 
 
@@ -65,6 +72,9 @@ def main():
                 walk_type = 'success_rewarded_two_lambdas'
                 walks = generate_rw(walk_type, starting_probability, c_lambdas, step_count, repetitions)
                 save_walks(walks, walk_type, starting_probability, c_lambdas, step_count)
+
+    logging.info(min(min_probabilities))
+    logging.info(max(max_probabilities))
 
 
 if __name__ == '__main__':
