@@ -837,24 +837,33 @@ And similarly for the variance of the position of the walker, following
  statements can be proved.
 \end_layout
 
-\begin_layout Proposition
+\begin_layout Corollary
 For 
-\begin_inset Formula $\forall t\geq1,$
+\begin_inset Formula $t\rightarrow+\infty,$
 \end_inset
 
- it holds that 
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
 \begin_inset Formula 
 \[
-Var(S_{t})=TODO
+Var(P_{t})\rightarrow\frac{\frac{1}{2}(1-\lambda^{2})}{(1-3\lambda^{2}+2\lambda)}-\frac{1}{4}.
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Proof
-TODO
 \end_layout
 
 \begin_layout Section
@@ -1252,6 +1261,39 @@ E(_{R}S_{t+1})=E[E(_{R}S_{t+1}|_{R}S_{t})]=E[_{R}S_{t}+(2_{R}P_{t-1}-1)]=
 which recursively proves the statement.
 \end_layout
 
+\begin_layout Corollary
+For 
+\begin_inset Formula $t\rightarrow+\infty,$
+\end_inset
+
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+E(S_{t})\rightarrow\begin{cases}
++\infty & p_{0}>\frac{1}{2}\\
+0 & p_{0}=\frac{1}{2}\\
+-\infty & p_{0}<\frac{1}{2}
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proposition
 For 
 \begin_inset Formula $\forall t\geq1,$
@@ -1446,25 +1488,33 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Proposition
+\begin_layout Corollary
 For 
-\begin_inset Formula $\forall t\geq1,$
+\begin_inset Formula $t\rightarrow+\infty,$
 \end_inset
 
  
-\begin_inset Formula $Var(_{R}S_{t})=0$
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+Var(P_{t})\rightarrow p_{0}(1-p_{0}).
+\]
+
 \end_inset
 
-.
-\end_layout
 
-\begin_layout Proof
-Tipuju
-\end_layout
-
-\begin_layout Standard
-vytvorit nove simulace a obrazky ukazani jednotlivych hodnot, protovnani
- - pozor na floating point zaokrouhlovani
 \end_layout
 
 \begin_layout Subsection
