@@ -82,7 +82,7 @@ if __name__ == '__main__':
     total_handler.setLevel(logging.DEBUG)
     info_handler.setLevel(logging.INFO)
     error_handler.setLevel(logging.WARNING)
-    stdout_handler.setLevel(logging.WARNING)
+    stdout_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
     logging_format = logging.Formatter('%(asctime)s - %(process)d - %(levelname)s - %(name)s - %(message)s')
@@ -99,4 +99,4 @@ if __name__ == '__main__':
 
     main()
     end_time = datetime.now()
-    logging.info(f"\nDuration: {(end_time - start_time)}")
+    logging.info(f"Duration: {(end_time - start_time)}")
