@@ -1,4 +1,4 @@
-# code used to analyze generalized data
+# code used fit models onto generalized data
 
 import logging
 import pickle
@@ -127,43 +127,47 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
             return [-10000, -10000, -10000]
 
 
+def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
+                min_akaike: float) -> Tuple[float, List[float], str]:
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
+    akaike = 2 * len(guess) + 2 * opt_result.fun
+    if opt_result.success and akaike < min_akaike:
+        min_akaike = akaike
+        current_model = model
+        result = opt_result.x
+    return min_akaike, result, current_model
+
+
 # find the best suitable model & parameter values
 def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
-    result = None
+    """
+    Uses the Akaike information criterion https://en.wikipedia.org/wiki/Akaike_information_criterion#Modification_for_small_sample_size
+    to get the optimal model.
+    AIC = 2k - 2ln(L)
+    opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks)) returns directly
+    - ln(L)
+    :param walks:
+    :return found parameters, best model:
+    """
+    result = []
     current_model = ''
-    min_log_likelihood = sys.float_info.max
+    min_akaike = sys.float_info.max
 
     # single lambda models
     guess = np.array([0.5, 0.5])
     model = 'success_punished'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike)
 
     model = 'success_rewarded'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike)
 
     # two lambdas models
     guess = np.array([0.5, 0.5, 0.5])
     model = 'success_punished_two_lambdas'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike)
 
     model = 'success_rewarded_two_lambdas'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike)
 
     return result, current_model
 
@@ -322,4 +326,4 @@ if __name__ == '__main__':
 
     main()
     end_time = datetime.now()
-    logging.info(f"\nDuration: {(end_time - start_time)}")
+    logging.info(f"Duration: {(end_time - start_time)}")
