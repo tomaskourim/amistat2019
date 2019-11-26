@@ -14,6 +14,12 @@ def parameter_estimate_evaluation(true_parameter_value: float, prediction: float
     return successes
 
 
+def model_estimate_evaluation(true_model_type: str, model_prediction: str, successes: int) -> int:
+    if true_model_type == model_prediction:
+        successes = successes + 1
+    return successes
+
+
 def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, model_type: str):
     lambdas = result['c_lambda'].unique()
     p0s = result['p0'].unique()
@@ -43,8 +49,8 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
                     successes = parameter_estimate_evaluation(p0, prediction, successes)
                 if prediction_type in ["everything"]:
                     tries = tries + 1
-                    if model_type in result_of_test.predicted_model.values[0]:
-                        successes = successes + 1
+                    successes = model_estimate_evaluation(model_type, result_of_test.predicted_model.values[0],
+                                                          successes)
     logging.info(
         f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
 
@@ -89,8 +95,8 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                         successes = parameter_estimate_evaluation(p0, prediction, successes)
                     if prediction_type in ["everything"]:
                         tries = tries + 1
-                        if result_of_test.predicted_model.values[0] in model_type:
-                            successes = successes + 1
+                        successes = model_estimate_evaluation(model_type, result_of_test.predicted_model.values[0],
+                                                              successes)
     logging.info(
         f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
 

@@ -1811,9 +1811,50 @@ noprefix "false"
 
 \end_inset
 
- shows the results of the model & parameter fitting algorithms.
- Ctvrty ukol bych mohl udela pomoci AIC, tam by to treba dopadlo lepe.
- Uvidim, jak budu stihat.
+ shows the results of the model & parameter fitting algorithms using maximal-lik
+elihood estimate.
+ The data shows the model can be fitted with high accuracy.
+ The only exception is finding the correct model type when the original
+ model was based on a single 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameter.
+ The maximum-likelihood estimate almost always prefers the model with two
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameters.
+ To account for the higher model complexity the minimazition of the Akaike
+ information criterion 
+\begin_inset Formula $AIC=2k-2ln(\hat{L})$
+\end_inset
+
+ was used (zdroj), where 
+\begin_inset Formula $k$
+\end_inset
+
+ is the number of model parameters and 
+\begin_inset Formula $\hat{L}$
+\end_inset
+
+ is the maximal likelihood.
+ This approach shows much better results.
+ The performance can be observed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Fitting-results-Akaike"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -2204,13 +2245,6 @@ SR
 \end_layout
 
 \begin_layout Standard
-Nasimulovani ruznych druhu prochazky s ruznymi parametry.
- Nasledne pokus o zpetne odhaleni druhu prochazky a jejich paramteru.
- Budu to delat zrejme podle MLE, vyhodnocovat asi podle te nejvetsi verohodnosti
-, pripadne podle goodness-of-fit
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -2221,7 +2255,7 @@ status open
 
 \lang american
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="5">
+<lyxtabular version="3" rows="2" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2300,165 +2334,6 @@ SR - 2
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\lang american
-Find 
-\begin_inset Formula $\overrightarrow{\lambda}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-93.8%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-39.1%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-77.1%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-70.8%
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\lang american
-Find 
-\begin_inset Formula $p_{o}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-89.1%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-85.9%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-83.3%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-91.7%
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\lang american
-Find 
-\begin_inset Formula $\overrightarrow{\lambda},\,p_{0}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-92.2%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-82.8%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-81.9%
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-76.4%
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -2474,7 +2349,7 @@ Find model type
 \begin_inset Text
 
 \begin_layout Plain Layout
-93.8%
+79.7%
 \end_layout
 
 \end_inset
@@ -2483,7 +2358,7 @@ Find model type
 \begin_inset Text
 
 \begin_layout Plain Layout
-90.6%
+79.7%
 \end_layout
 
 \end_inset
@@ -2492,7 +2367,7 @@ Find model type
 \begin_inset Text
 
 \begin_layout Plain Layout
-93.8%
+83.3%
 \end_layout
 
 \end_inset
@@ -2501,7 +2376,7 @@ Find model type
 \begin_inset Text
 
 \begin_layout Plain Layout
-87.5%
+83.3%
 \end_layout
 
 \end_inset
@@ -2519,39 +2394,11 @@ Find model type
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:Fitting-results-1"
+name "tab:Fitting-results-Akaike"
 
 \end_inset
 
-Fitting results.
- 
-\emph on
-SP 
-\emph default
-stands for success punished.
- 
-\emph on
-SR
-\emph default
- for success rewarded.
- 
-\begin_inset Formula $1\lambda$
-\end_inset
-
- vs.
- 
-\begin_inset Formula $2\lambda$
-\end_inset
-
- distinguish between the basic model with a single 
-\begin_inset Formula $\lambda$
-\end_inset
-
- parameter and the more advanced model with two 
-\begin_inset Formula $\lambda$
-\end_inset
-
- parameters.
+Finding the optimal model type using the Akaike information criterion.
 \end_layout
 
 \end_inset
