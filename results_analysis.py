@@ -7,6 +7,13 @@ import pandas as pd
 from config import CONFIDENCE_INTERVAL_SIZE
 
 
+def parameter_estimate_evaluation(true_parameter_value: float, prediction: float, successes: int) -> int:
+    if true_parameter_value * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= true_parameter_value * (
+            1 + CONFIDENCE_INTERVAL_SIZE / 2):
+        successes = successes + 1
+    return successes
+
+
 def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, model_type: str):
     lambdas = result['c_lambda'].unique()
     p0s = result['p0'].unique()
@@ -29,15 +36,11 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
                 if prediction_type in ["only_lambda", "all_parameters"]:
                     tries = tries + 1
                     prediction = result_of_test.predicted_lambda.values[0]
-                    if c_lambda * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= c_lambda * (
-                            1 + CONFIDENCE_INTERVAL_SIZE / 2):
-                        successes = successes + 1
+                    successes = parameter_estimate_evaluation(c_lambda, prediction, successes)
                 if prediction_type in ["only_p0", "all_parameters"]:
                     tries = tries + 1
                     prediction = result_of_test.predicted_p0.values[0]
-                    if p0 * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= p0 * (
-                            1 + CONFIDENCE_INTERVAL_SIZE / 2):
-                        successes = successes + 1
+                    successes = parameter_estimate_evaluation(p0, prediction, successes)
                 if prediction_type in ["everything"]:
                     tries = tries + 1
                     if model_type in result_of_test.predicted_model.values[0]:
@@ -75,20 +78,15 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                     if prediction_type in ["only_lambda", "all_parameters"]:
                         tries = tries + 1
                         prediction = result_of_test.predicted_lambda0.values[0]
-                        if c_lambda0 * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= c_lambda0 * (
-                                1 + CONFIDENCE_INTERVAL_SIZE / 2):
-                            successes = successes + 1
+                        successes = parameter_estimate_evaluation(c_lambda0, prediction, successes)
+
                         tries = tries + 1
                         prediction = result_of_test.predicted_lambda1.values[0]
-                        if c_lambda1 * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= c_lambda1 * (
-                                1 + CONFIDENCE_INTERVAL_SIZE / 2):
-                            successes = successes + 1
+                        successes = parameter_estimate_evaluation(c_lambda1, prediction, successes)
                     if prediction_type in ["only_p0", "all_parameters"]:
                         tries = tries + 1
                         prediction = result_of_test.predicted_p0.values[0]
-                        if p0 * (1 - CONFIDENCE_INTERVAL_SIZE / 2) <= prediction <= p0 * (
-                                1 + CONFIDENCE_INTERVAL_SIZE / 2):
-                            successes = successes + 1
+                        successes = parameter_estimate_evaluation(p0, prediction, successes)
                     if prediction_type in ["everything"]:
                         tries = tries + 1
                         if result_of_test.predicted_model.values[0] in model_type:
