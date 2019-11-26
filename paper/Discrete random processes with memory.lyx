@@ -124,7 +124,7 @@ Institute of Information Theory and Automation,
 \begin_layout Abstract
 The contribution focuses on non-Markov discrete-time random processes, i.e.
  processes with memory, and in particular, on Bernoulli-like random walks
- where the past events affect significantly the future development.
+ where the past events affect significantly the walk's future development.
  The main concern of the paper is therefore the formulation of models describing
  the dependence of transition probabilities on the process development.
  Such an impact can be incorporated explicitly and transition probabilities
@@ -142,7 +142,8 @@ The contribution focuses on non-Markov discrete-time random processes, i.e.
 Key words:
 \series default
 \emph default
- Random walk, transitions dependent on history,
+ Random walk, history dependent transition probabilities, non-Markov process,
+ success punishing/rewarding walk
 \end_layout
 
 \begin_layout Section
@@ -153,12 +154,13 @@ Introduction
 Random process is one of the most important object of mathematics.
  It is well described theoretically and has real life representations in
  almost every aspect of human life, from physics and biology to economy
- and social sciences.The random process itself is merely a series of realizations
- of random variables.
- Depending on the types of the random variables and their mutual interactions
- random processes can be splitted into a large nuber of different categories.
- Most common type of a discrete random process is a random walk, a mathematical
- object first introduced by K.Pearson in 1905 
+ and social sciences.
+ The random process itself is merely a series of realizations of random
+ variables.
+ Depending on the type of the random variables and their mutual interactions
+ random processes can be split into a large number of different categories.
+ The most common type of a discrete random process is a random walk, a mathemati
+cal object first introduced by K.Pearson in 1905 
 \begin_inset ERT
 status open
 
@@ -189,8 +191,8 @@ cite{turban2010random,schutz2004elephants}
 
 .
  Yet there are still new possibilities and options how to alter and improve
- the classical random walk and present yet another new model representing
- different real life events.
+ the classical random walk and present yet another model representing different
+ real life events.
  One of such modifications is the random walk with varying step size introduced
  in 
 \begin_inset Formula $2010$
@@ -209,7 +211,11 @@ cite{turban2010random}
 
 \end_inset
 
- which togehter with the idea of ``self-exciting point processes'' 
+ which together with the idea of 
+\emph on
+self-exciting point processes
+\emph default
+ 
 \begin_inset ERT
 status open
 
@@ -224,7 +230,7 @@ cite{hawkes1971spectra}
 
  and the perspective of model's applications in reliability analysis and
  also in sports statistics, served as an inspiration to the random walk
- with varying probabilities introduced by Kouřim 
+ with varying transition probabilities introduced by Kouřim 
 \begin_inset ERT
 status open
 
@@ -244,7 +250,48 @@ cite{ja2017ddny, ja2019teze}
 \end_layout
 
 \begin_layout Standard
-The rest of the paper is organized as follows....
+The rest of the paper is organized as follows.
+ Sections 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Random-walk-with"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Random-walk-aternatives"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ describe the properties of different versions of the model, section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Simulations"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ provides results from simulated model testing and finally section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ concludes the work.
 \end_layout
 
 \begin_layout Section
@@ -260,7 +307,20 @@ name "sec:Random-walk-with"
 
 \begin_layout Standard
 The random walk with varying probabilities is based on a standard Bernoulli
- (zdroj) random walk with some starting transition probability 
+ random walk 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{feller1957introduction}
+\end_layout
+
+\end_inset
+
+ with some starting transition probability 
 \begin_inset Formula $p_{0}$
 \end_inset
 
@@ -439,7 +499,8 @@ Properties
 \end_layout
 
 \begin_layout Standard
-Basic properties of the random walk with varying are described in 
+Basic properties of the random walk with varying probabilities are described
+ in 
 \begin_inset ERT
 status open
 
@@ -475,9 +536,9 @@ EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
 
 and 
 \begin_inset Formula 
-\[
-ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
-\]
+\begin{equation}
+ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}\label{eq:ESt}
+\end{equation}
 
 \end_inset
 
@@ -502,8 +563,8 @@ ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}
 \end_layout
 
 \begin_layout Standard
-Now to describe the variance of the transition probability, let us firstprove
- the following suport propositions.
+Now to describe the variance of the transition probability, let us prove
+ the following proposition.
 \end_layout
 
 \begin_layout Proposition
@@ -558,7 +619,7 @@ Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
 \begin_inset Formula $E(P_{t})$
 \end_inset
 
- is given by 
+ is given by (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt"
@@ -568,8 +629,8 @@ noprefix "false"
 
 \end_inset
 
-, in order to prove the proposition it is sufficient to prove the following
- statememt
+), therefore in order to prove the proposition it is sufficient to prove
+ the following statement
 \begin_inset Formula 
 \begin{equation}
 E(P_{t}^{2})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}.\label{eq:EPt2-finalvzorec}
@@ -590,7 +651,7 @@ To do so, let us first express the relation between
 \end_inset
 
  From the definition of the expected value and the definition of the walk
- 
+ (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:Pi_def"
@@ -600,7 +661,7 @@ noprefix "false"
 
 \end_inset
 
- follows
+) follows
 \begin_inset Formula 
 \[
 E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1}^{2})]=E[E(P_{t}^{2}|P_{t-1})]=
@@ -640,7 +701,7 @@ E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]=E[(2-2X_{t})|P_{t-1}]=
 
 \end_inset
 
-equation 
+equation (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-zaklad"
@@ -650,7 +711,7 @@ noprefix "false"
 
 \end_inset
 
- further yields
+) further yields
 \begin_inset Formula 
 \[
 E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=
@@ -674,7 +735,7 @@ E(P_{t}^{2})=E(P_{t-1}^{2})(3\lambda^{2}-2\lambda)+EP_{t-1}(-3\lambda^{2}+4\lamb
 
 \end_inset
 
-Now 
+Statement (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-finalvzorec"
@@ -684,7 +745,7 @@ noprefix "false"
 
 \end_inset
 
- can be proved using induction.
+) can be proved using induction.
  Based on the trivial fact that 
 \begin_inset Formula $Ep_{0}=p_{0}$
 \end_inset
@@ -697,7 +758,7 @@ noprefix "false"
 \begin_inset Formula $t=1$
 \end_inset
 
-
+ we get
 \begin_inset Formula 
 \[
 E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^{2}-2\lambda)^{1-i}=(3\lambda^{2}-2\lambda)p_{0}^{2}+K(0)=
@@ -721,7 +782,7 @@ E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^
 
 \end_inset
 
-and from 
+and from (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-pokrocile"
@@ -731,12 +792,12 @@ noprefix "false"
 
 \end_inset
 
- follows that the induction assumption holds.
+) follows that the induction assumption holds.
  Now for the induction step 
 \begin_inset Formula $t\rightarrow t+1$
 \end_inset
 
- we get by substituing 
+ we get by substituting (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-finalvzorec"
@@ -746,7 +807,7 @@ noprefix "false"
 
 \end_inset
 
- into 
+) into (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-pokrocile"
@@ -756,7 +817,7 @@ noprefix "false"
 
 \end_inset
 
-
+)
 \begin_inset Formula 
 \[
 E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
@@ -789,7 +850,7 @@ E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda
 \end_inset
 
 and the formula thus holds.
- Now substituing 
+ Now substituting (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt"
@@ -799,7 +860,7 @@ noprefix "false"
 
 \end_inset
 
- and 
+) and (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-finalvzorec"
@@ -809,7 +870,7 @@ noprefix "false"
 
 \end_inset
 
- into 
+) into (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:VarP-definition"
@@ -819,7 +880,7 @@ noprefix "false"
 
 \end_inset
 
- yields 
+) yields (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:VarP-proposition"
@@ -829,7 +890,7 @@ noprefix "false"
 
 \end_inset
 
- and proves the Proposition.
+) and proves the Proposition.
 \end_layout
 
 \begin_layout Standard
@@ -882,7 +943,7 @@ Success rewarded
 \end_layout
 
 \begin_layout Standard
-The basic definition of the random walk (
+The basic definition of the random walk (Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "success_punished"
@@ -892,8 +953,12 @@ noprefix "false"
 
 \end_inset
 
-) presents a model, where the ``success is punished'', meaning the probability
- of an event is decreased every time that event occurs.
+) presents a 
+\emph on
+success punished 
+\emph default
+model, meaning the probability of an event is decreased every time that
+ event occurs.
  Opposite situation can be considered, where the probability of an event
  is increased every time that event occurs.
  Formally, such a random walk is defined in a following manner 
@@ -946,7 +1011,7 @@ reference "success_punished"
  be a sequence of discrete random variables given by
 \begin_inset Formula 
 \begin{equation}
-P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1})\label{eq:P!1_def-1}
+P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1})\label{eq:P1_def-reward}
 \end{equation}
 
 \end_inset
@@ -954,7 +1019,7 @@ P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1})\label{eq:P!1_def-1}
 
 \begin_inset Formula 
 \begin{equation}
-P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{eq:Pi_def-1}
+P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{eq:Pi_def-reward}
 \end{equation}
 
 \end_inset
@@ -975,17 +1040,24 @@ The sequence
 \begin_inset Formula $S_{0}\in\mathbb{R}$
 \end_inset
 
- some given starting position, is a random walk with varying probabilities.
+ some given starting position, is a random walk with varying probabilities
+ - 
+\emph on
+success rewarded
+\emph default
+.
 \end_layout
 
 \begin_layout Standard
-This version of the random walk presents a ``success rewarded'' model.
- In this section, all variables are considered to be related to this model,
- whereas the variables with the same notations (
+In this section, all variables are considered to be related to the 
+\emph on
+success rewarded 
+\emph default
+model, whereas the variables with the same notations (
 \begin_inset Formula $P,\,X,\,S$
 \end_inset
 
-) from previous section 
+) from previous Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Random-walk-with"
@@ -1009,9 +1081,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The ``success rewarded'' version of the model behaves differently than the
- ``success punished'' version, which can be observed with the help of the
- following propositions.
+The 
+\emph on
+success rewarded
+\emph default
+ version of the model behaves differently than the 
+\emph on
+success punishe
+\emph default
+d version, which can be observed with the help of the following propositions.
 \end_layout
 
 \begin_layout Proposition
@@ -1036,17 +1114,27 @@ The proposition is proved using induction.
 \begin_inset Formula $t=2$
 \end_inset
 
- using 
+ using (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:P!1_def"
+reference "eq:P1_def-reward"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- it holds that
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Pi_def-reward"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) it holds that
 \begin_inset Formula 
 \[
 P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=
@@ -1065,7 +1153,7 @@ P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{
 
 \end_inset
 
-which is in accordance with 
+which is in accordance with (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:propSuccess1"
@@ -1075,22 +1163,22 @@ noprefix "false"
 
 \end_inset
 
-.
+).
  Now for the induction step 
 \begin_inset Formula $t\rightarrow t+1$
 \end_inset
 
- we obtain from 
+ we obtain from (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:Pi_def"
+reference "eq:Pi_def-reward"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and the induction assumption
+) and the induction assumption
 \begin_inset Formula 
 \[
 P_{t+1}=\lambda P_{t}+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
@@ -1148,17 +1236,17 @@ Using
 \begin_inset Formula $E(X_{t}|P_{t-1})=2P_{t-1}-1$
 \end_inset
 
- and 
+ and (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:Pi_def-1"
+reference "eq:Pi_def-reward"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- we obtain
+) we obtain
 \begin_inset Formula 
 \[
 EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=
@@ -1177,16 +1265,16 @@ EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P
 
 \begin_inset Formula 
 \[
-=EP_{t-1}.
+=E(P_{t-1}).
 \]
 
 \end_inset
 
 Recursively we get 
 \begin_inset Formula 
-\[
-EP_{t}=Ep_{0}=p_{0}.
-\]
+\begin{equation}
+E(P_{t})=E(p_{0})=p_{0}.\label{eq:EPt-reward-formula}
+\end{equation}
 
 \end_inset
 
@@ -1194,7 +1282,7 @@ EP_{t}=Ep_{0}=p_{0}.
 \end_layout
 
 \begin_layout Standard
-Now to calculate the position of the walker at a given step 
+Now to calculate the expected position of the walker at a given step 
 \begin_inset Formula $t\geq1$
 \end_inset
 
@@ -1204,7 +1292,11 @@ Now to calculate the position of the walker at a given step
 
 .
  From this, we can prove the following statement about the expected position
- of the walker.
+ of the walker after step 
+\begin_inset Formula $t$
+\end_inset
+
+ just from the knowledge of the input parameters.
 \end_layout
 
 \begin_layout Proposition
@@ -1250,7 +1342,7 @@ E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{t-1}-1)]=
 
 \end_inset
 
-which recursively proves the statement.
+which then recursively proves the statement.
 \end_layout
 
 \begin_layout Corollary
@@ -1405,7 +1497,7 @@ and the induction assumption holds.
 \begin_inset Formula $t\rightarrow t+1$
 \end_inset
 
- we get from 
+ we get from the induction assumption and (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt-EPt-1-reward"
@@ -1415,7 +1507,7 @@ noprefix "false"
 
 \end_inset
 
- and the induction assumption 
+) 
 \begin_inset Formula 
 \[
 E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
@@ -1447,17 +1539,17 @@ E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
 
 \end_inset
 
-The Proposition statement is then obtained by substituing 
+The Proposition statement is then obtained by substituting (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "PropReward2"
+reference "eq:EPt-reward-formula"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and 
+) and (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:Ept2-finalvzorec-reward"
@@ -1467,7 +1559,7 @@ noprefix "false"
 
 \end_inset
 
- into 
+) into (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:VarPtreward"
@@ -1477,7 +1569,7 @@ noprefix "false"
 
 \end_inset
 
-.
+).
 \end_layout
 
 \begin_layout Corollary
@@ -1520,7 +1612,11 @@ Another level of complexity can be added by using separate
 
  parameters for each direction of the walk.
  Again, two ways of handling success are available.
- The ``success punished'' version is defined as follows.
+ The 
+\emph on
+success punished
+\emph default
+ version is defined as follows.
 \end_layout
 
 \begin_layout Definition
@@ -1582,11 +1678,24 @@ The sequence
 \begin_inset Formula $S_{0}\in\mathbb{R}$
 \end_inset
 
- some given starting position, is a random walk with varying probabilities.
+ some given starting position, is a random walk with varying probabilities
+ - 
+\emph on
+success punished two 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\emph default
+.
 \end_layout
 
 \begin_layout Standard
-And the ``success rewarded'' version as
+And similarly the 
+\emph on
+success rewarded
+\emph default
+ version.
 \end_layout
 
 \begin_layout Definition
@@ -1648,16 +1757,28 @@ The sequence
 \begin_inset Formula $S_{0}\in\mathbb{R}$
 \end_inset
 
- some given starting position, is a random walk with varying probabilities.
+ some given starting position, is a random walk with varying probabilities
+ - 
+\emph on
+success rewarded two 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
+\emph default
+.
 \end_layout
 
-\begin_layout Definition
-Let us prove the following propositions describing the properties of a random
- walk affected by two coefficients lambda.
-\end_layout
+\begin_layout Standard
+Properties of the two 
+\begin_inset Formula $\lambda$
+\end_inset
 
-\begin_layout Definition
-TODO stejne veci opet dokazat pro tuhle variantu nebo jenom obrazky
+ models can be derived in a similar manner as for the single 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ case shown in previous sections.
 \end_layout
 
 \begin_layout Subsection
@@ -1726,18 +1847,22 @@ Testing dataset was generated in order to validate the quality of the model
 \end_inset
 
  and similarly the pair of memory coefficients 
-\begin_inset Formula $\bar{\lambda}=\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
+\begin_inset Formula $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
 \end_inset
 
 .
- The starting transition probability was chosen from the set 
-\begin_inset Formula $p_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$
+ The starting transition probability 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ was chosen from the set 
+\begin_inset Formula $P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$
 \end_inset
 
  and the length of the walk was 
 \series bold
 
-\begin_inset Formula $n=\{5,\,10,\,50,\,100\}$
+\begin_inset Formula $n\in\{5,\,10,\,50,\,100\}$
 \end_inset
 
 
@@ -1752,8 +1877,20 @@ Testing dataset was generated in order to validate the quality of the model
 
 \begin_layout Standard
 Four different fitting tasks were performed on the generated dataset.
- Using the maximum likelihood estimate and again Python language with Numpy
- package the fitting tasks were>
+ Using the maximum likelihood estimate (MLE) 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{rossi2018mathematical}
+\end_layout
+
+\end_inset
+
+ and again Python language with Numpy package the fitting tasks were
 \end_layout
 
 \begin_layout Itemize
@@ -1811,8 +1948,8 @@ noprefix "false"
 
 \end_inset
 
- shows the results of the model & parameter fitting algorithms using maximal-lik
-elihood estimate.
+ shows the results of the model & parameter fitting algorithms using the
+ MLE method.
  The data shows the model can be fitted with high accuracy.
  The only exception is finding the correct model type when the original
  model was based on a single 
@@ -1826,12 +1963,26 @@ elihood estimate.
 \end_inset
 
  parameters.
- To account for the higher model complexity the minimazition of the Akaike
- information criterion 
+ To improve the results the Akaike Information Criterion 
 \begin_inset Formula $AIC=2k-2ln(\hat{L})$
 \end_inset
 
- was used (zdroj), where 
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite{akaike1974new}
+\end_layout
+
+\end_inset
+
+, which helps to correctly identify models with smaller number of parameters,
+ was used.
+ Here 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2204,12 +2355,19 @@ Fitting results.
 \emph on
 SP 
 \emph default
-stands for success punished.
- 
+stands for 
+\emph on
+success punished
+\emph default
+, 
 \emph on
 SR
 \emph default
- for success rewarded.
+ for 
+\emph on
+success rewarded
+\emph default
+.
  
 \begin_inset Formula $1\lambda$
 \end_inset
@@ -2398,7 +2556,7 @@ name "tab:Fitting-results-Akaike"
 
 \end_inset
 
-Finding the optimal model type using the Akaike information criterion.
+Finding the optimal model type using the Akaike Information Criterion.
 \end_layout
 
 \end_inset
@@ -2426,9 +2584,12 @@ name "sec:Conclusion"
 This work follows up on the recent results on random walks with varying
  probabilities.
  It describes and proves certain properties of such a walk, other properties
- have been studied numerical methods.
- The study also shows the results of the maximum likelihood estimation of
- parameters using numerical optimization procedures.
+ have been studied with the help of numerical methods.
+ The study also shows the results of the maximum likelihood and 
+\begin_inset Formula $AIC$
+\end_inset
+
+ based estimations of model parameters and types using optimization procedures.
  The method has been tested successfully on a set of randomly generated
  data.
  The presented model has also many possible uses in real life application.
@@ -2457,13 +2618,16 @@ cite{ja2019imam}
 \end_inset
 
 .
- The source code containing all functionality mentioned in this article
- is freely available as open source at GitHub (https://github.com/tomaskourim/ami
-stat2019).
+\end_layout
+
+\begin_layout Standard
+The source code containing all functionality mentioned in this article is
+ freely available as open source at GitHub (https://github.com/tomaskourim/amista
+t2019).
 \end_layout
 
 \begin_layout Section*
-Acknowledgement
+Acknowledgment
 \end_layout
 
 \begin_layout Standard
