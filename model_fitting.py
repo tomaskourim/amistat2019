@@ -141,7 +141,8 @@ def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: L
 # find the best suitable model & parameter values
 def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     """
-    Uses the Akaike information criterion https://en.wikipedia.org/wiki/Akaike_information_criterion#Modification_for_small_sample_size
+    Uses the Akaike information criterion
+    https://en.wikipedia.org/wiki/Akaike_information_criterion#Modification_for_small_sample_size
     to get the optimal model.
     AIC = 2k - 2ln(L)
     opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks)) returns directly
