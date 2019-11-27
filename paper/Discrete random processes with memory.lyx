@@ -1849,7 +1849,7 @@ name "sec:Simulations"
 Testing dataset was generated in order to validate the quality of the model
  and its ability to be fitted on a real life problem.
  The data generation was performed using the Python programming language
- and its package Numpy.
+ and its package NumPy.
  Following values of input parameters were chosen.
  The memory coefficient values varied in 
 \begin_inset Formula $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
@@ -1899,7 +1899,7 @@ cite{rossi2018mathematical}
 
 \end_inset
 
- and again Python language with Numpy package the fitting tasks were
+ and Python language with SciPy package the fitting tasks were
 \end_layout
 
 \begin_layout Itemize
