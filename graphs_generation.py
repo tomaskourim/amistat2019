@@ -13,7 +13,8 @@ from data_generation import generate_random_walks, list_walks2list_lists
 def main():
     plt_rows = 1
     plt_columns = 3
-    plt_styles = ['g.', 'r.', 'b.']
+    mean_styles = ['g.', 'r.', 'b.']
+    var_styles = ['g-', 'r-', 'b-']
     for step_count in STEP_COUNTS_TESTING:
         for walk_type in WALK_TYPES:
             if 'two_lambdas' in walk_type:
@@ -37,14 +38,16 @@ def main():
                     probabilities, steps, developments = list_walks2list_lists(walks)
 
                     mean_probability = np.mean(probabilities, axis=0)
-                    plt.plot(mean_probability, plt_styles[index], label=label)
+                    variance_probability = np.var(probabilities, axis=0)
+                    plt.plot(mean_probability, mean_styles[index], label=label)
+                    plt.plot(variance_probability, var_styles[index], label=label)
                     # plt.plot(t, expected_p_t(t, p0, c_lambda), color="k", linewidth=0.5)
                     plt.legend(loc='best', fontsize='medium')
 
             fig = plt.gcf()
-            fig.suptitle(walk_type, fontsize=16)
             fig.set_size_inches(18.5, 10.5)
             fig.show()
+            fig.savefig(f'ept_walks_{REPETITIONS}_steps{step_count}_type_{walk_type}.pdf', dpi=100)
 
 
 if __name__ == '__main__':
