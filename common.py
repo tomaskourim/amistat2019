@@ -45,6 +45,7 @@ def get_current_probability(c_lambdas: List[float], last_probability: float, ste
 
 
 class CompleteWalk:
-    def __init__(self, probabilities, steps):
+    def __init__(self, probabilities, steps, development):
         self.probabilities = probabilities
         self.steps = steps
+        self.development = development
