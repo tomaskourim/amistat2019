@@ -42,3 +42,9 @@ def get_current_probability(c_lambdas: List[float], last_probability: float, ste
                 1 - c_lambdas[1] * (1 - last_probability)))
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
+
+
+class CompleteWalk:
+    def __init__(self, probabilities, steps):
+        self.probabilities = probabilities
+        self.steps = steps

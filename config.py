@@ -3,6 +3,8 @@ C_LAMBDA_PAIRS = [[0.1, 0.2], [0.2, 0.5], [0.5, 0.8], [0.1, 0.9], [0.5, 0.99], [
 START_PROBABILITIES = [0.01, 0.1, 0.25, 0.5, 0.8, 0.9, 0.99]
 STEP_COUNTS = [2, 3, 4, 5, 10, 50, 100]
 
+WALK_TYPES = ['success_punished', 'success_rewarded', 'success_punished_two_lambdas', 'success_rewarded_two_lambdas']
+
 DATA_DIRNAME = "generated_walks"
 
 CONFIDENCE_INTERVAL_SIZE = 0.1
