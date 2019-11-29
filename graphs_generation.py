@@ -5,7 +5,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import expected_p_t_array
+from common import expected_p_t_array, var_p_t_array
 from config import WALK_TYPES, REPETITIONS, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
@@ -25,10 +25,10 @@ def main():
                 two_lambda = False
             for p_index, starting_probability in enumerate(START_PROBABILITIES_TESTING):
                 plt.subplot(plt_rows, plt_columns, p_index + 1)
-                plt.axis([0, step_count, -0.1, 1.1])
+                plt.axis([0, step_count, -0.1, 1])
                 plt.title(r'$p_{0}=%.2f$' % starting_probability)
-                plt.xlabel('t')
-                plt.ylabel('Ep(t)')
+                plt.xlabel('steps')
+                plt.ylabel('Var(P(t)) / EP(t)')
                 for index, c_lambda in enumerate(C_LAMBDAS_TESTING):
                     if two_lambda:
                         c_lambdas = C_LAMBDA_PAIRS_TESTING[index]
@@ -43,14 +43,15 @@ def main():
                     variance_probability = np.var(probabilities, axis=0)
                     plt.plot(mean_probability, mean_styles[index], label=label)
                     plt.plot(variance_probability, var_styles[index])
-                    plt.plot(expected_p_t_array(step_count, starting_probability, c_lambda, walk_type),
-                             expected_styles[index],
-                             linewidth=0.7)
+                    if not two_lambda:
+                        plt.plot(expected_p_t_array(step_count, starting_probability, c_lambda, walk_type),
+                                 expected_styles[index], linewidth=0.7)
+                        plt.plot(var_p_t_array(step_count, starting_probability, c_lambda, walk_type),
+                                 expected_styles[index], linewidth=0.7)
                     plt.legend(loc='best', fontsize='medium')
 
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
-            fig.suptitle("sdf")
             fig.show()
             fig.savefig(f'ept_{REPETITIONS}_walks_{step_count}_steps_type_{walk_type}.pdf', dpi=100)
 

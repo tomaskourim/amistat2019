@@ -85,14 +85,20 @@ def support_k(i: int, p0: float, c_lambda: float):
             1 - c_lambda) ** 2)
 
 
-def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float) -> float:
+def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
     e = 0
     for i in range(1, step + 1):
-        sup_k = support_k(i - 1, p0, c_lambda)
-        cinitel = (3 * c_lambda ** 2 - 2 * c_lambda) ** (step + 1 - i)
-        sumand = sup_k * cinitel
-        e = e + sumand
-        print(f"SupportK = {sup_k}; cinitel = {cinitel}")
+        if walk_type == 'success_punished':
+            summand = support_k(i - 1, p0, c_lambda) * (3 * c_lambda ** 2 - 2 * c_lambda) ** (step - i)
+        elif walk_type == 'success_rewarded':
+            summand = (2 * c_lambda - c_lambda ** 2) ** (step - i)
+        elif walk_type == 'success_punished_two_lambdas':
+            summand = 0
+        elif walk_type == 'success_rewarded_two_lambdas':
+            summand = 0
+        else:
+            raise Exception(f'Unexpected walk type: {walk_type}')
+        e = e + summand
     return e
 
 
@@ -105,13 +111,13 @@ def expected_p_t_squared(step: int, p0: float, c_lambda: float, walk_type: str) 
     :param walk_type:
     :return:
     """
+
+    support_sum = expected_p_t_squared_support_sum(step, p0, c_lambda, walk_type)
+
     if walk_type == 'success_punished':
-        support_sum = expected_p_t_squared_support_sum(step, p0, c_lambda)
-        # print(f"support sum = {support_sum}")
-        print("----------------------------------------")
         e = (3 * c_lambda ** 2 - 2 * c_lambda) ** step + support_sum if c_lambda != 2 / 3 else 0
     elif walk_type == 'success_rewarded':
-        e = 0
+        e = (2 * c_lambda - c_lambda ** 2) ** step * p0 ** 2 + p0 * (1 - c_lambda) ** 2 * support_sum
     elif walk_type == 'success_punished_two_lambdas':
         e = 0
     elif walk_type == 'success_rewarded_two_lambdas':
@@ -126,6 +132,5 @@ def var_p_t_array(step_count: int, p0: float, c_lambda: float, walk_type: str) -
     for step in range(1, step_count + 1):
         ep2 = expected_p_t_squared(step, p0, c_lambda, walk_type)
         ep = expected_p_t(step, p0, c_lambda, walk_type)
-        # print(f"Ep2: {ep2}; Ep: {ep}")
         var_array.append(ep2 - ep ** 2)
     return var_array
