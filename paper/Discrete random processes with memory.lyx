@@ -135,7 +135,7 @@ The contribution focuses on non-Markov discrete-time random processes, i.e.
  processes with memory, and in particular, on Bernoulli-like random walks
  where the past events affect significantly the walk's future development.
  The main concern of the paper is therefore the formulation of models describing
- the dependence of transition probabilities on the process development.
+ the dependence of transition probabilities on the process history.
  Such an impact can be incorporated explicitly and transition probabilities
  modulated using a few parameters reflecting the current state of the walk
  as well as the information about the past path.
@@ -253,9 +253,9 @@ cite{ja2017ddny, ja2019teze}
 \end_inset
 
 .
- In this paper, the theoretical properties of the model are described and
- further examined, numerical procedures of model parameters estimation are
- specified and the results are tested on generated data.
+ In the present paper, the theoretical properties of the model are described
+ and further examined, numerical procedures of model parameters estimation
+ are specified and the results are tested on generated data.
 \end_layout
 
 \begin_layout Standard
@@ -340,20 +340,7 @@ t
 \end_inset
 
  so that the repetition of the same step becomes less probable.
- Formally, it can be defined 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite{ja2019teze}
-\end_layout
-
-\end_inset
-
-
+ Formally, it can be defined as
 \end_layout
 
 \begin_layout Definition
@@ -705,12 +692,12 @@ E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]=E[(2-2X_{t})|P_{t-1}]=
 
 \begin_inset Formula 
 \[
-=4(1-P_{t-1}),
+=4(1-P_{t-1}).
 \]
 
 \end_inset
 
-equation (
+Equation (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:EPt2-zaklad"
@@ -903,8 +890,21 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-And similarly for the variance of the position of the walker, following
- statements can be proved.
+From Proposition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "PropVarP-succes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ the limit behavior of 
+\begin_inset Formula $Var(P_{t})$
+\end_inset
+
+ can be derived, namely
 \end_layout
 
 \begin_layout Corollary
@@ -965,7 +965,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -1044,7 +1044,7 @@ name "sec:Random-walk-aternatives"
 \end_layout
 
 \begin_layout Subsection
-Success rewarded
+Success rewarded model
 \end_layout
 
 \begin_layout Standard
@@ -1471,7 +1471,7 @@ For
 
 \begin_inset Formula 
 \[
-E(S_{t})\rightarrow\begin{cases}
+\lim_{t\to+\infty}E(S_{t})=\begin{cases}
 +\infty & p_{0}>\frac{1}{2}\\
 0 & p_{0}=\frac{1}{2}\\
 -\infty & p_{0}<\frac{1}{2}
@@ -1677,6 +1677,29 @@ noprefix "false"
 ).
 \end_layout
 
+\begin_layout Standard
+Notice that the last sum in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:VarPt-reward-prop"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), after re-indexing by 
+\begin_inset Formula $j=t-i$
+\end_inset
+
+, yields 
+\begin_inset Formula $\sum_{j=0}^{t-1}(2\lambda-\lambda^{2})^{j}=\frac{1-(2\lambda-\lambda^{2})^{t}}{1-2\lambda+\lambda^{2}}$
+\end_inset
+
+.
+ Hence the limit follows immediately
+\end_layout
+
 \begin_layout Corollary
 For 
 \begin_inset Formula $t\rightarrow+\infty,$
@@ -1698,7 +1721,7 @@ For
 
 \begin_inset Formula 
 \[
-Var(P_{t})\rightarrow p_{0}(1-p_{0}).
+\lim_{t\to+\infty}Var(P_{t})=p_{0}(1-p_{0}).
 \]
 
 \end_inset
@@ -1707,7 +1730,11 @@ Var(P_{t})\rightarrow p_{0}(1-p_{0}).
 \end_layout
 
 \begin_layout Subsection
-Two lambdas
+Model with two 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ parameters
 \end_layout
 
 \begin_layout Standard
@@ -1875,15 +1902,109 @@ success rewarded two
 \end_layout
 
 \begin_layout Standard
-Properties of the two 
+Derivation of model properties is not so straightforward.
+ The development of transition probability and its variance for different
+ starting probabilities 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ and memory coefficients pairs 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+ for the 
+\emph on
+success punished two 
 \begin_inset Formula $\lambda$
 \end_inset
 
- models can be derived in a similar manner as for the single 
+ 
+\emph default
+version of the model is shown on Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Development-punish2l"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Similarly as in the single 
 \begin_inset Formula $\lambda$
 \end_inset
 
- case shown in previous sections.
+ version of the model, the variance seems to depend on the 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+ pair only.
+ The expected transition probability seems to converge to a constant value
+ independently on both the starting probability 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ and memory coefficients 
+\begin_inset Formula $\bar{\lambda}$
+\end_inset
+
+.
+ This interesting property of the walk will be subject to further study.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../simulations/ept_100_walks_100_steps_type_success_punished_two_lambdas.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Development-punish2l"
+
+\end_inset
+
+The development of the observed average transition probability (dotted)
+ of a 
+\emph on
+success punished two 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 
+\emph default
+version of the random walk and its observed variance (dot-dashed lines).
+ The values were aggregated from 100 simulated realizations of each parameter
+ combination.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2070,19 +2191,6 @@ noprefix "false"
  parameters.
  To improve the results the Akaike Information Criterion 
 \begin_inset Formula $AIC=2k-2ln(\hat{L})$
-\end_inset
-
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite{akaike1974new}
-\end_layout
-
 \end_inset
 
 , which helps to correctly identify models with smaller number of parameters,
