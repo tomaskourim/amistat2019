@@ -102,6 +102,7 @@ def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float, walk
     return e
 
 
+
 def expected_p_t_squared(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
     """
     Support function to get the variance

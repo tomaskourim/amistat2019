@@ -28,7 +28,7 @@ def main():
                 plt.axis([0, step_count, -0.1, 1])
                 plt.title(r'$p_{0}=%.2f$' % starting_probability)
                 plt.xlabel('steps')
-                plt.ylabel('Var(P(t)) / EP(t)')
+                # plt.ylabel('Var(P(t)) / EP(t)')
                 for index, c_lambda in enumerate(C_LAMBDAS_TESTING):
                     if two_lambda:
                         c_lambdas = C_LAMBDA_PAIRS_TESTING[index]
