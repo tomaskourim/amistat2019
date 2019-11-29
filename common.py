@@ -60,11 +60,12 @@ def expected_p_t(t: np.ndarray, p0: float, c_lambda: float, walk_type: str) -> n
     :param t:
     :param p0:
     :param c_lambda:
+    :param walk_type:
     :return:
     """
     if walk_type == 'success_punished':
-        e = np.power(2 * c_lambda - 1, t - 1) * p0 + (
-                1 - np.power(2 * c_lambda - 1, t - 1)) / 2 if c_lambda != 0.5 else [0.5] * len(t)
+        e = np.power(2 * c_lambda - 1, t) * p0 + (
+                1 - np.power(2 * c_lambda - 1, t)) / 2 if c_lambda != 0.5 else [0.5] * len(t)
     elif walk_type == 'success_rewarded':
         e = [p0] * len(t)
     elif walk_type == 'success_punished_two_lambdas':
