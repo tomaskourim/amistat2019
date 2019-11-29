@@ -5,6 +5,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
+from common import expected_p_t
 from config import WALK_TYPES, REPETITIONS, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
@@ -14,8 +15,10 @@ def main():
     plt_rows = 1
     plt_columns = 3
     mean_styles = ['g.', 'r.', 'b.']
-    var_styles = ['g-', 'r-', 'b-']
+    var_styles = ['g-.', 'r-.', 'b-.']
+    expected_styles = ['g-', 'r-', 'b-']
     for step_count in STEP_COUNTS_TESTING:
+        t = np.arange(0., step_count + 1, 1)
         for walk_type in WALK_TYPES:
             if 'two_lambdas' in walk_type:
                 two_lambda = True
@@ -40,14 +43,16 @@ def main():
                     mean_probability = np.mean(probabilities, axis=0)
                     variance_probability = np.var(probabilities, axis=0)
                     plt.plot(mean_probability, mean_styles[index], label=label)
-                    plt.plot(variance_probability, var_styles[index], label=label)
-                    # plt.plot(t, expected_p_t(t, p0, c_lambda), color="k", linewidth=0.5)
+                    plt.plot(variance_probability, var_styles[index])
+                    plt.plot(expected_p_t(t, starting_probability, c_lambda, walk_type), expected_styles[index],
+                             linewidth=0.7)
                     plt.legend(loc='best', fontsize='medium')
 
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
+            fig.suptitle("sdf")
             fig.show()
-            fig.savefig(f'ept_walks_{REPETITIONS}_steps{step_count}_type_{walk_type}.pdf', dpi=100)
+            fig.savefig(f'ept_{REPETITIONS}_walks_{step_count}_steps_type_{walk_type}.pdf', dpi=100)
 
 
 if __name__ == '__main__':
