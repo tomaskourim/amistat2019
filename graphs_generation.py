@@ -5,7 +5,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import expected_p_t
+from common import expected_p_t_array
 from config import WALK_TYPES, REPETITIONS, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
@@ -18,7 +18,6 @@ def main():
     var_styles = ['g-.', 'r-.', 'b-.']
     expected_styles = ['g-', 'r-', 'b-']
     for step_count in STEP_COUNTS_TESTING:
-        t = np.arange(0., step_count + 1, 1)
         for walk_type in WALK_TYPES:
             if 'two_lambdas' in walk_type:
                 two_lambda = True
@@ -44,7 +43,8 @@ def main():
                     variance_probability = np.var(probabilities, axis=0)
                     plt.plot(mean_probability, mean_styles[index], label=label)
                     plt.plot(variance_probability, var_styles[index])
-                    plt.plot(expected_p_t(t, starting_probability, c_lambda, walk_type), expected_styles[index],
+                    plt.plot(expected_p_t_array(step_count, starting_probability, c_lambda, walk_type),
+                             expected_styles[index],
                              linewidth=0.7)
                     plt.legend(loc='best', fontsize='medium')
 

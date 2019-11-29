@@ -53,25 +53,30 @@ class CompleteWalk:
         self.development = development
 
 
-def expected_p_t(t: np.ndarray, p0: float, c_lambda: float, walk_type: str) -> np.ndarray:
+def expected_p_t_array(step_count: int, p0: float, c_lambda: float, walk_type: str) -> List[float]:
+    e_array = []
+    for step in range(0, step_count + 1):
+        e_array.append(expected_p_t(step, p0, c_lambda, walk_type))
+    return e_array
+
+
+def expected_p_t(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
     """
-    Computes expected value of transition probability according to theoretical results. Returns an array for expected
-    values for each t.
-    :param t:
+    Computes expected value of transition probability according to theoretical results.
+    :param step:
     :param p0:
     :param c_lambda:
     :param walk_type:
     :return:
     """
     if walk_type == 'success_punished':
-        e = np.power(2 * c_lambda - 1, t) * p0 + (
-                1 - np.power(2 * c_lambda - 1, t)) / 2 if c_lambda != 0.5 else [0.5] * len(t)
+        e = (2 * c_lambda - 1) ** step * p0 + (1 - (2 * c_lambda - 1) ** step) / 2 if c_lambda != 0.5 else 0.5
     elif walk_type == 'success_rewarded':
-        e = [p0] * len(t)
+        e = p0
     elif walk_type == 'success_punished_two_lambdas':
-        e = t * 0
+        e = 0
     elif walk_type == 'success_rewarded_two_lambdas':
-        e = t * 0
+        e = 0
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
     return e
