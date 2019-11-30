@@ -1,6 +1,6 @@
 %% LyX 2.3.2-2 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[american,english]{article}
+\documentclass[american,english]{amsart}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{babel}
@@ -8,10 +8,10 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\usepackage[unicode=true,pdfusetitle,
- bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
- breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
- {hyperref}
+%\usepackage[unicode=true,pdfusetitle,
+% bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+% breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+% {hyperref}
 
 \makeatletter
 
@@ -601,6 +601,12 @@ The performance can be observed in Table \ref{tab:Fitting-results-Akaike}.
 \begin{table}
 \selectlanguage{american}%
 \begin{centering}
+\foreignlanguage{english}{\caption{\label{tab:Fitting-results}Fitting results. \emph{SP }stands for
+\emph{success punished}, \emph{SR} for \emph{success rewarded}. $1\lambda$
+vs. $2\lambda$ distinguish between the basic model with a single
+$\lambda$ parameter and the more advanced model with two $\lambda$
+parameters.}
+}
 \begin{tabular}{|c|c|c|c|c|}
 \hline 
 \selectlanguage{english}%
@@ -616,12 +622,7 @@ Find $\overrightarrow{\lambda},\,p_{0}$ & 91.4 \% & 84.4 \% & 83.3 \% & 79.9 \%\
 \hline 
 Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
 \hline 
-\end{tabular}\foreignlanguage{english}{\caption{\label{tab:Fitting-results}Fitting results. \emph{SP }stands for
-\emph{success punished}, \emph{SR} for \emph{success rewarded}. $1\lambda$
-vs. $2\lambda$ distinguish between the basic model with a single
-$\lambda$ parameter and the more advanced model with two $\lambda$
-parameters.}
-}
+\end{tabular}
 \par\end{centering}
 \selectlanguage{english}%
 \end{table}
@@ -629,6 +630,9 @@ parameters.}
 \begin{table}
 \selectlanguage{american}%
 \centering{}%
+\foreignlanguage{english}{\caption{\label{tab:Fitting-results-Akaike}Finding the optimal model type
+using the Akaike Information Criterion.}
+}
 \begin{tabular}{|c|c|c|c|c|}
 \hline 
 \selectlanguage{english}%
@@ -646,9 +650,7 @@ Find model type & \selectlanguage{english}%
 83.3\%\selectlanguage{american}%
 \tabularnewline
 \hline 
-\end{tabular}\foreignlanguage{english}{\caption{\label{tab:Fitting-results-Akaike}Finding the optimal model type
-using the Akaike Information Criterion.}
-}\selectlanguage{english}%
+\end{tabular}\selectlanguage{english}%
 \end{table}
 
 
