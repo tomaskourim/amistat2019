@@ -1,0 +1,685 @@
+%% LyX 2.3.2-2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[american,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}
+\theoremstyle{plain}
+\newtheorem{prop}{\protect\propositionname}
+\theoremstyle{plain}
+\newtheorem{cor}{\protect\corollaryname}
+
+\makeatother
+
+\addto\captionsamerican{\renewcommand{\corollaryname}{Corollary}}
+\addto\captionsamerican{\renewcommand{\definitionname}{Definition}}
+\addto\captionsamerican{\renewcommand{\propositionname}{Proposition}}
+\addto\captionsenglish{\renewcommand{\corollaryname}{Corollary}}
+\addto\captionsenglish{\renewcommand{\definitionname}{Definition}}
+\addto\captionsenglish{\renewcommand{\propositionname}{Proposition}}
+\providecommand{\corollaryname}{Corollary}
+\providecommand{\definitionname}{Definition}
+\providecommand{\propositionname}{Proposition}
+
+\begin{document}
+\title{Discrete random processes with memory: Models and applications}
+\author{Tomáš Kouřim$^{1,2}$, Petr Volf$^{2}$ \\
+ $^{1}$ Faculty of Nuclear Sciences and Physical Engineering, \\
+Czech Technical University in Prague\\
+ $^{2}$Institute of Information Theory and Automation,\\
+ Academy of Sciences of the Czech Republic}
+\maketitle
+\begin{abstract}
+The contribution focuses on non-Markov discrete-time random processes,
+i.e. processes with memory, and in particular, on Bernoulli-like random
+walks where the past events affect significantly the walk's future
+development. The main concern of the paper is therefore the formulation
+of models describing the dependence of transition probabilities on
+the process history. Such an impact can be incorporated explicitly
+and transition probabilities modulated using a few parameters reflecting
+the current state of the walk as well as the information about the
+past path. The behavior of proposed random walks, as well as the task
+of their parameters estimation, are studied both theoretically and
+with the aid of simulations. 
+
+\textbf{\emph{Key words:}} Random walk, history dependent transition
+probabilities, non-Markov process, success punishing/rewarding walk
+\end{abstract}
+
+\section{Introduction}
+
+Random process is one of the most important object of mathematics.
+It is well described theoretically and has real life representations
+in almost every aspect of human life, from physics and biology to
+economy and social sciences. The random process itself is merely a
+series of realizations of random variables. Depending on the type
+of the random variables and their mutual interactions random processes
+can be split into a large number of different categories. The most
+common type of a discrete random process is a random walk, a mathematical
+object first introduced by K.Pearson in 1905 \cite{pearson1905problem}.
+Similarly to random processes in general, there exist many well described
+variations of a random walk with various applications to real life
+problems \cite{turban2010random,schutz2004elephants}. Yet there are
+still new possibilities and options how to alter and improve the classical
+random walk and present yet another model representing different real
+life events. One of such modifications is the random walk with varying
+step size introduced in $2010$ by Turban \cite{turban2010random}
+which together with the idea of \emph{self-exciting point processes}
+\cite{hawkes1971spectra} and the perspective of model's applications
+in reliability analysis and also in sports statistics, served as an
+inspiration to the random walk with varying transition probabilities
+introduced by Kouřim \cite{ja2017ddny, ja2019teze}. In the present
+paper, the theoretical properties of the model are described and further
+examined, numerical procedures of model parameters estimation are
+specified and the results are tested on generated data.
+
+The rest of the paper is organized as follows. Sections \ref{sec:Random-walk-with}
+and \ref{sec:Random-walk-aternatives} describe the properties of
+different versions of the model, section \ref{sec:Simulations} provides
+results from simulated model testing and finally section \ref{sec:Conclusion}
+concludes the work.
+
+\section{Random walk with varying probabilities\label{sec:Random-walk-with}}
+
+The random walk with varying probabilities is based on a standard
+Bernoulli random walk \cite{feller1957introduction} with some starting
+transition probability $p_{0}$. This probability is then altered
+after each step of the walk using a coefficient $\lambda$ so that
+the repetition of the same step becomes less probable. Formally, it
+can be defined as
+\begin{defn}
+\label{success_punished}Let ${\{X_{n}\}}_{n=1}^{\infty}$ and ${\{P_{n}\}}_{n=1}^{\infty}$
+be sequences of discrete random variables, and $p_{0}\in[0,\,1]$
+and $\lambda\in(0,\,1)$ constant parameters, such that the first
+random variable $X_{1}$ is given by
+\[
+P(X_{1}=1)=p_{0}
+\]
+\[
+P(X_{1}=-1)=1-p_{0}.
+\]
+Further 
+\begin{equation}
+P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1-X_{1})\label{eq:P!1_def}
+\end{equation}
+and for $i\geq2$
+\[
+P(X_{i}=1|P_{i-1}=p_{i-1})=p_{i-1}
+\]
+ 
+\[
+P(X_{i}=-1|P_{i-1}=p_{i-1})=1-p_{i-1}
+\]
+\begin{equation}
+P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1-X_{i}).\label{eq:Pi_def}
+\end{equation}
+The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
+position, is called a \emph{random walk with varying probabilities},
+with ${\{X_{n}\}}_{n=1}^{\infty}$ being the steps of the walker and
+${\{P_{n}\}}_{n=1}^{\infty}$ transition probabilities.
+
+From \cite{ja2019teze}, it can be further derived that at each step
+$t+k,\;t,\,k>0$ the value of a transition probability $P_{t+k}$
+can be computed from the knowledge of transition probability $P_{t}$
+and the realization of the walk $X_{t+1},\,\dots,\,X_{t+k}$ using
+formula 
+\[
+P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i}).
+\]
+\end{defn}
+
+\subsection{Properties}
+
+Basic properties of the random walk with varying probabilities are
+described in \cite{ja2019teze}, namely that 
+\begin{equation}
+EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
+\end{equation}
+and 
+\begin{equation}
+ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}\label{eq:ESt}
+\end{equation}
+ for $\forall t\geq1$. This further yields $EP_{t}\rightarrow\frac{1}{2}$
+and $ES_{t}\rightarrow S_{0}+\frac{2p_{0}-1}{2(1-\lambda)}$ for $t\rightarrow+\infty$.
+
+Now to describe the variance of the transition probability, let us
+prove the following proposition.
+\begin{prop}
+\label{PropVarP-succes}For $\forall t\geq1,$ it holds that 
+\begin{equation}
+Var(P_{t})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}-k(t)^{2},\label{eq:VarP-proposition}
+\end{equation}
+ where 
+\[
+k(t)=EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}
+\]
+ and 
+\[
+K(t)=k(t)\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.
+\]
+\end{prop}
+\begin{proof}
+To prove the proposition several support formulas has to be derived
+first. From the definition of variance follows 
+\begin{equation}
+Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
+\end{equation}
+$E(P_{t})$ is given by (\ref{eq:EPt}), therefore in order to prove
+the proposition it is sufficient to prove the following statement
+\begin{equation}
+E(P_{t}^{2})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}.\label{eq:EPt2-finalvzorec}
+\end{equation}
+To do so, let us first express the relation between $E(P_{t}^{2})$
+and $E(P_{t-1}^{2})$ and $E(P_{t-1}).$ From the definition of the
+expected value and the definition of the walk (\ref{eq:Pi_def}) follows
+\[
+E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1}^{2})]=E[E(P_{t}^{2}|P_{t-1})]=
+\]
+\begin{equation}
+=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t}))^{2}|P_{t-1}].\label{eq:EPt2-zaklad}
+\end{equation}
+Using that $E(X_{t}|P_{t-1})=2P_{t-1}-1,$$E(X_{t}^{2})=1$ and further
+that 
+\[
+E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]=E[(2-2X_{t})|P_{t-1}]=
+\]
+\[
+=4(1-P_{t-1}).
+\]
+Equation (\ref{eq:EPt2-zaklad}) further yields
+\[
+E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=
+\]
+\[
+=E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]
+\]
+ and finally
+\begin{equation}
+E(P_{t}^{2})=E(P_{t-1}^{2})(3\lambda^{2}-2\lambda)+EP_{t-1}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.\label{eq:EPt2-pokrocile}
+\end{equation}
+Statement (\ref{eq:EPt2-finalvzorec}) can be proved using induction.
+Based on the trivial fact that $Ep_{0}=p_{0}$ and $E(p_{0})^{2}=p_{0}^{2}$,
+for $t=1$ we get
+\[
+E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^{2}-2\lambda)^{1-i}=(3\lambda^{2}-2\lambda)p_{0}^{2}+K(0)=
+\]
+\[
+=(3\lambda^{2}-2\lambda)p_{0}^{2}+((2\lambda-1)^{0}p_{0}+\frac{1-(2\lambda-1)^{0}}{2})\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
+\]
+\[
+=(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},
+\]
+and from (\ref{eq:EPt2-pokrocile}) follows that the induction assumption
+holds. Now for the induction step $t\rightarrow t+1$ we get by substituting
+(\ref{eq:EPt2-finalvzorec}) into (\ref{eq:EPt2-pokrocile})
+\[
+E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
+\]
+\[
+=((3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i})\cdot(3\lambda^{2}-2\lambda)+K(t)=
+\]
+\[
+=(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}+K(t)=
+\]
+\[
+=(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t+1}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}
+\]
+and the formula thus holds. Now substituting (\ref{eq:EPt}) and (\ref{eq:EPt2-finalvzorec})
+into (\ref{eq:VarP-definition}) yields (\ref{eq:VarP-proposition})
+and proves the Proposition.
+\end{proof}
+From Proposition \ref{PropVarP-succes} the limit behavior of $Var(P_{t})$
+can be derived, namely
+\begin{cor}
+For $t\rightarrow+\infty,$ \textup{
+\begin{equation}
+\lim_{t\to+\infty}Var(P_{t})=\frac{\frac{1}{2}(1-\lambda^{2})}{1-3\lambda^{2}+2\lambda}-\frac{1}{4}.\label{eq:CoroVarpt-statement}
+\end{equation}
+}
+\end{cor}
+\begin{proof}
+From the fact that $|3\lambda^{2}-2\lambda|<1\;\forall\lambda\in(0,\,1)$
+and equation (\ref{eq:EPt}) follows that to prove the Corollary it
+is enough to prove that 
+\begin{equation}
+\lim_{t\to+\infty}\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}=\frac{\frac{1}{2}(1-\lambda^{2})}{1-3\lambda^{2}+2\lambda}.\label{eq:CoroVarPt-suma}
+\end{equation}
+As $\lim_{t\to+\infty}k(t)=\frac{1}{2}$ it is clear that $\lim_{t\to+\infty}K(t)=\frac{1}{2}(1-\lambda^{2})$.
+Now let us rewrite the left hand side of equation (\ref{eq:CoroVarPt-suma})
+as $(\lim_{t\to+\infty}s_{1}+\lim_{t\to+\infty}s_{2})$, where 
+\[
+s_{1}=\sum_{i=1}^{\left\lfloor \frac{t}{2}\right\rfloor }K(i-1)(3\lambda^{2}-2\lambda)^{\left\lfloor \frac{t}{2}\right\rfloor -i}
+\]
+ and 
+\[
+s_{2}=\sum_{i=\left\lfloor \frac{t}{2}\right\rfloor +1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}.
+\]
+ Now because $K(t)$ is finite $\forall t$ and $(3\lambda^{2}-2\lambda)^{t}\to0$,
+it follows that $\forall\epsilon>0,\;\exists t_{0}$ such that $\forall t>t_{0},\;K(i-1)(3\lambda^{2}-2\lambda)^{\left\lfloor \frac{t}{2}\right\rfloor -i}<\epsilon,\;\forall i\in\{1,\,2,\,\dots,\,\left\lfloor \frac{t}{2}\right\rfloor \}$
+and thus that $\lim_{t\to+\infty}s_{1}=0.$
+
+Now we can show that $\forall\epsilon>0,\;\exists t_{0}$ such that
+$\forall t>t_{0},\;\frac{1}{2}(1-\lambda^{2})-\epsilon<K(i-1)<\frac{1}{2}(1-\lambda^{2})+\epsilon,\;\forall i\in\{\left\lfloor \frac{t}{2}\right\rfloor +1,\left\lfloor \frac{t}{2}\right\rfloor +2,\,\dots,\,t\}$.
+Thus $\forall t>2t_{0}$
+\[
+\lim_{t\to+\infty}s_{2}=\frac{1}{2}(1-\lambda^{2})\sum_{i=\left\lfloor \frac{t}{2}\right\rfloor +1}^{t}(3\lambda^{2}-2\lambda)^{t-i},
+\]
+ which after re-indexing the sum yields $\lim_{t\to+\infty}s_{2}=\frac{\frac{1}{2}(1-\lambda^{2})}{1-3\lambda^{2}+2\lambda}$
+and proves (\ref{eq:CoroVarpt-statement}).
+\end{proof}
+Figure \ref{fig:The-development-punished} shows the comparison of
+computed theoretical values of transition probability variance and
+its expected value and the actual observed values of average transition
+probability and variance for different starting probabilities $p_{0}$
+and memory coefficients $\lambda$.
+
+\begin{figure}
+\includegraphics[width=1\textwidth]{../simulations/ept_100_walks_100_steps_type_success_punished}
+
+\caption{\label{fig:The-development-punished}The development of the observed
+average transition probability (dotted, upper part of the figure)
+of a \emph{success punished} version of the random walk and its observed
+variance (dot-dashed lines, lower part of the figure) compared to
+the theoretical values computed using from (\ref{eq:EPt}) and Proposition
+\ref{PropVarP-succes} (same colors, solid lines). The values were
+aggregated from 100 simulated realizations of each parameter combination.}
+
+\end{figure}
+
+
+\section{Random walk with varying transition probability - alternatives\label{sec:Random-walk-aternatives}}
+
+\subsection{Success rewarded model}
+
+The basic definition of the random walk (Definition \ref{success_punished})
+presents a \emph{success punished }model, meaning the probability
+of an event is decreased every time that event occurs. Opposite situation
+can be considered, where the probability of an event is increased
+every time that event occurs. Formally, such a random walk is defined
+in a following manner \cite{ja2019teze}.
+\begin{defn}
+\label{succes_rewarded}Let ${\{X_{n}\}}_{n=1}^{\infty}$, $p_{0}$
+and $\lambda$ be as in Definition \ref{success_punished}. Further
+let ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence of discrete random
+variables given by
+\begin{equation}
+P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1})\label{eq:P1_def-reward}
+\end{equation}
+\begin{equation}
+P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{eq:Pi_def-reward}
+\end{equation}
+
+The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
+position, is a random walk with varying probabilities - \emph{success
+rewarded}.
+\end{defn}
+In this section, all variables are considered to be related to the
+\emph{success rewarded }model, whereas the variables with the same
+notations ($P,\,X,\,S$) from previous Section \ref{sec:Random-walk-with}
+are considered to be related to the model from Definition \ref{success_punished}.
+
+The \emph{success rewarded} version of the model behaves differently
+than the \emph{success punishe}d version, which can be observed with
+the help of the following propositions.
+\begin{prop}
+For $\forall t\geq2,$ 
+\begin{equation}
+P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i})\label{eq:propSuccess1}
+\end{equation}
+\end{prop}
+\begin{proof}
+The proposition is proved using induction. For $t=2$ using (\ref{eq:P1_def-reward})
+and (\ref{eq:Pi_def-reward}) it holds that
+\[
+P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=
+\]
+
+\[
+=p_{0}\lambda^{2}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{2}\lambda^{2-i}(1+X_{i}),
+\]
+which is in accordance with (\ref{eq:propSuccess1}). Now for the
+induction step $t\rightarrow t+1$ we obtain from (\ref{eq:Pi_def-reward})
+and the induction assumption
+\[
+P_{t+1}=\lambda P_{t}+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
+\]
+\[
+=\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
+\]
+\[
+=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
+\]
+\[
+=p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t+1}\lambda^{t+1-i}(1+X_{i}).
+\]
+\end{proof}
+\begin{prop}
+\label{PropReward2}For $\forall t\geq1,$ $E(P_{t})=p_{0}.$
+\end{prop}
+\begin{proof}
+Using $E(X_{t}|P_{t-1})=2P_{t-1}-1$ and (\ref{eq:Pi_def-reward})
+we obtain
+\[
+EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=
+\]
+\[
+=E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})=
+\]
+\[
+=E(P_{t-1}).
+\]
+Recursively we get 
+\begin{equation}
+E(P_{t})=E(p_{0})=p_{0}.\label{eq:EPt-reward-formula}
+\end{equation}
+\end{proof}
+Now to calculate the expected position of the walker at a given step
+$t\geq1$, it is easy to see that $E(S_{t})=S_{t-1}+2P_{t-1}-1$.
+From this, we can prove the following statement about the expected
+position of the walker after step $t$ just from the knowledge of
+the input parameters.
+\begin{prop}
+For $\forall t\geq1,$ 
+\[
+E(S_{t})=S_{0}+t(2p_{0}-1).
+\]
+\end{prop}
+\begin{proof}
+Using the result of Proposition \ref{PropReward2} we get 
+\[
+E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{t-1}-1)]=
+\]
+\[
+=ES_{t}+(2p_{0}-1)
+\]
+which then recursively proves the statement.
+\end{proof}
+\begin{cor}
+For $t\rightarrow+\infty,$ \textup{
+\[
+\lim_{t\to+\infty}E(S_{t})=\begin{cases}
++\infty & p_{0}>\frac{1}{2}\\
+0 & p_{0}=\frac{1}{2}\\
+-\infty & p_{0}<\frac{1}{2}
+\end{cases}.
+\]
+}
+\end{cor}
+\begin{prop}
+For $\forall t\geq1,$ 
+\begin{equation}
+Var(P_{t})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}-p_{0}^{2}.\label{eq:VarPt-reward-prop}
+\end{equation}
+\end{prop}
+\begin{proof}
+The proof will be done in several steps similar as in Proposition
+\ref{PropVarP-succes}. It is based on the definition of variance
+\begin{equation}
+Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarPtreward}
+\end{equation}
+From Proposition \ref{PropReward2} follows $E(P_{t})=p_{0}$ and
+it is thus sufficient to prove that 
+\begin{equation}
+E(P_{t}^{2})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}.\label{eq:Ept2-finalvzorec-reward}
+\end{equation}
+The proof will be done using induction again. First observe that
+\[
+E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1}^{2})]=E[E(P_{t}^{2}|P_{t-1})]=
+\]
+\[
+=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t}))^{2}|P_{t-1}]=
+\]
+\begin{equation}
+=EP_{t-1}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2},\label{eq:EPt-EPt-1-reward}
+\end{equation}
+where the facts that $E[(1+X_{t})^{2}|P_{t-1}]=4P_{t-1}$, $E[(1+X_{t})|P_{t-1}]=2P_{t-1}$
+and Proposition \ref{PropReward2} were used. Now for $t=1$ we get
+\[
+EP_{1}=p_{0}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=(2\lambda-\lambda^{2})^{1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{1}(2\lambda-\lambda^{2})^{1-i}
+\]
+and the induction assumption holds. For the induction step $t\rightarrow t+1$
+we get from the induction assumption and (\ref{eq:EPt-EPt-1-reward})
+\[
+E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
+\]
+\[
+=((2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i})\cdot(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
+\]
+ 
+\[
+=(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i+1}+p_{0}(1-\lambda)^{2}=
+\]
+\[
+=(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t+1}(2\lambda-\lambda^{2})^{t+1-i}.
+\]
+The Proposition statement is then obtained by substituting (\ref{eq:EPt-reward-formula})
+and (\ref{eq:Ept2-finalvzorec-reward}) into (\ref{eq:VarPtreward}).
+\end{proof}
+Notice that the last sum in (\ref{eq:VarPt-reward-prop}), after re-indexing
+by $j=t-i$, yields $\sum_{j=0}^{t-1}(2\lambda-\lambda^{2})^{j}=\frac{1-(2\lambda-\lambda^{2})^{t}}{1-2\lambda+\lambda^{2}}$.
+Hence the limit follows immediately
+\begin{cor}
+For $t\rightarrow+\infty,$ \textup{
+\[
+\lim_{t\to+\infty}Var(P_{t})=p_{0}(1-p_{0}).
+\]
+}
+\end{cor}
+
+\subsection{Model with two $\lambda$ parameters}
+
+Another level of complexity can be added by using separate $\lambda$
+parameters for each direction of the walk. Again, two ways of handling
+success are available. The \emph{success punished} version is defined
+as follows.
+\begin{defn}
+\label{2lambdas}Let ${\{X_{n}\}}_{n=1}^{\infty}$ and $p_{0}$ be
+as in Definition \ref{success_punished}. Further let $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
+be constant coefficients and ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence
+of discrete random variables given by
+\begin{equation}
+P_{1}=\frac{1}{2}[(1+X_{1})\lambda_{0}p_{0}+(1-X_{1})(1-\lambda_{1}(1-p_{0}))]\label{eq:P!1_def-1-1}
+\end{equation}
+\begin{equation}
+P_{i}=\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.\label{eq:Pi_def-1-1}
+\end{equation}
+The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
+position, is a random walk with varying probabilities - \emph{success
+punished two $\lambda$}.
+\end{defn}
+The \emph{success rewarded} version of the model can be defined similarly.
+\begin{defn}
+\label{2lambdas-reward}Let ${\{X_{n}\}}_{n=1}^{\infty}$ and $p_{0}$
+be as in Definition \ref{success_punished}. Further let $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
+be constant coefficients and ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence
+of discrete random variables given by
+\[
+P_{1}=\frac{1}{2}[(1-X_{1})\lambda_{0}p_{0}+(1+X_{1})(1-\lambda_{1}(1-p_{0}))]
+\]
+\[
+P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.
+\]
+The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
+for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
+position, is a random walk with varying probabilities - \emph{success
+rewarded two $\lambda$}.
+\end{defn}
+Derivation of model properties is not so straightforward. The development
+of transition probability and its variance for different starting
+probabilities $p_{0}$ and memory coefficients pairs $\bar{\lambda}$
+for the \emph{success punished two $\lambda$ }version of the model
+is shown on Figure \ref{fig:Development-punish2l}. Similarly as in
+the single $\lambda$ version of the model, the variance seems to
+depend on the $\bar{\lambda}$ pair only. The expected transition
+probability seems to converge to a constant value independently on
+both the starting probability $p_{0}$ and memory coefficients $\bar{\lambda}$.
+This interesting property of the walk will be subject to further study.
+
+\begin{figure}
+\includegraphics[width=1\textwidth]{../simulations/ept_100_walks_100_steps_type_success_punished_two_lambdas}
+
+\caption{\label{fig:Development-punish2l}The development of the observed average
+transition probability (dotted, upper part of the figure) of a \emph{success
+punished two $\lambda$ }version of the random walk and its observed
+variance (dot-dashed lines, lower part of the figure). The values
+were aggregated from 100 simulated realizations of each parameter
+combination.}
+
+\end{figure}
+
+
+\subsection{Other alternatives}
+
+The presented model of a random walk can be further developed and
+more versions can be derived and described. These variants include
+but are not limited to multidimensional walk (with either one or multiple
+$\lambda$ parameters, again with \emph{success rewarded }or \emph{success
+punished}), a walk with the transition probability explicitly dependent
+on more than the last step, i.e. $P_{t}(k)\sim P_{t}(X_{t},\,X_{t-1},\dots,X_{t-(k-1)})$,
+or the walk with $\lambda$ parameter not constant, but a function
+of the time $t$, i.e. $P_{t}(\lambda(t)$). Detailed properties of
+such walks together with their possible applications on real life
+problems will by subject of a further study.
+
+\section{Simulations\label{sec:Simulations}}
+
+Testing dataset was generated in order to validate the quality of
+the model and its ability to be fitted on a real life problem. The
+data generation was performed using the Python programming language
+and its package NumPy. Following values of input parameters were chosen.
+The memory coefficient values varied in $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
+and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$.
+The starting transition probability $p_{0}$ was chosen from the set
+$P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$ and the length of the walk was
+\textbf{$n\in\{5,\,10,\,50,\,100\}$}. For each permutation of the
+parameters $100$ walks were generated.
+
+Four different fitting tasks were performed on the generated dataset.
+Using the maximum likelihood estimate (MLE) \cite{rossi2018mathematical}
+and Python language with SciPy package the fitting tasks were
+\selectlanguage{american}%
+\begin{itemize}
+\item Find $\overrightarrow{\lambda}$ with known $p_{0}$ and model type
+\item Find $p_{0}$ with known $\overrightarrow{\lambda}$ and model type
+\item Find $p_{0},\,\overrightarrow{\lambda}$ with known model type
+\item Find model type without any prior knowledge
+\end{itemize}
+\selectlanguage{english}%
+Table \ref{tab:Fitting-results} shows the results of the model \&
+parameter fitting algorithms using the MLE method. The data shows
+the model can be fitted with high accuracy. The only exception is
+finding the correct model type when the original model was based on
+a single $\lambda$ parameter. The maximum-likelihood estimate almost
+always prefers the model with two $\lambda$ parameters. To improve
+the results the Akaike Information Criterion $AIC=2k-2ln(\hat{L})$,
+which helps to correctly identify models with smaller number of parameters,
+was used. Here $k$ is the number of model parameters and $\hat{L}$
+is the maximal likelihood. This approach shows much better results.
+The performance can be observed in Table \ref{tab:Fitting-results-Akaike}.
+
+\begin{table}
+\selectlanguage{american}%
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\selectlanguage{english}%
+\selectlanguage{american}%
+ & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
+\hline 
+\hline 
+Find $\overrightarrow{\lambda}$ & 96.9 \% & 34.4 \% & 80.2 \% & 77.1 \%\tabularnewline
+\hline 
+Find $p_{o}$ & 92.2 \% & 82.8 \% & 89.6 \% & 93.8 \%\tabularnewline
+\hline 
+Find $\overrightarrow{\lambda},\,p_{0}$ & 91.4 \% & 84.4 \% & 83.3 \% & 79.9 \%\tabularnewline
+\hline 
+Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
+\hline 
+\end{tabular}\foreignlanguage{english}{\caption{\label{tab:Fitting-results}Fitting results. \emph{SP }stands for
+\emph{success punished}, \emph{SR} for \emph{success rewarded}. $1\lambda$
+vs. $2\lambda$ distinguish between the basic model with a single
+$\lambda$ parameter and the more advanced model with two $\lambda$
+parameters.}
+}
+\par\end{centering}
+\selectlanguage{english}%
+\end{table}
+
+\begin{table}
+\selectlanguage{american}%
+\centering{}%
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\selectlanguage{english}%
+\selectlanguage{american}%
+ & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
+\hline 
+\hline 
+Find model type & \selectlanguage{english}%
+79.7\%\selectlanguage{american}%
+ & \selectlanguage{english}%
+79.7\%\selectlanguage{american}%
+ & \selectlanguage{english}%
+83.3\%\selectlanguage{american}%
+ & \selectlanguage{english}%
+83.3\%\selectlanguage{american}%
+\tabularnewline
+\hline 
+\end{tabular}\foreignlanguage{english}{\caption{\label{tab:Fitting-results-Akaike}Finding the optimal model type
+using the Akaike Information Criterion.}
+}\selectlanguage{english}%
+\end{table}
+
+
+\section{Conclusion\label{sec:Conclusion}}
+
+This work follows up on the recent results on random walks with varying
+probabilities. It describes and proves certain properties of such
+a walk, other properties have been studied with the help of numerical
+methods. The study also shows the results of the maximum likelihood
+and $AIC$ based estimations of model parameters and types using optimization
+procedures. The method has been tested successfully on a set of randomly
+generated data. The presented model has also many possible uses in
+real life application. Such a type of random walk describes especially
+well processes where either a single or just a small number of events
+can significantly affect the future development of the process. Such
+processes can be found in reliability analysis, medical as well as
+econometric studies, and very often in sports modeling. The authors
+recently published a study where the success rewarded model was applied
+to predict the \emph{in-play} development of a Grand Slam tennis matches
+with compelling results when used for live betting against a bookmaker
+\cite{ja2019imam}.
+
+The source code containing all functionality mentioned in this article
+is freely available as open source at GitHub (https://github.com/tomaskourim/amistat2019).
+
+\section*{Acknowledgment}
+
+The research was supported by the grant No. 18-02739S of the Grant
+Agency of the Czech Republic.
+
+\bibliographystyle{plain}
+\bibliography{doktknih}
+
+\end{document}
