@@ -20,6 +20,12 @@ def model_estimate_evaluation(true_model_type: str, model_prediction: str, succe
     return successes
 
 
+def check_prediction(prediction: float, model_type: str, prediction_type: str, true_value: float):
+    if prediction >= 1 or prediction <= 0:
+        logging.error(
+            f"Wrong prediction {prediction}. Model {model_type}, Predi_type {prediction_type}, true val {true_value}")
+
+
 def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, model_type: str):
     lambdas = result['c_lambda'].unique()
     p0s = result['p0'].unique()
@@ -42,10 +48,12 @@ def analyze_result_single_lambda(result: pd.DataFrame, prediction_type: str, mod
                 if prediction_type in ["only_lambda", "all_parameters"]:
                     tries = tries + 1
                     prediction = result_of_test.predicted_lambda.values[0]
+                    check_prediction(prediction, model_type, prediction_type, c_lambda)
                     successes = parameter_estimate_evaluation(c_lambda, prediction, successes)
                 if prediction_type in ["only_p0", "all_parameters"]:
                     tries = tries + 1
                     prediction = result_of_test.predicted_p0.values[0]
+                    check_prediction(prediction, model_type, prediction_type, p0)
                     successes = parameter_estimate_evaluation(p0, prediction, successes)
                 if prediction_type in ["everything"]:
                     tries = tries + 1
@@ -84,14 +92,17 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
                     if prediction_type in ["only_lambda", "all_parameters"]:
                         tries = tries + 1
                         prediction = result_of_test.predicted_lambda0.values[0]
+                        check_prediction(prediction, model_type, prediction_type, c_lambda0)
                         successes = parameter_estimate_evaluation(c_lambda0, prediction, successes)
 
                         tries = tries + 1
                         prediction = result_of_test.predicted_lambda1.values[0]
+                        check_prediction(prediction, model_type, prediction_type, c_lambda1)
                         successes = parameter_estimate_evaluation(c_lambda1, prediction, successes)
                     if prediction_type in ["only_p0", "all_parameters"]:
                         tries = tries + 1
                         prediction = result_of_test.predicted_p0.values[0]
+                        check_prediction(prediction, model_type, prediction_type, p0)
                         successes = parameter_estimate_evaluation(p0, prediction, successes)
                     if prediction_type in ["everything"]:
                         tries = tries + 1
