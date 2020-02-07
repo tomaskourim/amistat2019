@@ -40,7 +40,7 @@ def save_walks(walks: List[List[int]], walk_type: str, starting_probability: flo
         os.mkdir(DATA_DIRNAME)
     filename = f"{DATA_DIRNAME}/{walk_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
-        pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count], f)
+        pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count, repetition], f)
 
 
 def list_walks2list_lists(walks):
