@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import expected_p_t_array, var_p_t_array
-from config import WALK_TYPES, REPETITIONS, \
+from config import WALK_TYPES, REPETITIONS_OF_WALK, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
 
@@ -35,7 +35,7 @@ def main():
                     else:
                         c_lambdas = [c_lambda]
                         label = r'$\lambda=%.2f$' % c_lambda
-                    walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count, REPETITIONS)
+                    walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count, REPETITIONS_OF_WALK)
                     probabilities, steps, developments = list_walks2list_lists(walks)
 
                     mean_probability = np.mean(probabilities, axis=0)
@@ -52,7 +52,7 @@ def main():
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
             fig.show()
-            fig.savefig(f'ept_{REPETITIONS}_walks_{step_count}_steps_type_{walk_type}.pdf', dpi=100)
+            fig.savefig(f'ept_{REPETITIONS_OF_WALK}_walks_{step_count}_steps_type_{walk_type}.pdf', dpi=100)
 
 
 if __name__ == '__main__':
