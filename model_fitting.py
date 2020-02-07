@@ -178,12 +178,12 @@ def main():
     results = pd.DataFrame(
         columns=["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count", "prediction_type",
                  "predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1",
-                 "predicted_p0"])
+                 "predicted_p0", "repetition"])
     start_time_loop = datetime.now()
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
-            walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
+            walks, walk_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
             # TODO here are actually just walk steps but want to use complete walks
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 c_lambda = c_lambdas[0]
@@ -218,7 +218,8 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": ""}
+                              "predicted_p0": "",
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
@@ -233,7 +234,8 @@ def main():
                               "predicted_lambda": "",
                               "predicted_lambda0": "",
                               "predicted_lambda1": "",
-                              "predicted_p0": estimated_p0}
+                              "predicted_p0": estimated_p0,
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_params = get_parameters_estimate(walk_type, walks)
@@ -258,7 +260,8 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0]}
+                              "predicted_p0": estimated_params[0],
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_params, estimated_model = get_model_estimate(walks)
@@ -283,7 +286,8 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0]}
+                              "predicted_p0": estimated_params[0],
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             end_time_iter = datetime.now()
