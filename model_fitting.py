@@ -28,7 +28,7 @@ def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float]
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
-        if current_probability >= 1 or current_probability <= 0:
+        if (current_probability >= 1 and 'punished' in walk_type) or current_probability <= 0:
             logging.error(
                 f"unexpected probability: {current_probability}. "
                 f"Walk type: {walk_type}, lambdas: {c_lambdas}, starting probability: {starting_probability}")
