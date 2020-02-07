@@ -24,7 +24,7 @@ from config import DATA_DIRNAME
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
                                    walk: List[int], walk_type: str, starting_index: int) -> float:
     if starting_probability >= 1 or starting_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
-        return sys.float_info.max / 2 - 5 # so that I dont get double overflow error
+        return sys.float_info.max / 2 - 5  # so that I dont get double overflow error
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
@@ -127,10 +127,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-            return [-10000, -10000]
-        elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-            return [-10000, -10000, -10000]
+        return guess * (-10000000)
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
