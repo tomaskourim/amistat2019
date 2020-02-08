@@ -189,6 +189,7 @@ def main():
                  "predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1",
                  "predicted_p0", "repetition"])
     start_time_loop = datetime.now()
+    iterations = len(generated_data)
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
@@ -302,8 +303,10 @@ def main():
             end_time_iter = datetime.now()
             time_curr = end_time_iter - start_time_iter
             time_per_iter = (end_time_iter - start_time_loop) / (i + 1)
-            eta = (len(generated_data) - i - 1) * time_per_iter
-            logging.info(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
+            eta = (iterations - i - 1) * time_per_iter
+            logging.info(
+                f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}. "
+                f"Remaining {iterations - i - 1} out of {iterations} iterations.")
 
     with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'wb') as f:
         pickle.dump([results], f)
