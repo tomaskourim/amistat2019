@@ -13,7 +13,7 @@ import pandas as pd
 import scipy.optimize as opt
 
 from common import get_current_probability
-from config import DATA_DIRNAME
+from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM
 
 
 # compare with reality
@@ -28,7 +28,7 @@ def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float]
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
-        if (current_probability >= 1 and 'punished' in walk_type) or current_probability <= 0:
+        if (current_probability > 1) or current_probability <= 0:
             logging.error(
                 f"unexpected probability: {current_probability}. "
                 f"Walk type: {walk_type}, lambdas: {c_lambdas}, starting probability: {starting_probability}")
@@ -90,7 +90,8 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
         error_value = [-500000, -500000]
-        opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='TNC', bounds=bounds,
+        opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
+                                  bounds=bounds,
                                   args=(walk_type, starting_probability, walks))
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
@@ -124,7 +125,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
 
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='TNC', bounds=bounds,
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM, bounds=bounds,
                               args=(walk_type, walks))
     if opt_result.success:
         logging.debug("Fitted successfully.")
@@ -135,7 +136,8 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
                 min_akaike: float, bounds: opt.Bounds) -> Tuple[float, List[float], str]:
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='TNC', bounds=bounds, args=(model, walks))
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM, bounds=bounds,
+                              args=(model, walks))
     akaike = 2 * len(guess) + 2 * opt_result.fun
     if opt_result.success and akaike < min_akaike:
         min_akaike = akaike
