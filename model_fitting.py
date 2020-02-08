@@ -88,7 +88,7 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
                                          args=(walk_type, starting_probability, walks))
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
-        bounds = ((0, 1), (0, 1))
+        bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
         error_value = [-500000, -500000]
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='TNC', bounds=bounds,
                                   args=(walk_type, starting_probability, walks))
@@ -117,10 +117,10 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
 def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[float]:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
         guess = np.array([0.5, 0.5])
-        bounds = ((0, 1), (0, 1))
+        bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5, 0.5])
-        bounds = ((0, 1), (0, 1), (0, 1))
+        bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
 
@@ -134,7 +134,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
-                min_akaike: float, bounds: Tuple[Tuple[float]]) -> Tuple[float, List[float], str]:
+                min_akaike: float, bounds: opt.Bounds) -> Tuple[float, List[float], str]:
     opt_result = opt.minimize(negative_log_likelihood_params, guess, method='TNC', bounds=bounds, args=(model, walks))
     akaike = 2 * len(guess) + 2 * opt_result.fun
     if opt_result.success and akaike < min_akaike:
@@ -162,7 +162,7 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
 
     # single lambda models
     guess = np.array([0.5, 0.5])
-    bounds = ((0, 1), (0, 1))
+    bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     model = 'success_punished'
     min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
@@ -171,7 +171,7 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
 
     # two lambdas models
     guess = np.array([0.5, 0.5, 0.5])
-    bounds = ((0, 1), (0, 1), (0, 1))
+    bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     model = 'success_punished_two_lambdas'
     min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
