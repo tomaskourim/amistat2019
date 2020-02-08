@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pandas as pd
 
-from config import CONFIDENCE_INTERVAL_SIZE
+from config import CONFIDENCE_INTERVAL_SIZE, OPTIMIZATION_ALGORITHM
 
 
 def parameter_estimate_evaluation(true_parameter_value: float, prediction: float, successes: int) -> int:
@@ -130,7 +130,7 @@ def analyze_results(results: pd.DataFrame):
 
 
 def main():
-    with open("results.pkl", 'rb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'rb') as f:
         results = pickle.load(f)  # load data
 
     analyze_results(results[0])

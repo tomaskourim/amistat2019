@@ -91,7 +91,6 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
         error_value = np.repeat('not_fitted', len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
-                                  bounds=bounds,
                                   args=(walk_type, starting_probability, walks))
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
@@ -125,7 +124,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
 
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM, bounds=bounds,
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM,
                               args=(walk_type, walks))
     if opt_result.success:
         logging.debug("Fitted successfully.")
@@ -136,7 +135,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
                 min_akaike: float, bounds: opt.Bounds) -> Tuple[float, List[float], str]:
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM, bounds=bounds,
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM,
                               args=(model, walks))
     akaike = 2 * len(guess) + 2 * opt_result.fun
     if opt_result.success and akaike < min_akaike:
@@ -306,7 +305,7 @@ def main():
             eta = (len(generated_data) - i - 1) * time_per_iter
             logging.info(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
 
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained_feasible.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'wb') as f:
         pickle.dump([results], f)
 
 
