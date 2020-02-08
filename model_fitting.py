@@ -24,7 +24,7 @@ from config import DATA_DIRNAME
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
                                    walk: List[int], walk_type: str, starting_index: int) -> float:
     if starting_probability >= 1 or starting_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
-        return sys.float_info.max / 2 - 5  # so that I dont get double overflow error
+        return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
@@ -83,13 +83,13 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-        error_value = -10000
+        error_value = -500000
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(walk_type, starting_probability, walks))
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
         bounds = ((0, 1), (0, 1))
-        error_value = [-10000, -10000]
+        error_value = [-500000, -500000]
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='TNC', bounds=bounds,
                                   args=(walk_type, starting_probability, walks))
     else:
@@ -110,7 +110,7 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return -10000
+        return -500000
 
 
 # get lambda and p0
@@ -130,7 +130,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return guess * (-10000000)
+        return guess * (-1000000)
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
@@ -156,7 +156,7 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     :param walks:
     :return found parameters, best model:
     """
-    result = [-50000,-50000]
+    result = [-500000, -500000]
     current_model = 'unknown'
     min_akaike = sys.float_info.max
 
