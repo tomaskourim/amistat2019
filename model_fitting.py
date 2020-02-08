@@ -83,13 +83,13 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-        error_value = -500000
+        error_value = 'not_fitted'
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(walk_type, starting_probability, walks))
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
-        error_value = [-500000, -500000]
+        error_value = np.repeat('not_fitted', len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
                                   bounds=bounds,
                                   args=(walk_type, starting_probability, walks))
@@ -111,7 +111,7 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return -500000
+        return 'not_fitted'
 
 
 # get lambda and p0
@@ -131,7 +131,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return guess * (-1000000)
+        return np.repeat('not_fitted', len(guess))
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
@@ -158,8 +158,8 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     :param walks:
     :return found parameters, best model:
     """
-    result = [-500000, -500000]
-    current_model = 'unknown'
+    result = ['not_fitted', 'not_fitted']
+    current_model = 'not_fitted'
     min_akaike = sys.float_info.max
 
     # single lambda models
@@ -282,7 +282,7 @@ def main():
             elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
                 estimated_lambda = ""
                 estimated_lambda0 = estimated_params[1]
-                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else -10000
+                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
             current_result = {"model_type": walk_type,
@@ -306,7 +306,7 @@ def main():
             eta = (len(generated_data) - i - 1) * time_per_iter
             logging.info(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
 
-    with open("results.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained_feasible.pkl", 'wb') as f:
         pickle.dump([results], f)
 
 

@@ -13,6 +13,6 @@ STEP_COUNTS_TESTING = [100, 1000]
 WALK_TYPES = ['success_punished', 'success_rewarded', 'success_punished_two_lambdas', 'success_rewarded_two_lambdas']
 DATA_DIRNAME = "generated_walks"
 
-OPTIMIZATION_ALGORITHM = 'TNC'
+OPTIMIZATION_ALGORITHM = 'SLSQP'
 
 CONFIDENCE_INTERVAL_SIZE = 0.1
