@@ -305,8 +305,8 @@ def main():
             time_per_iter = (end_time_iter - start_time_loop) / (i + 1)
             eta = (iterations - i - 1) * time_per_iter
             logging.info(
-                f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}. "
-                f"Remaining {iterations - i - 1} out of {iterations} iterations.")
+                f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
+                f"{iterations - i - 1}/{iterations}; {datafile}")
 
     with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'wb') as f:
         pickle.dump([results], f)
