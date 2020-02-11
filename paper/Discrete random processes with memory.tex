@@ -213,7 +213,7 @@ E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1
 \begin{equation}
 E(P_{t}^{2})=E(P_{t-1}^{2})(3\lambda^{2}-2\lambda)+EP_{t-1}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.\label{eq:EPt2-pokrocile}
 \end{equation}
-Statement (\ref{eq:EPt2-finalvzorec}) can be proved using induction.
+Statement (\ref{eq:EPt2-finalvzorec}) can be proved using mathematical induction.
 Based on the trivial fact that $Ep_{0}=p_{0}$ and $E(p_{0})^{2}=p_{0}^{2}$,
 for $t=1$ we get
 \[
@@ -225,8 +225,8 @@ E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^
 \[
 =(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},
 \]
-and from (\ref{eq:EPt2-pokrocile}) it follows that the induction assumption
-holds. Now for the induction step $t\rightarrow t+1$ we get by substituting
+and from (\ref{eq:EPt2-pokrocile}) it follows that \eqref{eq:EPt2-finalvzorec} 
+holds for $t=1$. Now for the induction step $t\rightarrow t+1$ we get by substituting
 (\ref{eq:EPt2-finalvzorec}) into (\ref{eq:EPt2-pokrocile})
 \[
 E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
@@ -320,7 +320,7 @@ P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}
 \end{prop}
 
 \begin{proof}
-The proposition is proved using induction. For $t=2$ using (\ref{eq:P1_def-reward})
+The proposition is proved using mathematical induction. For $t=2$ using (\ref{eq:P1_def-reward})
 and (\ref{eq:Pi_def-reward}) it holds that
 \[
 P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=
@@ -421,7 +421,7 @@ it is thus sufficient to prove that
 \begin{equation}
 E(P_{t}^{2})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}.\label{eq:Ept2-finalvzorec-reward}
 \end{equation}
-The proof will be done using induction again. First observe that
+The proof will be done using mathematical induction again. First observe that
 \[
 E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=
 \]
@@ -436,7 +436,7 @@ and Proposition \ref{PropReward2} were used. Now for $t=1$ we get
 \[
 EP_{1}=p_{0}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=(2\lambda-\lambda^{2})^{1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{1}(2\lambda-\lambda^{2})^{1-i}
 \]
-and the induction assumption holds. For the induction step $t\rightarrow t+1$
+and thus \eqref{eq:Ept2-finalvzorec-reward} holds for $t=1$. For the induction step $t\rightarrow t+1$
 we get from the induction assumption and (\ref{eq:EPt-EPt-1-reward})
 \[
 E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
