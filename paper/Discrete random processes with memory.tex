@@ -6,11 +6,11 @@
 
 \newtheorem{thm}{Theorem}[section]
 \theoremstyle{definition}
-\newtheorem{defn}{\protect\definitionname}
+\newtheorem{defn}[thm]{\protect\definitionname}
 \theoremstyle{plain}
-\newtheorem{prop}{\protect\propositionname}[section]
+\newtheorem{prop}[thm]{\protect\propositionname}
 \theoremstyle{plain}
-\newtheorem{cor}{\protect\corollaryname}
+\newtheorem{cor}[thm]{\protect\corollaryname}
 \numberwithin{equation}{section}
 
 \makeatother
@@ -110,22 +110,22 @@ for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
 position, is called a \emph{random walk with varying probabilities},
 with ${\{X_{n}\}}_{n=1}^{\infty}$ being the steps of the walker and
 ${\{P_{n}\}}_{n=1}^{\infty}$ transition probabilities.
-
-\smallskip
-From \cite{ja2019teze}, it can be further derived that at each step
-$t+k,\;t,\,k>0$ the value of a transition probability $P_{t+k}$
-can be computed from the knowledge of transition probability $P_{t}$
-and the realization of the walk $X_{t+1},\,\dots,\,X_{t+k}$ using
-formula 
-\[
-P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i}).
-\]
 \end{defn}
+
+
+
 
 \subsection{Properties}
 
-Basic properties of the random walk with varying probabilities are
-described in \cite{ja2019teze}, namely that 
+The random walk with varying probabilities was first introduced in \cite{ja2017ddny} and further elaborated in \cite{ja2019teze}. Basic properties of the walk were also described in the previous work. 
+Namely, the value of a transition probability $P_{t+k}$ at each step
+$t+k,\;t,\,k>0$
+can be computed from the knowledge of transition probability $P_{t}$
+and the realization of the walk $X_{t+1},\,\dots,\,X_{t+k}$ using
+formula 
+\begin{equation}
+P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i})\label{eq:Pt}
+\end{equation} and further formulas to compute the expected value of transition probability and position of the walker
 \begin{equation}
 EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
 \end{equation}
@@ -136,8 +136,30 @@ ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}\label{eq:ESt}
  for all $t\geq1$. This further yields $EP_{t}\rightarrow\frac{1}{2}$
 and $ES_{t}\rightarrow S_{0}+\frac{2p_{0}-1}{2(1-\lambda)}$ for $t\rightarrow+\infty$.
 
-Now to describe the variance of the transition probability, let us
-prove the following proposition.
+Now to describe the walk in more detail, let us 
+prove the following propositions about the expected step of the walk and variance of the transition probability.
+
+\begin{prop}
+For all $t\geq1,$ it holds that 
+\begin{equation}
+E(X_{t})=(2\lambda-1)^{t-1}(2p_{0}-1)
+\end{equation}
+\end{prop}
+\begin{proof}
+Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be proved directly using \ref{eq:EPt} as 
+
+\[
+E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
+\]
+\[
+=2((2\lambda-1)^{t-1}p_{0}+\frac{1-(2\lambda-1)^{t-1}}{2})-1=
+\]
+\[
+=(2\lambda-1)^{t-1}(2p_{0}-1).
+\]
+
+
+\end{proof}
 
 \begin{prop}
 \label{PropVarP-succes}For all $t\geq1,$ it holds that 
