@@ -142,11 +142,11 @@ prove the following propositions about the expected step of the walk and varianc
 \begin{prop}
 For all $t\geq1,$ it holds that 
 \begin{equation}
-E(X_{t})=(2\lambda-1)^{t-1}(2p_{0}-1)
+E(X_{t})=(2\lambda-1)^{t-1}(2p_{0}-1).
 \end{equation}
 \end{prop}
 \begin{proof}
-Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be proved directly using \ref{eq:EPt} as 
+Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be proved directly using \eqref{eq:EPt} as 
 
 \[
 E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
@@ -363,6 +363,14 @@ Recursively we get
 E(P_{t})=E(p_{0})=p_{0}.\label{eq:EPt-reward-formula}
 \end{equation}
 \end{proof}
+
+\begin{prop}
+For all $t\geq1,$ $E(X_{t})=2p_{0}-1.$
+\end{prop}
+\begin{proof}
+Follows directly from Proposition \ref{PropReward2}.
+\end{proof}
+
 Now to calculate the expected position of the walker at a given step
 $t\geq1$, it is easy to see that $E(S_{t})=S_{t-1}+2P_{t-1}-1$.
 From this, we can prove the following statement about the expected
