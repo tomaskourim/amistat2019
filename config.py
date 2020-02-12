@@ -10,8 +10,9 @@ C_LAMBDA_PAIRS_TESTING = [[0.5, 0.8], [0.75, 0.9], [0.2, 0.6]]
 START_PROBABILITIES_TESTING = [0.99, 0.8, 0.4]
 STEP_COUNTS_TESTING = [100, 1000]
 
-WALK_TYPES = ['success_punished', 'success_rewarded', 'success_punished_two_lambdas', 'success_rewarded_two_lambdas']
+MODEL_TYPES = ['success_punished', 'success_rewarded', 'success_punished_two_lambdas', 'success_rewarded_two_lambdas']
 DATA_DIRNAME = "generated_walks"
+PREDICTION_TYPES = ["only_lambda", "only_p0", "all_parameters", "everything"]
 
 OPTIMIZATION_ALGORITHM = 'Nelder-Mead'
 

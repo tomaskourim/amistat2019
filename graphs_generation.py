@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import expected_p_t_array, var_p_t_array
-from config import WALK_TYPES, REPETITIONS_OF_WALK, \
+from config import MODEL_TYPES, REPETITIONS_OF_WALK, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
 
@@ -18,7 +18,7 @@ def main():
     var_styles = ['g-.', 'r-.', 'b-.']
     expected_styles = ['g-', 'r-', 'b-']
     for step_count in STEP_COUNTS_TESTING:
-        for walk_type in WALK_TYPES:
+        for walk_type in MODEL_TYPES:
             if 'two_lambdas' in walk_type:
                 two_lambda = True
             else:

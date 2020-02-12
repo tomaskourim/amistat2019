@@ -4,7 +4,9 @@ from datetime import datetime
 
 import pandas as pd
 
-from config import CONFIDENCE_INTERVAL_SIZE, OPTIMIZATION_ALGORITHM
+from config import CONFIDENCE_INTERVAL_SIZE
+from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, \
+    PREDICTION_TYPES
 
 
 def parameter_estimate_evaluation(true_parameter_value: float, prediction: float, successes: int) -> int:
@@ -112,7 +114,31 @@ def analyze_result_multiple_lambda(result, prediction_type, model_type):
         f"Model type: {model_type}, prediction type: {prediction_type}. Successes: {successes}. Tries: {tries}. Success rate: {successes / tries}")
 
 
+def select_results(results, prediction_type, model_type, c_lambdas, step_count, p0):
+    results = results[results.prediction_type.isin([prediction_type])]
+    results = results[results.model_type.isin([model_type])]
+    results = results[results.step_count.isin([step_count])]
+    results = results[results.p0.isin([p0])]
+    if 'two_lambdas' in model_type:
+        results = results[results.c_lambda0.isin([c_lambdas[0]])]
+        results = results[results.c_lambda1.isin([c_lambdas[1]])]
+    else:
+        results = results[results.c_lambda.isin([c_lambdas[0]])]
+    return results
+
+
 def analyze_results(results: pd.DataFrame):
+    for index, c_lambda in enumerate(C_LAMBDAS):
+        for p0 in START_PROBABILITIES:
+            for step_count in STEP_COUNTS:
+                for model_type in MODEL_TYPES:
+                    if 'two_lambdas' in model_type:
+                        c_lambdas = C_LAMBDA_PAIRS[index]
+                    else:
+                        c_lambdas = [c_lambda]
+                    for prediction_type in PREDICTION_TYPES:
+                        current_results = select_results(results, prediction_type, model_type, c_lambdas, step_count,
+                                                         p0)
     model_types = results['model_type'].unique()
     prediction_types = results['prediction_type'].unique()
     for model_type in model_types:

@@ -9,7 +9,7 @@ from typing import List
 import numpy as np
 
 from common import bernoulli2ising, get_current_probability, CompleteWalk
-from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME, WALK_TYPES, \
+from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME, MODEL_TYPES, \
     REPETITIONS_OF_WALK, REPETITIONS_OF_WALK_SERIES
 
 
@@ -65,7 +65,7 @@ def main():
         for index, c_lambda in enumerate(C_LAMBDAS):
             for starting_probability in START_PROBABILITIES:
                 for step_count in STEP_COUNTS:
-                    for walk_type in WALK_TYPES:
+                    for walk_type in MODEL_TYPES:
                         if 'two_lambdas' in walk_type:
                             c_lambdas = C_LAMBDA_PAIRS[index]
                         else:
