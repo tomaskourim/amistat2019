@@ -142,7 +142,7 @@ each step $t+k,\;t,\,k>0$ can be computed from the knowledge of
 transition probability $P_{t}$ and the realization of the walk
 $X_{t+1},\,\dots,\,X_{t+k}$ using formula
 \begin{equation}
-P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i})\label{eq:Pt}
+P_{t+k}=P_{t}\lambda^{k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i})\label{eq:Pt}
 \end{equation} and further formulas to compute the expected value of transition probability and position of the walker
 \begin{equation}
 EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
@@ -158,7 +158,7 @@ Now to describe the walk in more detail, let us
 prove the following propositions about the expected step
 of the walk and variance of the transition probability.
 
-\begin{prop}
+\begin{prop}\label{PropEXt-succes}
 For all $t\geq1,$ it holds that
 \begin{equation}
 E(X_{t})=(2\lambda-1)^{t-1}(2p_{0}-1).
@@ -191,7 +191,7 @@ chain $X_t$.
 \begin{proof}
 As $X_t$ are Bernoulli(1,-1), they are fully characterized by
 their expectations, and it holds that $EX_t=2\cdot EP_{t-1}-1$.
-Then the limit distribution follows from Proposition 2.2 or also
+Then the limit distribution follows from Proposition \ref{PropEXt-succes} or also
 from the fact that $EP_t$ tends to $\frac{1}{2}$.
 
 Let $EP_{t-1}=\frac{1}{2}$ be the characteristics of $X_t$, i.e.
