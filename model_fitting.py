@@ -13,7 +13,7 @@ import pandas as pd
 import scipy.optimize as opt
 
 from common import get_current_probability
-from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM
+from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES
 
 
 # compare with reality
@@ -180,10 +180,11 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
 
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
-    results = pd.DataFrame(
-        columns=["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count", "prediction_type",
-                 "predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1",
-                 "predicted_p0", "repetition"])
+    columns = MODEL_PARAMETERS
+    columns.append("prediction_type")
+    columns.extend(PREDICTION_VALUES)
+    columns.append("repetition")
+    results = pd.DataFrame(columns=columns)
     start_time_loop = datetime.now()
     iterations = len(generated_data)
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases

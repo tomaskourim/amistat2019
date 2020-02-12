@@ -5,14 +5,17 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
+from config import MODEL_PARAMETERS, PREDICTION_VALUES
+
 
 def main():
-    result_files = ['results_Nelder-Mead_constrained.pkl', 'results_bettor1.pkl', 'results_amistat1.pkl',
-                    'results_amistat2.pkl']
-    results_total = pd.DataFrame(
-        columns=["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count", "prediction_type",
-                 "predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1",
-                 "predicted_p0", "repetition"])
+    result_files = ['results_archive/results_Nelder-Mead_constrained.pkl', 'results_archive/results_bettor1.pkl',
+                    'results_archive/results_amistat1.pkl', 'results_archive/results_amistat2.pkl']
+    columns = MODEL_PARAMETERS
+    columns.append("prediction_type")
+    columns.extend(PREDICTION_VALUES)
+    columns.append("repetition")
+    results_total = pd.DataFrame(columns=columns)
     for file in result_files:
         with open(file, 'rb') as f:
             results = pickle.load(f)  # load data
