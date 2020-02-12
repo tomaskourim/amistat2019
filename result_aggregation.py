@@ -20,7 +20,7 @@ def main():
         results[0].repetition += (current_repetitions + 1) if not np.isnan(current_repetitions) else 0
         results_total = results_total.append(results[0])
     with open(f"results_total.pkl", 'wb') as f:
-        pickle.dump([results], f)
+        pickle.dump(results_total, f)
 
 
 if __name__ == '__main__':

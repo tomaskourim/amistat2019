@@ -130,10 +130,10 @@ def analyze_results(results: pd.DataFrame):
 
 
 def main():
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'rb') as f:
+    with open(f"results_total.pkl", 'rb') as f:
         results = pickle.load(f)  # load data
 
-    analyze_results(results[0])
+    analyze_results(results)
 
 
 if __name__ == '__main__':
