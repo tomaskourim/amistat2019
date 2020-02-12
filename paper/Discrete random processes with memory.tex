@@ -24,18 +24,22 @@
 \title{Discrete random processes with memory: Models and applications}
 
 
-\author{\|TomÃ¡Å¡ |KouÅ™im|, \|Petr |Volf|, Prague}
+\author{\|TomÃ¡\'{L}¡ |Kou\'{L}™im|, \|Petr |Volf|, Prague}
 
 
 %\rec {2019}
 
-\abstract
-The contribution focuses on Bernoulli-like random
-walks where the past events affect significantly the walk's future
-development. The main concern of the paper is therefore the formulation
-of models describing the dependence of transition probabilities on
-the process history. Such an impact can be incorporated explicitly
-and transition probabilities modulated using a few parameters reflecting the current state of the walk as well as the information about the past path. The behavior of proposed random walks, as well as the task of their parameters estimation, are studied both theoretically and with the aid of simulations. 
+\abstract The contribution focuses on Bernoulli-like random walks
+where the past events affect significantly the walk's future
+development. The main concern of the paper is therefore the
+formulation of models describing the dependence of transition
+probabilities on the process history. Such an impact can be
+incorporated explicitly and transition probabilities modulated
+using a few parameters reflecting the current state of the walk as
+well as the information about the past path. The behavior of
+proposed random walks, as well as the task of their parameters
+estimation, are studied both theoretically and with the aid of
+simulations.
 \endabstract
 
 \keywords
@@ -48,13 +52,15 @@ probabilities, non-Markov process, success punishing/rewarding walk
 \endsubjclass
 
 \thanks
-The research was supported by the grant No. 18-02739S of the Grant Agency of the Czech Republic.
+The research was supported by the grant No. 18-02739S of the Grant
+Agency of the Czech Republic.
 \endthanks
 
 \section{Introduction}
 One of the most
-common types of a discrete random process is a random walk, first introduced by K.Pearson in 1905 \cite{pearson1905problem}.
-There exist many 
+common types of a discrete random process is a random walk,
+first introduced by K.Pearson in 1905 \cite{pearson1905problem}.
+There exist many
 variations of a random walk with various applications to real life
 problems \cite{turban2010random,schutz2004elephants}. Yet there are
 still new possibilities and options how to alter and improve the classical
@@ -65,16 +71,30 @@ which together with the idea of \emph{self-exciting point processes}
 \cite{hawkes1971spectra} and the perspective of model applications
 in reliability analysis and also in sports statistics, served as an
 inspiration to the random walk with varying transition probabilities
-introduced by KouÅ™im \cite{ja2017ddny, ja2019teze}. In the present
-paper, the theoretical properties of the model are described and further
-examined, numerical procedures of model parameters estimation are
-specified and the results are tested on generated data.
+introduced by Kou\'{L}™im \cite{ja2017ddny, ja2019teze}.
 
-The rest of the paper is organized as follows. Sections \ref{sec:Random-walk-with}
-and \ref{sec:Random-walk-aternatives} describe the properties of
-different versions of the model, section \ref{sec:Simulations} provides
-results from simulated model testing and finally section \ref{sec:Conclusion}
-concludes the work.
+NEW:
+
+Naturally, there exists also a number of recent papers dealing
+with discrete random walks and time series. Thus, the paper of
+Davis and Liu (2016) contains a rather broad definition of such a
+process dynamics. Formally, our definition is covered as well,
+however, other assumptions, e.g. the condition of contraction, are
+not fulfilled.
+
+------
+
+In the present paper, the theoretical properties of the model are
+described and further examined, numerical procedures of model
+parameters estimation are specified and the results are tested on
+generated data.
+
+The rest of the paper is organized as follows. Sections
+\ref{sec:Random-walk-with} and \ref{sec:Random-walk-aternatives}
+describe the properties of different versions of the model,
+section \ref{sec:Simulations} provides results from simulated
+model testing and finally section \ref{sec:Conclusion} concludes
+the work.
 
 \section{Random walk with varying probabilities\label{sec:Random-walk-with}}
 
@@ -93,7 +113,7 @@ random variable $X_{1}$ is given by
 P(X_{1}=1)=p_{0},\,\,\,
 P(X_{1}=-1)=1-p_{0}.
 \]
-Further 
+Further
 \begin{equation}
 P_{1}=\lambda p_{0}+\frac{1}{2}(1-\lambda)(1-X_{1})\label{eq:P!1_def}
 \end{equation}
@@ -112,41 +132,41 @@ with ${\{X_{n}\}}_{n=1}^{\infty}$ being the steps of the walker and
 ${\{P_{n}\}}_{n=1}^{\infty}$ transition probabilities.
 \end{defn}
 
-
-
-
 \subsection{Properties}
 
-The random walk with varying probabilities was first introduced in \cite{ja2017ddny} and further elaborated in \cite{ja2019teze}. Basic properties of the walk were also described in the previous work. 
-Namely, the value of a transition probability $P_{t+k}$ at each step
-$t+k,\;t,\,k>0$
-can be computed from the knowledge of transition probability $P_{t}$
-and the realization of the walk $X_{t+1},\,\dots,\,X_{t+k}$ using
-formula 
+The random walk with varying probabilities was first introduced in
+\cite{ja2017ddny} and further elaborated in \cite{ja2019teze}.
+Basic properties of the walk were also described in the previous
+work. Namely, the value of a transition probability $P_{t+k}$ at
+each step $t+k,\;t,\,k>0$ can be computed from the knowledge of
+transition probability $P_{t}$ and the realization of the walk
+$X_{t+1},\,\dots,\,X_{t+k}$ using formula
 \begin{equation}
 P_{t+k}=P_{t}\lambda^{t+k}+\frac{1}{2}(1-\lambda)\sum_{i=t+1}^{t+k}\lambda^{t+k-i}(1-X_{i})\label{eq:Pt}
 \end{equation} and further formulas to compute the expected value of transition probability and position of the walker
 \begin{equation}
 EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}\label{eq:EPt}
 \end{equation}
-and 
+and
 \begin{equation}
 ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}\label{eq:ESt}
 \end{equation}
  for all $t\geq1$. This further yields $EP_{t}\rightarrow\frac{1}{2}$
 and $ES_{t}\rightarrow S_{0}+\frac{2p_{0}-1}{2(1-\lambda)}$ for $t\rightarrow+\infty$.
 
-Now to describe the walk in more detail, let us 
-prove the following propositions about the expected step of the walk and variance of the transition probability.
+Now to describe the walk in more detail, let us
+prove the following propositions about the expected step
+of the walk and variance of the transition probability.
 
 \begin{prop}
-For all $t\geq1,$ it holds that 
+For all $t\geq1,$ it holds that
 \begin{equation}
 E(X_{t})=(2\lambda-1)^{t-1}(2p_{0}-1).
 \end{equation}
 \end{prop}
 \begin{proof}
-Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be proved directly using \eqref{eq:EPt} as 
+Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be
+proved directly using \eqref{eq:EPt} as
 
 \[
 E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
@@ -159,18 +179,38 @@ E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
 \]
 
 
+\begin{proof}
+
+NEW:
+\begin{cor}
+The limit distribution of $X_t$ is the Bernoulli distribution with
+$p={1\over 2}$. It is also the stationary distribution of the
+chain $X_t$.
+\end{cor}
+
+\begin{proof}
+As $X_t$ are Bernoulli(1,-1), they are fully characterized by
+their expectations, and it holds that $EX_t=2\cdot EP_{t-1}-1$.
+Then the limit distribution follows from Proposition 2.2 or also
+from the fact that $EP_t$ tends to {1\over 2}.
+
+Let $EP_{t-1}={1\over 2}$ be the characteristics of $X_t$, i.e.
+$EX_t=0$. As then
+$EP_t=EP_{t-1}\lambda+(1-\lambda)/2(1-EX_t)={1\over 2}$, therefore
+$EX_{t+1}=0$ again.
+
 \end{proof}
 
 \begin{prop}
-\label{PropVarP-succes}For all $t\geq1,$ it holds that 
+\label{PropVarP-succes}For all $t\geq1,$ it holds that
 \begin{equation}
 Var(P_{t})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}-k(t)^{2},\label{eq:VarP-proposition}
 \end{equation}
- where 
+ where
 \[
 k(t)=EP_{t}=(2\lambda-1)^{t}p_{0}+\frac{1-(2\lambda-1)^{t}}{2}
 \]
- and 
+ and
 \[
 K(t)=k(t)\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.
 \]
@@ -178,7 +218,7 @@ K(t)=k(t)\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.
 
 \begin{proof}
 To prove the proposition several support formulas has to be derived
-first. From the definition of variance it follows 
+first. From the definition of variance it follows
 \begin{equation}
 Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
 \end{equation}
@@ -197,7 +237,7 @@ E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=
 =E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t}))^{2}|P_{t-1}].\label{eq:EPt2-zaklad}
 \end{equation}
 Using that $E(X_{t}|P_{t-1})=2P_{t-1}-1$, $E(X_{t}^{2})=1$ and further
-that 
+that
 \[
 E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]
 =E[(2-2X_{t})|P_{t-1}]= 4(1-P_{t-1}).
@@ -225,7 +265,7 @@ E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^
 \[
 =(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},
 \]
-and from (\ref{eq:EPt2-pokrocile}) it follows that \eqref{eq:EPt2-finalvzorec} 
+and from (\ref{eq:EPt2-pokrocile}) it follows that \eqref{eq:EPt2-finalvzorec}
 holds for $t=1$. Now for the induction step $t\rightarrow t+1$ we get by substituting
 (\ref{eq:EPt2-finalvzorec}) into (\ref{eq:EPt2-pokrocile})
 \[
@@ -306,14 +346,14 @@ rewarded}.
 In this section, all variables are considered to be related to the
 \emph{success rewarded }model, whereas the variables with the same
 notations ($P,\,X,\,S$) from previous Section \ref{sec:Random-walk-with}
-are considered to be related to the model from Definition \ref{success_punished}. 
+are considered to be related to the model from Definition \ref{success_punished}.
 
 The \emph{success rewarded} version of the model behaves differently
 than the \emph{success punished} version, which can be observed with
 the help of the following propositions.
 
 \begin{prop}
-For all $t\ge 2,$ 
+For all $t\ge 2,$
 \begin{equation}
 P_{t}=p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}).\label{eq:propSuccess1}
 \end{equation}
@@ -358,33 +398,59 @@ EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P
 \[
 =E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})=  E(P_{t-1}).
 \]
-Recursively we get 
+Recursively we get
 \begin{equation}
 E(P_{t})=E(p_{0})=p_{0}.\label{eq:EPt-reward-formula}
 \end{equation}
 \end{proof}
 
+NEW STRONGER FORMULATION!!:
+
 \begin{prop}
-For all $t\geq1,$ $E(X_{t})=2p_{0}-1.$
+The sequence $X_t$ is a stationary sequence of Bernoulli random
+variables with values 1,-1 and $P(X_t=1)=p_0$.
 \end{prop}
 \begin{proof}
-Follows directly from Proposition \ref{PropReward2}.
+As the distribution of $X_t$ is fully given by $E(P_{t-1})$, the
+statement follows directly from Proposition \ref{PropReward2}.
 \end{proof}
 
-Now to calculate the expected position of the walker at a given step
-$t\geq1$, it is easy to see that $E(S_{t})=S_{t-1}+2P_{t-1}-1$.
-From this, we can prove the following statement about the expected
-position of the walker after step $t$ just from the knowledge of
-the input parameters.
+NEW: ale neni nutno
+
+Further, simulation studies revealed that the distribution of
+probabilities $P_t$ tends to Bernoulli (0,1) distribution with
+parameter (probability of 1) $p_0$. Moreover, the following holds:
 
 \begin{prop}
-For all $t\geq1,$ 
+ This Bernoulli distribution is
+then the stationary distribution of the process $P_t$.
+\end{prop}
+\begin{proof}
+Let $P_{t-1}$ be either 1 with probability $p_0$, then $X_t=1$, or
+$P_{t-1}=0$ with $1-p_0$, then $X_t=-1$.  As $P_t=\lambda
+P_{t-1}+(1-\lambda)(1+X_t)/2,$ it follows that with probability
+$p_0$ $P_t=\lambda\cdot 1+(1-\lambda)\cdot 2/2=1$, while with
+probability $1-p_0$ $P_t=\lambda\cdot 0+(1-\lambda)\cdot 0/2=0$.
+It means that $P_t$ has the same Bernoulli distribution as
+$P_{t-1}$.
+\end{proof}
+
+------
+
+Now to calculate the expected position of the walker at a given
+step $t\geq1$, it is easy to see that
+$E(S_{t})=S_{t-1}+2P_{t-1}-1$. From this, we can prove the
+following statement about the expected position of the walker
+after step $t$ just from the knowledge of the input parameters.
+
+\begin{prop}
+For all $t\geq1,$
 \[
 E(S_{t})=S_{0}+t(2p_{0}-1).
 \]
 \end{prop}
 \begin{proof}
-Using the result of Proposition \ref{PropReward2} we get 
+Using the result of Proposition \ref{PropReward2} we get
 \[
 E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{t-1}-1)]=
 ES_{t}+(2p_{0}-1)
@@ -405,7 +471,7 @@ For $t\rightarrow+\infty,$ \textup{
 \end{cor}
 
 \begin{prop}
-For all $t\geq1,$ 
+For all $t\geq1,$
 \begin{equation}
 Var(P_{t})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}-p_{0}^{2}.\label{eq:VarPt-reward-prop}
 \end{equation}
@@ -417,7 +483,7 @@ The proof will be done in several steps similar as in Proposition
 Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarPtreward}
 \end{equation}
 From Proposition \ref{PropReward2} it follows $E(P_{t})=p_{0}$ and
-it is thus sufficient to prove that 
+it is thus sufficient to prove that
 \begin{equation}
 E(P_{t}^{2})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}.\label{eq:Ept2-finalvzorec-reward}
 \end{equation}
@@ -444,7 +510,7 @@ E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
 \[
 =((2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i})\cdot(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
 \]
- 
+
 \[
 =(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i+1}+p_{0}(1-\lambda)^{2}=
 \]
@@ -590,20 +656,20 @@ The performance can be observed in Table \ref{tab:Fitting-results-Akaike}.
 vs. $2\lambda$ distinguish between the basic model with a single
 $\lambda$ parameter and the more advanced model with two $\lambda$ parameters.}}
 \begin{tabular}{|c|c|c|c|c|}
-\hline 
+\hline
 
 
  & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
-\hline 
-\hline 
+\hline
+\hline
 Find $\overrightarrow{\lambda}$ & 96.9 \% & 34.4 \% & 80.2 \% & 77.1 \%\tabularnewline
-\hline 
+\hline
 Find $p_{o}$ & 92.2 \% & 82.8 \% & 89.6 \% & 93.8 \%\tabularnewline
-\hline 
+\hline
 Find $\overrightarrow{\lambda},\,p_{0}$ & 91.4 \% & 84.4 \% & 83.3 \% & 79.9 \%\tabularnewline
-\hline 
+\hline
 Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
-\hline 
+\hline
 \end{tabular}
 \par\end{centering}
 \end{table}
@@ -614,20 +680,20 @@ Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
 {\caption{\label{tab:Fitting-results-Akaike}Finding the optimal model type
 using the AIC.}
 \begin{tabular}{|c|c|c|c|c|}
-\hline 
+\hline
  & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
-\hline 
-\hline 
-Find model type & 
+\hline
+\hline
+Find model type &
 79.7\
- & 
+ &
 79.7\%
- & 
+ &
 83.3\%
- & 
+ &
 83.3\%
 \tabularnewline
-\hline 
+\hline
 \end{tabular}
 
 }
@@ -653,7 +719,8 @@ with compelling results when used for live betting against a bookmaker
 \cite{ja2019imam}.
 
 The source code containing all functionality mentioned in this article
-is freely available as open source at GitHub (https://github.com/tomaskourim/amistat2019).
+is freely available as open source at
+GitHub (https://github.com/tomaskourim/amistat2019).
 
 
 \bibliographystyle{plain}
