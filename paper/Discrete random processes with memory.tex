@@ -619,34 +619,27 @@ the model and its ability to be fitted on a real life problem. The
 data generation was performed using the Python programming language
 and its package NumPy. Following values of input parameters were chosen.
 The memory coefficient values varied in $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
-and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$.
+and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$.
 The starting transition probability $p_{0}$ was chosen from the set
 $P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$ and the length of the walk was
-\textbf{$n\in\{5,\,10,\,50,\,100\}$}. For each permutation of the
-parameters $100$ walks were generated.
+\textbf{$steps\in\{5,\,10,\,50,\,100\}$}. All four described models of the random walk were tested. For each permutation of the
+parameters and the model type $100$ walks were generated and considered as $1$ observation. $100$ observations of each set of walks were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks.
 
 Four different fitting tasks were performed on the generated dataset.
 Using the maximum likelihood estimate (MLE) \cite{rossi2018mathematical}
-and Python language with SciPy package the fitting tasks were
+and Python language with SciPy package the three fitting tasks were:
 
 \begin{itemize}
-\item Find $\overrightarrow{\lambda}$ with known $p_{0}$ and model type
-\item Find $p_{0}$ with known $\overrightarrow{\lambda}$ and model type
-\item Find $p_{0},\,\overrightarrow{\lambda}$ with known model type
-\item Find model type without any prior knowledge
+\item find $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ with known $p_{0}$ and model type,
+\item find $p_{0}$ with known  $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ and model type,
+\item find $p_{0}$ and $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ with known model type,
 \end{itemize}
-
-Table \ref{tab:Fitting-results} shows the results of the model and
-parameter fitting algorithms using the MLE method. The data shows that
-the model can be fitted with high accuracy. The only exception is
-finding the correct model type when the original model was based on
-a single $\lambda$ parameter. The maximum-likelihood estimate almost
-always prefers the model with two $\lambda$ parameters. To improve
-the results the Akaike Information Criterion $AIC=2k-2ln(\hat{L})$,
-which helps to correctly identify models with smaller number of parameters,
-was used. Here $k$ is the number of model parameters and $\hat{L}$
-is the maximal likelihood. This approach shows much better results.
-The performance can be observed in Table \ref{tab:Fitting-results-Akaike}.
+and using the Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$
+is the maximal likelihood and 
+which helps to correctly identify models with smaller number of parameters, the last task was:
+\begin{itemize}
+\item find model type without any prior knowledge.
+\end{itemize}
 
 \begin{table}
 
