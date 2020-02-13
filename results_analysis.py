@@ -135,7 +135,7 @@ def in_interval(datapoint: float, lower_bound: float, upper_bound: float) -> boo
     return True if lower_bound <= datapoint <= upper_bound else False
 
 
-def evaluate_point_prediction(result_row, data, true_value, name):
+def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
     mean = np.mean(data)
     median = np.median(data)
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
@@ -162,17 +162,28 @@ def evaluate_point_prediction(result_row, data, true_value, name):
     return result_row
 
 
-def evaluate_lambda_prediction(result_row, current_results, model_type, c_lambdas):
-    pass
+def evaluate_lambda_prediction(result_row: pd.DataFrame, current_results: pd.DataFrame, model_type: str,
+                               c_lambdas: List[float]) -> pd.DataFrame:
+    if 'two_lambdas' in model_type:
+        data = current_results.predicted_lambda0
+        name = "lambda0"
+        result_row = evaluate_point_prediction(result_row, data, c_lambdas[1], name)
+        data = current_results.predicted_lambda1
+        name = "lambda1"
+        return evaluate_point_prediction(result_row, data, c_lambdas[2], name)
+    else:
+        data = current_results.predicted_lambda
+        name = "lambda"
+        return evaluate_point_prediction(result_row, data, c_lambdas[0], name)
 
 
-def evaluate_p0_prediction(result_row, current_results, p0):
+def evaluate_p0_prediction(result_row: pd.DataFrame, current_results: pd.DataFrame, p0: float) -> pd.DataFrame:
     data = current_results.predicted_p0
     name = "p0"
     return evaluate_point_prediction(result_row, data, p0, name)
 
 
-def evaluate_model_prediction(result_row, current_results, model_type):
+def evaluate_model_prediction(result_row: pd.DataFrame, current_results: pd.DataFrame, model_type: str) -> pd.DataFrame:
     pass
 
 
@@ -237,7 +248,7 @@ def analyze_results(results: pd.DataFrame):
                     for prediction_type in PREDICTION_TYPES:
                         current_results = select_results(results, prediction_type, model_type, c_lambdas, step_count,
                                                          p0)
-                        fitting_results.append(analyze_prediction_combination(current_results, columns))
+                        fitting_results=fitting_results.append(analyze_prediction_combination(current_results, columns))
         model_types = results['model_type'].unique()
         prediction_types = results['prediction_type'].unique()
         for model_type in model_types:
