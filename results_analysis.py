@@ -168,6 +168,7 @@ def analyze_results(results: pd.DataFrame):
                                                          p0)
                         fitting_results = fitting_results.append(
                             analyze_prediction_combination(current_results, columns))
+    fitting_results.to_excel(f"fitting_evaluation_interval_size_{CONFIDENCE_INTERVAL_SIZE}.xlsx")
 
 
 def main():
