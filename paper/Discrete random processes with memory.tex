@@ -641,7 +641,13 @@ which helps to correctly identify models with smaller number of parameters, the 
 \item find model type without any prior knowledge.
 \end{itemize}
 
-Together there were $1024$ different fitting setups. To evaluate the quality of the fitting results four different testing criteria were tested for every setup. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval.
+To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model prediction simply the proportion of correctly predicted models was computed.
+
+Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10\%)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ while the performance in finding correct $p_0$ seems independent on the walk's length.[OVERIT] This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ play their role thorough the entire course of the walk. An example of the results can be seen in Table XXX. 
+
+There were some cases where the optimization algorithm provided a very bad estimate or did not converge at all. This was especially the case with the \emph{success rewarded} version of the model. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. An example of such results can be seen in Table XXX. Handling of such unwanted behavior will be subject of further research.
+
+Full results of all testing setups as well as several values of parameter $\alpha$ can be seen in the GitHub repository (see the last paragraph of the paper). 
 
 \begin{table}
 \begin{centering}
@@ -667,7 +673,7 @@ Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
 \end{table}
 
 \begin{table}
-\centering{}%
+\centering{}
 
 {\caption{\label{tab:Fitting-results-Akaike}Finding the optimal model type
 using the AIC.}
