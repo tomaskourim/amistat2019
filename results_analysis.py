@@ -184,7 +184,13 @@ def evaluate_p0_prediction(result_row: pd.DataFrame, current_results: pd.DataFra
 
 
 def evaluate_model_prediction(result_row: pd.DataFrame, current_results: pd.DataFrame, model_type: str) -> pd.DataFrame:
-    pass
+    data = current_results.predicted_model
+    result_row["predicted_model_success_rate"] = len(data[data == model_type]) / len(data)
+    result_row["mean_predicted_lambda"] = ""
+    result_row["mean_predicted_lambda0"] = ""
+    result_row["mean_predicted_lambda1"] = ""
+    result_row["mean_predicted_p0"] = ""
+    return result_row
 
 
 def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict) -> pd.DataFrame:
@@ -248,7 +254,8 @@ def analyze_results(results: pd.DataFrame):
                     for prediction_type in PREDICTION_TYPES:
                         current_results = select_results(results, prediction_type, model_type, c_lambdas, step_count,
                                                          p0)
-                        fitting_results=fitting_results.append(analyze_prediction_combination(current_results, columns))
+                        fitting_results = fitting_results.append(
+                            analyze_prediction_combination(current_results, columns))
         model_types = results['model_type'].unique()
         prediction_types = results['prediction_type'].unique()
         for model_type in model_types:
