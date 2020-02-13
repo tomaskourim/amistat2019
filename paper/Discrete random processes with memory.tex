@@ -641,8 +641,9 @@ which helps to correctly identify models with smaller number of parameters, the 
 \item find model type without any prior knowledge.
 \end{itemize}
 
-\begin{table}
+Together there were $1024$ different fitting setups. To evaluate the quality of the fitting results four different testing criteria were tested for every setup. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval.
 
+\begin{table}
 \begin{centering}
 {\caption{\label{tab:Fitting-results}Fitting results. \emph{SP }stands for
 \emph{success punished}, \emph{SR} for \emph{success rewarded}. $1\lambda$
@@ -650,8 +651,6 @@ vs. $2\lambda$ distinguish between the basic model with a single
 $\lambda$ parameter and the more advanced model with two $\lambda$ parameters.}}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-
-
  & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
 \hline
 \hline
