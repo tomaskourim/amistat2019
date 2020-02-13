@@ -37,7 +37,7 @@ def select_results(results: pd.DataFrame, prediction_type: str, model_type: str,
 
 
 def in_interval(datapoint: float, interval: List[float]) -> bool:
-    return True if interval[1] <= datapoint <= interval[1] else False
+    return True if interval[0] <= datapoint <= interval[1] else False
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
@@ -47,8 +47,8 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
     percentile_int = [np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint'),
                       np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')]
-    near_int = [min(1, true_value + true_value * (CONFIDENCE_INTERVAL_SIZE / 2)),
-                max(0, true_value - true_value * (CONFIDENCE_INTERVAL_SIZE / 2))]
+    near_int = [max(0, true_value - true_value * (CONFIDENCE_INTERVAL_SIZE / 2)),
+                min(1, true_value + true_value * (CONFIDENCE_INTERVAL_SIZE / 2))]
     conf_int_success = in_interval(true_value, conf_int)
     percentile_success = in_interval(true_value, percentile_int)
     near_mean_success = in_interval(mean, near_int)
