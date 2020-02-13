@@ -183,23 +183,30 @@ E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
 
 NEW:
 \begin{cor}
-The limit distribution of $X_t$ is the Bernoulli distribution with
-$p=\frac{1}{2}$. It is also the stationary distribution of the
-chain $X_t$.
+\label{cor-stac-dist}
+The distribution of $X_t$ converges to the Bernoulli (1,-1) distribution with
+$p=\frac{1}{2}$. This Bernoulli distribution is simultaneously the stationary distribution of the random sequence $X_t$.
 \end{cor}
 
 \begin{proof}
-As $X_t$ are Bernoulli(1,-1), they are fully characterized by
-their expectations, and it holds that $EX_t=2\cdot EP_{t-1}-1$.
-Then the limit distribution follows from Proposition \ref{PropEXt-succes} or also
-from the fact that $EP_t$ tends to $\frac{1}{2}$.
+As $X_t$ are Bernoulli (1,-1), their distributions are fully characterized by their expectations $EX_t$, and it holds that
+$EX_t=2\cdot EP_{t-1}-1$. Then the first statement of the Corollary follows from the fact that $EP_t\to \frac{1}{2}.$
 
-Let $EP_{t-1}=\frac{1}{2}$ be the characteristics of $X_t$, i.e.
+Further, let $EP_{t-1}=\frac{1}{2}$ be the characteristics of $X_t$, i.e.
 $EX_t=0$. As then
-$EP_t=EP_{t-1}\lambda+(1-\lambda)/2(1-EX_t)=\frac{1}{2}$, therefore
-$EX_{t+1}=0$ again.
+$EP_t=EP_{t-1}\lambda+(1-\lambda)/2(1-EX_t)=\frac{1}{2}$, therefore $EX_{t+1}=0$ again.
 
 \end{proof}
+
+\paragraph{\bf Remark:} Naturally, when the initial probability
+$p_0=\frac{1}{2}$, then $X_t,\,t=1,2,...$ is the stationary
+random sequence with the distribution given in Corollary
+\ref{cor-stac-dist}.
+
+Further, it is easy to show that the same holds for
+$EX_t$ from $t\ge2$ also when the parameter $\lambda = \frac{1}{2}$.
+
+%%%%%%%%%%%%%%%%
 
 \begin{prop}
 \label{PropVarP-succes}For all $t\geq1,$ it holds that
@@ -408,22 +415,20 @@ NEW STRONGER FORMULATION!!:
 
 \begin{prop}
 The sequence $X_t$ is a stationary sequence of Bernoulli random
-variables with values 1,-1 and $P(X_t=1)=p_0$.
+variables with values 1,-1 and with $P(X_t=1)=p_0$.
 \end{prop}
 \begin{proof}
 As the distribution of $X_t$ is fully given by $E(P_{t-1})$, the
 statement follows directly from Proposition \ref{PropReward2}.
 \end{proof}
 
-NEW: ale neni nutno
+NEW:
 
-Further, simulation studies revealed that the distribution of
-probabilities $P_t$ tends to Bernoulli (0,1) distribution with
-parameter (probability of 1) $p_0$. Moreover, the following holds:
+Further, the following holds:
 
 \begin{prop}
- This Bernoulli distribution is
-then the stationary distribution of the process $P_t$.
+Bernoulli (0,1) distribution with parameter $p_0$ is the stationary distribution of the random sequence
+$P_t$.
 \end{prop}
 \begin{proof}
 Let $P_{t-1}$ be either 1 with probability $p_0$, then $X_t=1$, or
