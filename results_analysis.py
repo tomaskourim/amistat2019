@@ -167,7 +167,8 @@ def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict)
 def analyze_results(results: pd.DataFrame):
     columns = MODEL_PARAMETERS
     columns.extend(["prediction_type", "mean_predicted_lambda", "mean_predicted_lambda0", "mean_predicted_lambda1",
-                    "mean_predicted_p0"])
+                    "mean_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0", "median_predicted_lambda1",
+                    "median_predicted_p0"])
     columns.extend(["predicted_lambda_conf_int_LB", "predicted_lambda_conf_int_UB", "predicted_lambda_percentile_LB",
                     "predicted_lambda_percentile_UP", "predicted_lambda_near_value_LB",
                     "predicted_lambda_near_value_UP"])
@@ -179,14 +180,22 @@ def analyze_results(results: pd.DataFrame):
                     "predicted_lambda1_near_value_UP"])
     columns.extend(["predicted_p0_conf_int_LB", "predicted_p0_conf_int_UB", "predicted_p0_percentile_LB",
                     "predicted_p0_percentile_UP", "predicted_p0_near_value_LB", "predicted_p0_near_value_UP"])
-    columns.extend(["predicted_lambda_conf_int_success", "predicted_lambda_percentile_success",
-                    "predicted_lambda_near_value_success"])
-    columns.extend(["predicted_lambda0_conf_int_success", "predicted_lambda0_percentile_success",
-                    "predicted_lambda0_near_value_success"])
-    columns.extend(["predicted_lambda1_conf_int_success", "predicted_lambda1_percentile_success",
-                    "predicted_lambda1_near_value_success"])
-    columns.extend(["predicted_p0_conf_int_success", "predicted_p0_percentile_success",
-                    "predicted_p0_near_value_success"])
+    columns.extend(["predicted_lambda_conf_int_mean_success", "predicted_lambda_percentile_mean_success",
+                    "predicted_lambda_near_value_mean_success"])
+    columns.extend(["predicted_lambda0_conf_int_mean_success", "predicted_lambda0_percentile_mean_success",
+                    "predicted_lambda0_near_value_mean_success"])
+    columns.extend(["predicted_lambda1_conf_int_mean_success", "predicted_lambda1_percentile_mean_success",
+                    "predicted_lambda1_near_value_mean_success"])
+    columns.extend(["predicted_p0_conf_int_mean_success", "predicted_p0_percentile_mean_success",
+                    "predicted_p0_near_value_mean_success"])    
+    columns.extend(["predicted_lambda_conf_int_median_success", "predicted_lambda_percentile_median_success",
+                    "predicted_lambda_near_value_median_success"])
+    columns.extend(["predicted_lambda0_conf_int_median_success", "predicted_lambda0_percentile_median_success",
+                    "predicted_lambda0_near_value_median_success"])
+    columns.extend(["predicted_lambda1_conf_int_median_success", "predicted_lambda1_percentile_median_success",
+                    "predicted_lambda1_near_value_median_success"])
+    columns.extend(["predicted_p0_conf_int_median_success", "predicted_p0_percentile_median_success",
+                    "predicted_p0_near_value_median_success"])
     columns.append("predicted_model_success_rate")
     fitting_results = pd.DataFrame(columns=columns)
 
