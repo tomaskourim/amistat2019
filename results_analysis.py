@@ -36,8 +36,8 @@ def select_results(results: pd.DataFrame, prediction_type: str, model_type: str,
     return results
 
 
-def in_interval(datapoint: float, lower_bound: float, upper_bound: float) -> bool:
-    return True if lower_bound <= datapoint <= upper_bound else False
+def in_interval(datapoint: float, interval: List[float]) -> bool:
+    return True if interval[1] <= datapoint <= interval[1] else False
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
@@ -45,22 +45,22 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     mean = float(np.mean(data))
     median = float(np.median(data))
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
-    lower_percentile = np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint')
-    upper_percentile = np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')
-    upper_near = min(1, true_value + true_value * (CONFIDENCE_INTERVAL_SIZE / 2))
-    lower_near = max(0, true_value - true_value * (CONFIDENCE_INTERVAL_SIZE / 2))
-    conf_int_success = in_interval(true_value, conf_int[0], conf_int[1])
-    percentile_success = in_interval(true_value, lower_percentile, upper_percentile)
-    near_mean_success = in_interval(mean, lower_near, upper_near)
-    near_median_success = in_interval(median, lower_near, upper_near)
+    percentile_int = [np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint'),
+                      np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')]
+    near_int = [min(1, true_value + true_value * (CONFIDENCE_INTERVAL_SIZE / 2)),
+                max(0, true_value - true_value * (CONFIDENCE_INTERVAL_SIZE / 2))]
+    conf_int_success = in_interval(true_value, conf_int)
+    percentile_success = in_interval(true_value, percentile_int)
+    near_mean_success = in_interval(mean, near_int)
+    near_median_success = in_interval(median, near_int)
     result_row[f"mean_predicted_{name}"] = mean
     result_row[f"median_predicted_{name}"] = median
     result_row[f"predicted_{name}_conf_int_LB"] = conf_int[0]
     result_row[f"predicted_{name}_conf_int_UB"] = conf_int[1]
-    result_row[f"predicted_{name}_percentile_LB"] = lower_percentile
-    result_row[f"predicted_{name}_percentile_UP"] = upper_percentile
-    result_row[f"predicted_{name}_near_value_LB"] = lower_near
-    result_row[f"predicted_{name}_near_value_UP"] = upper_near
+    result_row[f"predicted_{name}_percentile_LB"] = percentile_int[0]
+    result_row[f"predicted_{name}_percentile_UP"] = percentile_int[1]
+    result_row[f"predicted_{name}_near_value_LB"] = near_int[0]
+    result_row[f"predicted_{name}_near_value_UP"] = near_int[1]
     result_row[f"predicted_{name}_conf_int_success"] = conf_int_success
     result_row[f"predicted_{name}_percentile_success"] = percentile_success
     result_row[f"predicted_{name}_near_value_mean_success"] = near_mean_success
