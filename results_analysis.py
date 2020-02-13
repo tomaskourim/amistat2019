@@ -12,10 +12,14 @@ from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, 
     PREDICTION_TYPES
 
 
-def check_prediction(prediction: float, model_type: str, prediction_type: str, true_value: float):
-    if prediction >= 1 or prediction <= 0:
+def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> pd.Series:
+    if (prediction == 'not_fitted').any():
+        prediction = prediction[prediction != 'not_fitted']
+    if max(prediction) >= 1 or min(prediction) <= 0:
         logging.error(
-            f"Wrong prediction {prediction}. Model {model_type}, Predi_type {prediction_type}, true val {true_value}")
+            f"Wrong prediction {min(prediction), max(prediction)}. Model {model_type}, prediction type "
+            f"{prediction_type}, true value {true_value}")
+    return prediction
 
 
 def select_results(results: pd.DataFrame, prediction_type: str, model_type: str, c_lambdas: List[float],
@@ -37,6 +41,7 @@ def in_interval(datapoint: float, lower_bound: float, upper_bound: float) -> boo
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
+    data = check_prediction(data, result_row["model_type"][0], result_row["prediction_type"][0], true_value)
     mean = float(np.mean(data))
     median = float(np.median(data))
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
@@ -95,6 +100,7 @@ def evaluate_model_prediction(result_row: pd.DataFrame, current_results: pd.Data
 
 
 def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict) -> pd.DataFrame:
+    # gather input parameters
     input_parameters = current_results.head(1).reset_index(drop=True)
     input_parameters.drop(columns="repetition", inplace=True)
     renaming_columns = {}
@@ -102,12 +108,17 @@ def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict)
         renaming_columns[prediction_value] = f"mean_{prediction_value}"
     input_parameters.rename(columns=renaming_columns, inplace=True)
     input_parameters.drop(columns="mean_predicted_model", inplace=True)
+
     prediction_type = input_parameters.prediction_type[0]
     model_type = input_parameters.model_type[0]
     c_lambdas = [input_parameters.c_lambda[0], input_parameters.c_lambda0[0], input_parameters.c_lambda1[0]]
     p0 = input_parameters.p0[0]
+
+    # prepare result dataframe - actually only a row
     result_row = pd.DataFrame(columns=columns)
     result_row = result_row.append(input_parameters, sort=False)
+
+    # evaluate fitting
     if prediction_type == "only_lambda" or prediction_type == "all_parameters":
         result_row = evaluate_lambda_prediction(result_row, current_results, model_type, c_lambdas)
     if prediction_type == "only_p0" or prediction_type == "all_parameters":
