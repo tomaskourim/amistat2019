@@ -11,6 +11,8 @@
 \newtheorem{prop}[thm]{\protect\propositionname}
 \theoremstyle{plain}
 \newtheorem{cor}[thm]{\protect\corollaryname}
+\theoremstyle{plain}
+\newtheorem{rem}[thm]{\protect\remarkname}
 \numberwithin{equation}{section}
 
 \makeatother
@@ -18,6 +20,7 @@
 \providecommand{\corollaryname}{Corollary}
 \providecommand{\definitionname}{Definition}
 \providecommand{\propositionname}{Proposition}
+\providecommand{\remarkname}{Remark}
 
 
 \begin{document}
@@ -196,15 +199,13 @@ $EP_t=EP_{t-1}\lambda+(1-\lambda)/2(1-EX_t)=\frac{1}{2}$, therefore $EX_{t+1}=0$
 
 \end{proof}
 
-\paragraph{\bf Remark:} Naturally, when the initial probability
-$p_0=\frac{1}{2}$, then $X_t,\,t=1,2,...$ is the stationary
-random sequence with the distribution given in Corollary
-\ref{cor-stac-dist}.
-
-Further, it is easy to show that the same holds for
-$EX_t$ from $t\ge2$ also when the parameter $\lambda = \frac{1}{2}$.
-
-%%%%%%%%%%%%%%%%
+\begin{rem}
+Naturally, when the initial probability
+$p_0=\frac{1}{2}$, then $X_t,\,t=1,\,2,\dots$ is the stationary
+random sequence with the distribution given by Corollary
+\ref{cor-stac-dist}. Further, it is easy to show that the same holds for
+$EX_t$ from $t\ge2$ also for $\lambda = \frac{1}{2}$.
+\end{rem}
 
 \begin{prop}
 \label{PropVarP-succes}For all $t\geq1,$ it holds that
