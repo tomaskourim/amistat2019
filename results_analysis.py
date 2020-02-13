@@ -3,7 +3,9 @@ import pickle
 from datetime import datetime
 from typing import List
 
+import numpy as np
 import pandas as pd
+import scipy.stats as st
 
 from config import CONFIDENCE_INTERVAL_SIZE, MODEL_PARAMETERS, PREDICTION_VALUES
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, \
@@ -129,15 +131,48 @@ def select_results(results: pd.DataFrame, prediction_type: str, model_type: str,
     return results
 
 
-def evaluate_lambda_prediction(current_results, model_type, c_lambdas):
+def in_interval(datapoint: float, lower_bound: float, upper_bound: float) -> bool:
+    return True if lower_bound <= datapoint <= upper_bound else False
+
+
+def evaluate_point_prediction(result_row, data, true_value, name):
+    mean = np.mean(data)
+    median = np.median(data)
+    conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
+    lower_percentile = np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint')
+    upper_percentile = np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')
+    upper_near = min(1, true_value + true_value * (CONFIDENCE_INTERVAL_SIZE / 2))
+    lower_near = max(0, true_value - true_value * (CONFIDENCE_INTERVAL_SIZE / 2))
+    conf_int_success = in_interval(true_value, conf_int[0], conf_int[1])
+    percentile_success = in_interval(true_value, lower_percentile, upper_percentile)
+    near_mean_success = in_interval(mean, lower_near, upper_near)
+    near_median_success = in_interval(median, lower_near, upper_near)
+    result_row[f"mean_predicted_{name}"] = mean
+    result_row[f"median_predicted_{name}"] = median
+    result_row[f"predicted_{name}_conf_int_LB"] = conf_int[0]
+    result_row[f"predicted_{name}_conf_int_UB"] = conf_int[1]
+    result_row[f"predicted_{name}_percentile_LB"] = lower_percentile
+    result_row[f"predicted_{name}_percentile_UP"] = upper_percentile
+    result_row[f"predicted_{name}_near_value_LB"] = lower_near
+    result_row[f"predicted_{name}_near_value_UP"] = upper_near
+    result_row[f"predicted_{name}_conf_int_success"] = conf_int_success
+    result_row[f"predicted_{name}_percentile_success"] = percentile_success
+    result_row[f"predicted_{name}_near_value_mean_success"] = near_mean_success
+    result_row[f"predicted_{name}_near_value_median_success"] = near_median_success
+    return result_row
+
+
+def evaluate_lambda_prediction(result_row, current_results, model_type, c_lambdas):
     pass
 
 
-def evaluate_p0_prediction(current_results, model_type, p0):
-    pass
+def evaluate_p0_prediction(result_row, current_results, p0):
+    data = current_results.predicted_p0
+    name = "p0"
+    return evaluate_point_prediction(result_row, data, p0, name)
 
 
-def evaluate_model_prediction(current_results, model_type):
+def evaluate_model_prediction(result_row, current_results, model_type):
     pass
 
 
@@ -156,19 +191,19 @@ def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict)
     result_row = pd.DataFrame(columns=columns)
     result_row = result_row.append(input_parameters, sort=False)
     if prediction_type == "only_lambda" or prediction_type == "all_parameters":
-        result_row = evaluate_lambda_prediction(current_results, model_type, c_lambdas)
+        result_row = evaluate_lambda_prediction(result_row, current_results, model_type, c_lambdas)
     if prediction_type == "only_p0" or prediction_type == "all_parameters":
-        result_row = evaluate_p0_prediction(current_results, model_type, p0)
+        result_row = evaluate_p0_prediction(result_row, current_results, p0)
     if prediction_type == "everything":
-        result_row = evaluate_model_prediction(current_results, model_type)
+        result_row = evaluate_model_prediction(result_row, current_results, model_type)
     return result_row
 
 
 def analyze_results(results: pd.DataFrame):
     columns = MODEL_PARAMETERS
     columns.extend(["prediction_type", "mean_predicted_lambda", "mean_predicted_lambda0", "mean_predicted_lambda1",
-                    "mean_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0", "median_predicted_lambda1",
-                    "median_predicted_p0"])
+                    "mean_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0",
+                    "median_predicted_lambda1", "median_predicted_p0"])
     columns.extend(["predicted_lambda_conf_int_LB", "predicted_lambda_conf_int_UB", "predicted_lambda_percentile_LB",
                     "predicted_lambda_percentile_UP", "predicted_lambda_near_value_LB",
                     "predicted_lambda_near_value_UP"])
@@ -180,22 +215,14 @@ def analyze_results(results: pd.DataFrame):
                     "predicted_lambda1_near_value_UP"])
     columns.extend(["predicted_p0_conf_int_LB", "predicted_p0_conf_int_UB", "predicted_p0_percentile_LB",
                     "predicted_p0_percentile_UP", "predicted_p0_near_value_LB", "predicted_p0_near_value_UP"])
-    columns.extend(["predicted_lambda_conf_int_mean_success", "predicted_lambda_percentile_mean_success",
-                    "predicted_lambda_near_value_mean_success"])
-    columns.extend(["predicted_lambda0_conf_int_mean_success", "predicted_lambda0_percentile_mean_success",
-                    "predicted_lambda0_near_value_mean_success"])
-    columns.extend(["predicted_lambda1_conf_int_mean_success", "predicted_lambda1_percentile_mean_success",
-                    "predicted_lambda1_near_value_mean_success"])
-    columns.extend(["predicted_p0_conf_int_mean_success", "predicted_p0_percentile_mean_success",
-                    "predicted_p0_near_value_mean_success"])    
-    columns.extend(["predicted_lambda_conf_int_median_success", "predicted_lambda_percentile_median_success",
-                    "predicted_lambda_near_value_median_success"])
-    columns.extend(["predicted_lambda0_conf_int_median_success", "predicted_lambda0_percentile_median_success",
-                    "predicted_lambda0_near_value_median_success"])
-    columns.extend(["predicted_lambda1_conf_int_median_success", "predicted_lambda1_percentile_median_success",
-                    "predicted_lambda1_near_value_median_success"])
-    columns.extend(["predicted_p0_conf_int_median_success", "predicted_p0_percentile_median_success",
-                    "predicted_p0_near_value_median_success"])
+    columns.extend(["predicted_lambda_conf_int_success", "predicted_lambda_percentile_success",
+                    "predicted_lambda_near_value_mean_success", "predicted_lambda_near_value_median_success"])
+    columns.extend(["predicted_lambda0_conf_int_success", "predicted_lambda0_percentile_success",
+                    "predicted_lambda0_near_value_mean_success", "predicted_lambda0_near_value_median_success"])
+    columns.extend(["predicted_lambda1_conf_int_success", "predicted_lambda1_percentile_success",
+                    "predicted_lambda1_near_value_mean_success", "predicted_lambda1_near_value_median_success"])
+    columns.extend(["predicted_p0_conf_int_success", "predicted_p0_percentile_success",
+                    "predicted_p0_near_value_mean_success", "predicted_p0_near_value_median_success"])
     columns.append("predicted_model_success_rate")
     fitting_results = pd.DataFrame(columns=columns)
 
