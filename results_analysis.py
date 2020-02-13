@@ -136,8 +136,8 @@ def in_interval(datapoint: float, lower_bound: float, upper_bound: float) -> boo
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
-    mean = np.mean(data)
-    median = np.median(data)
+    mean = float(np.mean(data))
+    median = float(np.median(data))
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
     lower_percentile = np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint')
     upper_percentile = np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')
