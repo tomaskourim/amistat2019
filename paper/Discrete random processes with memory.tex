@@ -623,25 +623,20 @@ and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[
 The starting transition probability $p_{0}$ was chosen from the set
 $P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$ and the length of the walk was
 \textbf{$steps\in\{5,\,10,\,50,\,100\}$}. All four described models of the random walk were tested. For each permutation of the
-parameters and the model type $100$ walks were generated and considered as $1$ observation. $100$ observations of each set of walks were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks.
+parameters and the model type $100$ walks were generated and considered as $1$ ``observation''. Further, $100$ such ``observations'' of each set of walks were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks. 
 
-Four different fitting tasks were performed on the generated dataset.
-Using the maximum likelihood estimate (MLE) \cite{rossi2018mathematical}
-and Python language with SciPy package the three fitting tasks were:
+Four different fitting tasks were performed on each of the $100$ ``observations'', generating $100$ different estimates for each walk configuration. The tasks were:
 
 \begin{itemize}
 \item find $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ with known $p_{0}$ and model type,
 \item find $p_{0}$ with known  $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ and model type,
 \item find $p_{0}$ and $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ with known model type,
-\end{itemize}
-and using the Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$
-is the maximal likelihood and 
-which helps to correctly identify models with smaller number of parameters, the last task was:
-\begin{itemize}
 \item find model type without any prior knowledge.
 \end{itemize}
 
-To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model prediction simply the proportion of correctly predicted models was computed.
+The first three tasks consist of estimation of parameters and were based on the maximum likelihood estimate (MLE) \cite{rossi2018mathematical}. The evaluation of the likelihood function for given parameters is easy, however the computation of the log-likelihood derivatives is hardly tractable. The ML estimates were therefore obtained using numerical methods with the help of the Python programming language and it's scientific package SciPy. The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
+
+To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model estimation simply the proportion of correctly predicted models for each task, over all walk configurations was computed.
 
 Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10\%)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ while the performance in finding correct $p_0$ seems independent on the walk's length.[OVERIT] This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ play their role thorough the entire course of the walk. An example of the results can be seen in Table XXX. 
 
