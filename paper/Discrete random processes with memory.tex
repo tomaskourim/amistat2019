@@ -636,32 +636,29 @@ Four different fitting tasks were performed on each of the $100$ ``observations'
 
 The first three tasks consist of estimation of parameters and were based on the maximum likelihood estimate (MLE) \cite{rossi2018mathematical}. The evaluation of the likelihood function for given parameters is easy, however the computation of the log-likelihood derivatives is hardly tractable. The ML estimates were therefore obtained using numerical methods with the help of the Python programming language and it's scientific package SciPy. The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
 
-To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the $(1-\alpha)\%$ confidence interval was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(1-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model estimation simply the proportion of correctly predicted models for each task, over all walk configurations was computed.
+To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the standard $(100-\alpha)\%$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(100-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha/100}{2}\omega,\,\omega+\frac{\alpha/100}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model estimation simply the proportion of correctly predicted models for each task, over all walk configurations was computed.
 
-Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10\%)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ while the performance in finding correct $p_0$ seems independent on the walk's length.[OVERIT] This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ play their role thorough the entire course of the walk. An example of the results can be seen in Table XXX. 
+Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ play their role thorough the entire course of the walk. An example of the results can be seen in Table \ref{tab:Fitting-results}. 
 
-There were some cases where the optimization algorithm provided a very bad estimate or did not converge at all. This was especially the case with the \emph{success rewarded} version of the model. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. An example of such results can be seen in Table XXX. Handling of such unwanted behavior will be subject of further research.
+The previous statement, however, does not hold for the \emph{success rewarded} version of the model. In this case the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. An example of such results can be seen in Table XXX. Handling of such unwanted behavior will be subject of further research.
 
 Full results of all testing setups as well as several values of parameter $\alpha$ can be seen in the GitHub repository (see the last paragraph of the paper). 
 
 \begin{table}
 \begin{centering}
-{\caption{\label{tab:Fitting-results}Fitting results. \emph{SP }stands for
-\emph{success punished}, \emph{SR} for \emph{success rewarded}. $1\lambda$
-vs. $2\lambda$ distinguish between the basic model with a single
-$\lambda$ parameter and the more advanced model with two $\lambda$ parameters.}}
-\begin{tabular}{|c|c|c|c|c|}
+{\caption{\label{tab:Fitting-results}$p_0=0.8$ fitting results. \emph{SP }stands for
+\emph{success punished}, \emph{SR} for \emph{success rewarded}. The table shows the mean and median values of the 100 ``observations''  of the specific walk configuration together with the corresponding ``confidence'', ``percentile'' and ``proximity'' intervals.}}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
- & SP - 1$\lambda$ & SR - 1$\lambda$ & SP - 2$\lambda$ & SR - 2$\lambda$\tabularnewline
+ Type & $\overrightarrow{\lambda}$ & steps & mean & median & CI & percentile & proximity \tabularnewline
 \hline
+SP & 0.5 & 5 & 0.802 & 0.802 & $[0.796, 0.808]$ & $[0.74, 0.85]$ & $[0.76,0.84]$ \tabularnewline
 \hline
-Find $\overrightarrow{\lambda}$ & 96.9 \% & 34.4 \% & 80.2 \% & 77.1 \%\tabularnewline
+SR & 0.9 & 50 & 0.798 & 0.797 & $[0.796,0.801 ]$ & $[0.77, 0.82]$ & $[0.76,0.84]$ \tabularnewline
 \hline
-Find $p_{o}$ & 92.2 \% & 82.8 \% & 89.6 \% & 93.8 \%\tabularnewline
+SP & $[0.5,0.99]$ & 10 & 0.795 & 0.795 &$[0.79,0.8002]$  & $[0.74,0.84]$ & $[0.76,0.84]$ \tabularnewline
 \hline
-Find $\overrightarrow{\lambda},\,p_{0}$ & 91.4 \% & 84.4 \% & 83.3 \% & 79.9 \%\tabularnewline
-\hline
-Find model type & 1.6 \% & 1.6 \% & 87.5 \% & 89.6 \%\tabularnewline
+SR &  $[0.99,0.9]$ & 5 & 0.8 & 0.799 & $[0.797,0.803]$ & $[0.77,0.84]$ & $[0.76,0.84]$ \tabularnewline
 \hline
 \end{tabular}
 \par\end{centering}
