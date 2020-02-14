@@ -667,11 +667,9 @@ To evaluate the quality of the parameter fitting results four different testing 
 
 Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ play their role thorough the entire course of the walk. An example of the results can be seen in Table \ref{tab:Fitting-results}. Some results of the model prediction can be observed in Table \ref{tab:Fitting-results-model}
 
-The previous statement, however, does not hold for the \emph{success rewarded} version of the model. In this case the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. An example of such results can be seen in Table XXX. Handling of such unwanted behavior will be subject of further research.
+For the \emph{success rewarded} version of the model the fitting results were rather unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. Handling of such unwanted behavior will be subject of further research.
 
 Full results of all testing setups as well as several values of parameter $\alpha$ can be seen in the GitHub repository (see the last paragraph of the paper). 
-
-
 
 \begin{table}
 \centering{}
@@ -692,12 +690,6 @@ SP2 & $[0.99,0.9]$  & $0.99$  & 50 & 0.99 \tabularnewline
 \end{tabular}
 }
 \end{table}
-
-
-
-
-
-
 
 \section{Conclusion\label{sec:Conclusion}}
 
