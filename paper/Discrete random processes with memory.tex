@@ -203,8 +203,7 @@ $EP_t=EP_{t-1}\lambda+(1-\lambda)/2(1-EX_t)=\frac{1}{2}$, therefore $EX_{t+1}=0$
 Naturally, when the initial probability
 $p_0=\frac{1}{2}$, then $X_t,\,t=1,\,2,\dots$ is the stationary
 random sequence with the distribution given by Corollary
-\ref{cor-stac-dist}. Further, it is easy to show that the same holds for
-$EX_t$ from $t\ge2$ also for $\lambda = \frac{1}{2}$.
+\ref{cor-stac-dist}. Further, it is easy to show that the same holds also for $\lambda = \frac{1}{2}$ and $t\ge2$.
 \end{rem}
 
 \begin{prop}
@@ -306,6 +305,27 @@ computed theoretical values of transition probability variance and
 its expected value and the actual observed values of average transition
 probability and variance for different starting probabilities $p_{0}$
 and memory coefficients $\lambda$.
+
+
+\begin{prop}
+For all $t\geq1,$ it holds that
+\begin{equation}
+Var(X_{t})=1-(2\lambda-1)^{2(t-1)}(2p_{0}-1)^2.
+\end{equation}
+\end{prop}
+\begin{proof}
+The fact that $X_t$ are Bernoulli $(1,\,-1)$ implies $E(X_{t}^2)=1$. The statement then follows directly from the definition variance and Proposition \ref{PropEXt-succes}.
+\end{proof}
+
+
+\begin{cor}
+For $t\rightarrow+\infty,$ \textup{
+\begin{equation}
+\lim_{t\to+\infty}Var(X_{t})=1.
+\end{equation}
+}
+\end{cor}
+
 
 \begin{figure}
  \begin{center}
