@@ -8,7 +8,8 @@ __pycache__/
 *.lyx~
 paper/presentation/Discrete random walks with memory_presentation.synctex.gz
 test.py
-paper/Amistat_zdroj.pdf
+results.pkl
 paper/Discrete random processes with memory.synctex.gz
+paper/Amistat_zdroj.pdf
 results archive/
 results_total.pkl
