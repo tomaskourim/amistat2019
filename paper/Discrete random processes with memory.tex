@@ -307,14 +307,14 @@ probability and variance for different starting probabilities $p_{0}$
 and memory coefficients $\lambda$.
 
 
-\begin{prop}
+\begin{prop}\label{propVarX}
 For all $t\geq1,$ it holds that
 \begin{equation}
 Var(X_{t})=1-(2\lambda-1)^{2(t-1)}(2p_{0}-1)^2.
 \end{equation}
 \end{prop}
 \begin{proof}
-The fact that $X_t$ are Bernoulli $(1,\,-1)$ implies $E(X_{t}^2)=1$. The statement then follows directly from the definition variance and Proposition \ref{PropEXt-succes}.
+The fact that $X_t$ are Bernoulli $(1,\,-1)$ implies $E(X_{t}^2)=1$. The statement then follows directly from the definition of variance and Proposition \ref{PropEXt-succes}.
 \end{proof}
 
 
@@ -441,20 +441,16 @@ As the distribution of $X_t$ is fully given by $E(P_{t-1})$, the
 statement follows directly from Proposition \ref{PropReward2}.
 \end{proof}
 
-NEW:
-
-Further, the following holds:
-
 \begin{prop}
-Bernoulli $(0,\,1)$ distribution with parameter $p_0$ is the stationary distribution of the random sequence
+Bernoulli $(0,\,1)$ distribution with parameter $q$ is the stationary distribution of the random sequence
 ${\{P_{t}\}}_{t=1}^{\infty}$.
 \end{prop}
 \begin{proof}
-Let $P_{t-1}$ be either 1 with probability $p_0$, then $X_t=1$, or
-$P_{t-1}=0$ with $1-p_0$, then $X_t=-1$.  As $P_t=\lambda
+Let $P_{t-1}$ be either 1 with probability $q$, then $X_t=1$, or
+$P_{t-1}=0$ with $1-q$, then $X_t=-1$.  As $P_t=\lambda
 P_{t-1}+(1-\lambda)(1+X_t)/2,$ it follows that with probability
-$p_0$ $P_t=\lambda\cdot 1+(1-\lambda)\cdot 2/2=1$, while with
-probability $1-p_0$ $P_t=\lambda\cdot 0+(1-\lambda)\cdot 0/2=0$.
+$q$ $P_t=\lambda\cdot 1+(1-\lambda)\cdot 2/2=1$, while with
+probability $1-q$ $P_t=\lambda\cdot 0+(1-\lambda)\cdot 0/2=0$.
 It means that $P_t$ has the same Bernoulli distribution as
 $P_{t-1}$.
 \end{proof}
@@ -555,6 +551,18 @@ For $t\rightarrow+\infty,$ \textup{
 \]
 }
 \end{cor}
+
+\begin{prop}
+For all $t\geq1,$ it holds that
+\begin{equation}
+Var(X_{t})=4p_0(1-p_0).
+\end{equation}
+\end{prop}
+\begin{proof}
+As $E(X_t)=2p_0-1$ the proof follows similarly as in Proposition \ref{propVarX} directly from the definition of variance.
+\end{proof}
+
+
 
 \subsection{Model with two $\lambda$ parameters}
 
