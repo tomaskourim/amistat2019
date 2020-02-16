@@ -72,9 +72,9 @@ which together with the idea of \emph{self-exciting point processes}
 \cite{hawkes1971spectra} and the perspective of model applications
 in reliability analysis and also in sports statistics, served as an
 inspiration to the random walk with varying transition probabilities
-introduced by Kou\v{r}im \cite{ja2017ddny, ja2019teze}. The definition of the walk falls into a rather broad class of processes introduced and described in the paper of
-Davis and Liu (2016) \cite{davis2012theory}. However, other assumptions, e.g. the condition of contraction, are
-not fulfilled by the walk and thus the conclusions cannot be applied.
+introduced by Kou\v{r}im \cite{ja2017ddny, ja2019teze}. The definition of the walk falls into a rather broad class of processes described for instance in the paper of
+Davis and Liu \cite{davis2012theory}. However, other assumptions, e.g. the condition of contraction, are
+not fulfilled by the walk and thus the conclusions from  \cite{davis2012theory} cannot be applied.
 
 In the present paper, the theoretical properties of the model are
 described and further examined, numerical procedures of model
@@ -128,8 +128,8 @@ ${\{P_{n}\}}_{n=1}^{\infty}$ transition probabilities.
 
 The random walk with varying probabilities was first introduced in
 \cite{ja2017ddny} and further elaborated in \cite{ja2019teze}.
-Basic properties of the walk were also described in the previous
-work. Namely, the value of a transition probability $P_{t+k}$ at
+Basic properties of the walk were also described in these previous
+papers. Namely, the value of a transition probability $P_{t+k}$ at
 each step $t+k,\;t,\,k>0$ can be computed from the knowledge of
 transition probability $P_{t}$ and the realization of the walk
 $X_{t+1},\,\dots,\,X_{t+k}$ using formula
@@ -348,8 +348,8 @@ computed from 1000 simulated realizations of each parameter combination.}
 \subsection{Success rewarding model}
 
 The basic definition of the random walk (Definition \ref{success_punished})
-presents a \emph{success punishing }model, meaning the probability
-of an event is decreased every time that event occurs. Opposite situation
+presents a \emph{success punishing} model, meaning that the probability
+of an event is decreased every time event occurs. Opposite situation
 can be considered, where the probability of an event is increased
 every time that event occurs. Formally, such a random walk is defined
 in a following manner \cite{ja2019teze}:
@@ -371,13 +371,8 @@ for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
 position, is a random walk with varying probabilities - \emph{success
 rewarding}.
 \end{defn}
-
-In this section, all variables are considered to be related to the
-\emph{success rewarding} model, whereas the variables with the same
-notations ($P,\,X,\,S$) from previous Section \ref{sec:Random-walk-with}
-are considered to be related to the model from Definition \ref{success_punished}.
-
-The \emph{success rewarding} version of the model behaves differently
+In this section, all variables ($P,\,X,\,S$) are related to the
+\emph{success rewarding} model. The \emph{success rewarding} version of the model behaves differently
 than the \emph{success punishing} version, which can be observed with
 the help of the following propositions.
 
@@ -558,10 +553,8 @@ Var(X_{t})=4p_0(1-p_0).
 \end{equation}
 \end{prop}
 \begin{proof}
-As $E(X_t)=2p_0-1$ the proof follows similarly as in Proposition \ref{propVarX} directly from the definition of variance.
+As $E(X_t)=2p_0-1$ and $E(X_t^2)=1$ the proof follows similarly as in Proposition \ref{propVarX} directly from the definition of variance.
 \end{proof}
-
-
 
 \subsection{Two-parameter models}
 
@@ -682,21 +675,22 @@ SP2 & $[0.5,0.99]$ & 10 & 0.795 & 0.795 &$[0.79,0.8002]$  & $[0.74,0.84]$ & $[0.
 \hline
 SR2 &  $[0.99,0.9]$ & 5 & 0.8 & 0.799 & $[0.797,0.803]$ & $[0.77,0.84]$ & $[0.76,0.84]$ \tabularnewline
 \hline
+\hline
 SR & $0.9$ & 10 & 0.501 & 0.508 & $[0.494,0.508]$ & $[0.44,0.56]$ & $[0.48,0.53]$ \tabularnewline
 \hline
 SP & $0.9$ & 50 & 0.501 & 0.501 & $[0.499,0.503]$ & $[0.48,0.52]$ & $[0.48,0.53]$ \tabularnewline
 \hline
 SP2 & $0.8$ & 100 & 0.501 & 0.502 & $[0.499,0.503]$ & $[0.48,0.53]$ & $[0.48,0.53]$ \tabularnewline
 \hline
-SR2 & $0.99$ & 5 & 0.497 & 0.497 & $[0449.,0.544]$ & $[0.01,0.99]$ & $[0.48,0.53]$ \tabularnewline
+SR2 & $0.9$ & 100 & 0.501 & 0.505 & $[0.496,0.506]$ & $[0.44,0.54]$ & $[0.48,0.53]$ \tabularnewline
 \hline
 \end{tabular}
 \par\end{centering}
 \end{table}
 
-To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the standard $(100-\alpha)\%$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(100-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha/100}{2}\omega,\,\omega+\frac{\alpha/100}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model estimation simply the proportion of correctly predicted models for each task, over all walk configurations was computed.
+To evaluate the quality of the parameter fitting results four different testing criteria were tested. First, the standard $(100-\alpha)\%$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{\alpha}{2}-th$ and $(100-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. Finally, a ``proximity'' interval was constructed based on the true parameter value $\omega$ as $[\omega-\frac{\alpha/100}{2}\omega,\,\omega+\frac{\alpha/100}{2}\omega]$ and it was tested whether the mean fitted parameter value and median fitted parameter value fell into that interval. To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
 
-Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk. An example of the results can be seen in Table \ref{tab:Fitting-results}. Some results of the model prediction can be observed in Table \ref{tab:Fitting-results-model}
+Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk. An example of the results can be seen in Table \ref{tab:Fitting-results}. Some results of the model type prediction task can be observed in Table \ref{tab:Fitting-results-model}.
 
 For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. Handling of such unwanted behavior will be subject of further research.
 
