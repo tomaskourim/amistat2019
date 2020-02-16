@@ -1,6 +1,5 @@
 # used to generate useful graphics
 import logging
-import sys
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -24,11 +23,13 @@ def main(simulated_property="probability"):
                 two_lambda = True
             else:
                 two_lambda = False
-            min_y = sys.float_info.max
-            max_y = sys.float_info.min
+            # TODO handle with dignity
+            min_y = 0 if simulated_property == "probability" else -3
+            max_y = 1 if simulated_property == "probability" else 30
             for p_index, starting_probability in enumerate(START_PROBABILITIES_TESTING):
                 plt.subplot(plt_rows, plt_columns, p_index + 1)
                 plt.title(r'$p_{0}=%.2f$' % starting_probability)
+                plt.axis([0, step_count, min_y, max_y])
                 plt.xlabel('steps')
                 for index, c_lambda in enumerate(C_LAMBDAS_TESTING):
                     if two_lambda:
@@ -59,12 +60,12 @@ def main(simulated_property="probability"):
                         plt.plot(var_p_t_array(step_count, starting_probability, c_lambda, walk_type),
                                  expected_styles[index], linewidth=0.7)
                     plt.legend(loc='best', fontsize='medium')
-            plt.axis([0, step_count, min_y, max_y])
 
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
             fig.show()
-            fig.savefig(f'e_{simulated_property}_{REPETITIONS_OF_WALK}_walks_{step_count}_steps_type_{walk_type}.pdf', dpi=100)
+            fig.savefig(f'e_{simulated_property}_{REPETITIONS_OF_WALK}_walks_{step_count}_steps_type_{walk_type}.pdf',
+                        dpi=100)
 
 
 if __name__ == '__main__':
@@ -97,6 +98,6 @@ if __name__ == '__main__':
     logger.addHandler(error_handler)
     logger.addHandler(stdout_handler)
 
-    main(simulated_property="probability")
+    main(simulated_property="position")
     end_time = datetime.now()
     logging.info(f"Duration: {(end_time - start_time)}")
