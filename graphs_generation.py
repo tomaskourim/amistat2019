@@ -28,9 +28,11 @@ def main(simulated_property="probability"):
             max_y = 1 if simulated_property == "probability" else 30
             for p_index, starting_probability in enumerate(START_PROBABILITIES_TESTING):
                 plt.subplot(plt_rows, plt_columns, p_index + 1)
-                plt.title(r'$p_{0}=%.2f$' % starting_probability)
+                plt.title(r'$p_{0}=%.2f$' % starting_probability, fontsize=20)
                 plt.axis([0, step_count, min_y, max_y])
-                plt.xlabel('steps')
+                plt.xlabel('steps', fontsize=18)
+                plt.xticks(fontsize=14)
+                plt.yticks(fontsize=14)
                 for index, c_lambda in enumerate(C_LAMBDAS_TESTING):
                     if two_lambda:
                         c_lambdas = C_LAMBDA_PAIRS_TESTING[index]
@@ -50,8 +52,6 @@ def main(simulated_property="probability"):
                         variance = np.var(developments, axis=0)
                     else:
                         raise Exception("unexpected property type")
-                    min_y = min(min(mean), min(variance), min_y)
-                    max_y = max(max(mean), max(variance), max_y)
                     plt.plot(mean, mean_styles[index], label=label)
                     plt.plot(variance, var_styles[index])
                     if not two_lambda and simulated_property == "probability":
@@ -59,7 +59,7 @@ def main(simulated_property="probability"):
                                  expected_styles[index], linewidth=0.7)
                         plt.plot(var_p_t_array(step_count, starting_probability, c_lambda, walk_type),
                                  expected_styles[index], linewidth=0.7)
-                    plt.legend(loc='best', fontsize='medium')
+                    plt.legend(loc='best', fontsize='xx-large', markerscale=3)
 
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
@@ -99,5 +99,6 @@ if __name__ == '__main__':
     logger.addHandler(stdout_handler)
 
     main(simulated_property="position")
+    main(simulated_property="probability")
     end_time = datetime.now()
     logging.info(f"Duration: {(end_time - start_time)}")
