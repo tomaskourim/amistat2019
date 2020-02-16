@@ -313,10 +313,14 @@ For $t\rightarrow+\infty,$ \textup{
 }
 \end{cor}
 
+\begin{rem}\label{rem:success_pun_varS}
+The variance of the position of the walker was studied with the help of computer simulations, presented in Figure \ref{fig:position-punished}. The simulations show that the variance grows to infinity with $t\rightarrow\infty$ depending on both $p_0$ and $\lambda$. The derivation of an exact formula will be subject of further studies.
+\end{rem}
+
 
 \begin{figure}
  \begin{center}
-\includegraphics[width=1\textwidth]{../simulations/ept_1000_walks_100_steps_type_success_punished}
+\includegraphics[width=1\textwidth]{../simulations/e_probability_1000_walks_100_steps_type_success_punished}
 \caption{\label{fig:The-development-punished}The development of the observed
 average transition probability (dotted, upper part of the figure)
 of a \emph{success punishing} version of the random walk and its observed
@@ -326,6 +330,18 @@ the theoretical values computed using (\ref{eq:EPt}) and Proposition
 computed from 1000 simulated realizations of each parameter combination.}
  \end{center}
 \end{figure}
+
+\begin{figure}
+ \begin{center}
+\includegraphics[width=1\textwidth]{../simulations/e_position_1000_walks_100_steps_type_success_punished}
+\caption{\label{fig:position-punished}The observed
+average position of the walker (dotted, ``thicker'')
+of a \emph{success punishing} version of the random walk and its observed
+variance (dot-dashed lines, ``thinner''). The values were
+computed from 1000 simulated realizations of each parameter combination.}
+ \end{center}
+\end{figure}
+
 
 \section{Random walk with varying transition probability - alternatives\label{sec:Random-walk-aternatives}}
 
@@ -603,7 +619,7 @@ This interesting property of the walk will be subject to further study.
 
 \begin{figure}
  \begin{center}
-\includegraphics[width=1\textwidth]{../simulations/ept_1000_walks_100_steps_type_success_punished_two_lambdas}
+\includegraphics[width=1\textwidth]{../simulations/e_probability_1000_walks_100_steps_type_success_punished_two_lambdas}
 \caption{\label{fig:Development-punish2l}The development of the observed average
 transition probability (dotted, upper part of the figure) of a \emph{two-parameter success
 punishing} version of the random walk and its observed
