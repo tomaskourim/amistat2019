@@ -21,7 +21,7 @@ def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas:
     for i in range(1, walk_steps + 1):
         # next step using actual probability
         steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))
-        development.append(steps[i - 1] + steps[i])
+        development.append(development[i - 1] + steps[i])
         probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], walk_type))
     return CompleteWalk(probabilities, steps, development)
 
