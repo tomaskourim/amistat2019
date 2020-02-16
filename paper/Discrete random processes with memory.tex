@@ -547,7 +547,7 @@ As $E(X_t)=2p_0-1$ the proof follows similarly as in Proposition \ref{propVarX} 
 
 
 
-\subsection{Model with two $\lambda$ parameters}
+\subsection{Two-parameter models}
 
 Another level of complexity can be added by using separate $\lambda$
 parameters for each direction of the walk. Again, two ways of handling
@@ -567,8 +567,8 @@ P_{i}=\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1})
 \end{equation}
 The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
 for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
-position, is a random walk with varying probabilities - \emph{success
-punished two $\lambda$}.
+position, is a random walk with varying probabilities - \emph{two-parameter success
+punished}.
 \end{defn}
 
 The \emph{success rewarded} version of the model can be defined similarly.
@@ -586,14 +586,14 @@ P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1})
 \]
 The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
 for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
-position, is a random walk with varying probabilities - \emph{success
-rewarded two $\lambda$}.
+position, is a random walk with varying probabilities - \emph{two-parameter success
+rewarded}.
 \end{defn}
 
 Derivation of model properties is not so straightforward. The development
 of transition probability and its variance for different starting
 probabilities $p_{0}$ and memory coefficients pairs $\bar{\lambda}$
-for the \emph{success punished two $\lambda$ }version of the model
+for the \emph{two-parameter success punished} version of the model
 is shown on Figure \ref{fig:Development-punish2l}. Similarly as in
 the single $\lambda$ version of the model, the variance seems to
 depend on the $\bar{\lambda}$ pair only. The expected transition
@@ -605,8 +605,8 @@ This interesting property of the walk will be subject to further study.
  \begin{center}
 \includegraphics[width=1\textwidth]{../simulations/ept_100_walks_100_steps_type_success_punished_two_lambdas}
 \caption{\label{fig:Development-punish2l}The development of the observed average
-transition probability (dotted, upper part of the figure) of a \emph{success
-punished two $\lambda$ }version of the random walk and its observed
+transition probability (dotted, upper part of the figure) of a \emph{two-parameter success
+punished} version of the random walk and its observed
 variance (dot-dashed lines, lower part of the figure). The values
 were computed from 100 simulated realizations of each parameter
 combination.}
