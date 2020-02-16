@@ -319,7 +319,7 @@ For $t\rightarrow+\infty,$ \textup{
 \includegraphics[width=1\textwidth]{../simulations/ept_100_walks_100_steps_type_success_punished}
 \caption{\label{fig:The-development-punished}The development of the observed
 average transition probability (dotted, upper part of the figure)
-of a \emph{success punished} version of the random walk and its observed
+of a \emph{success punishing} version of the random walk and its observed
 variance (dot-dashed lines, lower part of the figure) compared to
 the theoretical values computed using (\ref{eq:EPt}) and Proposition
 \ref{PropVarP-succes} (same colors, solid lines). The values were
@@ -329,10 +329,10 @@ computed from 100 simulated realizations of each parameter combination.}
 
 \section{Random walk with varying transition probability - alternatives\label{sec:Random-walk-aternatives}}
 
-\subsection{Success rewarded model}
+\subsection{Success rewarding model}
 
 The basic definition of the random walk (Definition \ref{success_punished})
-presents a \emph{success punished }model, meaning the probability
+presents a \emph{success punishing }model, meaning the probability
 of an event is decreased every time that event occurs. Opposite situation
 can be considered, where the probability of an event is increased
 every time that event occurs. Formally, such a random walk is defined
@@ -353,16 +353,16 @@ P_{i}=\lambda P_{i-1}+\frac{1}{2}(1-\lambda)(1+X_{i})\;\;\forall i\geq2.\label{e
 The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
 for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
 position, is a random walk with varying probabilities - \emph{success
-rewarded}.
+rewarding}.
 \end{defn}
 
 In this section, all variables are considered to be related to the
-\emph{success rewarded }model, whereas the variables with the same
+\emph{success rewarding} model, whereas the variables with the same
 notations ($P,\,X,\,S$) from previous Section \ref{sec:Random-walk-with}
 are considered to be related to the model from Definition \ref{success_punished}.
 
-The \emph{success rewarded} version of the model behaves differently
-than the \emph{success punished} version, which can be observed with
+The \emph{success rewarding} version of the model behaves differently
+than the \emph{success punishing} version, which can be observed with
 the help of the following propositions.
 
 \begin{prop}
@@ -551,7 +551,7 @@ As $E(X_t)=2p_0-1$ the proof follows similarly as in Proposition \ref{propVarX} 
 
 Another level of complexity can be added by using separate $\lambda$
 parameters for each direction of the walk. Again, two ways of handling
-success are available. The \emph{success punished} version is defined
+success are available. The \emph{success punishing} version is defined
 as follows.
 
 \begin{defn}
@@ -568,10 +568,10 @@ P_{i}=\frac{1}{2}[(1+X_{i})\lambda_{0}P_{i-1}+(1-X_{i})(1-\lambda_{1}(1-P_{i-1})
 The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
 for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
 position, is a random walk with varying probabilities - \emph{two-parameter success
-punished}.
+punishing}.
 \end{defn}
 
-The \emph{success rewarded} version of the model can be defined similarly.
+The \emph{success rewarding} version of the model can be defined similarly.
 
 \begin{defn}
 \label{2lambdas-reward}Let ${\{X_{n}\}}_{n=1}^{\infty}$ and $p_{0}$
@@ -587,13 +587,13 @@ P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1})
 The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},\;S_{N}=S_{0}+\sum_{i=1}^{N}X_{i}$
 for $n\in\mathbb{N}$, with $S_{0}\in\mathbb{R}$ some given starting
 position, is a random walk with varying probabilities - \emph{two-parameter success
-rewarded}.
+rewarding}.
 \end{defn}
 
 Derivation of model properties is not so straightforward. The development
 of transition probability and its variance for different starting
 probabilities $p_{0}$ and memory coefficients pairs $ [\lambda_{0},\,\lambda_{1}]=\bar{\lambda}$
-for the \emph{two-parameter success punished} version of the model
+for the \emph{two-parameter success punishing} version of the model
 is shown on Figure \ref{fig:Development-punish2l}. Similarly as in
 the single $\lambda$ version of the model, the variance seems to
 depend on the $\bar{\lambda}$ pair only. The expected transition
@@ -606,7 +606,7 @@ This interesting property of the walk will be subject to further study.
 \includegraphics[width=1\textwidth]{../simulations/ept_100_walks_100_steps_type_success_punished_two_lambdas}
 \caption{\label{fig:Development-punish2l}The development of the observed average
 transition probability (dotted, upper part of the figure) of a \emph{two-parameter success
-punished} version of the random walk and its observed
+punishing} version of the random walk and its observed
 variance (dot-dashed lines, lower part of the figure). The values
 were computed from 100 simulated realizations of each parameter
 combination.}
@@ -619,8 +619,8 @@ combination.}
 The presented model of a random walk can be further developed and
 more versions can be derived and described. These variants include
 but are not limited to multidimensional walk (with either one or multiple
-$\lambda$ parameters, again with \emph{success rewarded }or \emph{success
-punished}), a walk with the transition probability explicitly dependent
+$\lambda$ parameters, again with \emph{success rewarding} or \emph{success
+punishing}), a walk with the transition probability explicitly dependent
 on more than the last step, i.e. $P_{t}(k)\sim P_{t}(X_{t},\,X_{t-1},\dots,X_{t-(k-1)})$,
 or the walk with $\lambda$ parameter not constant, but a function
 of the time $t$, i.e. $P_{t}(\lambda(t)$). Detailed properties of
@@ -653,7 +653,7 @@ The first three tasks consist of estimation of parameters and were based on the 
 
 \begin{table}
 \begin{centering}
-{\caption{\label{tab:Fitting-results} The first four rows of the table show the results of fitting $p_0$ with true value $0.8$ and known $\tilde{\lambda}$ (second column), the last four the results of fitting $\lambda$ or $\lambda_0$ respectively with true value $0.5$ (and corresponding $\lambda_1=0.8$) and known $p_0$ (second column). The mean and median values of the 100 ``observations''  of the specific walk configuration are presented together with the corresponding ``confidence'', ``percentile'' and ``proximity'' intervals.  \emph{SP }stands for \emph{success punished}, \emph{SR} for \emph{success rewarded}, the number $2$ denotes the model with two $\lambda$ parameters.}}
+{\caption{\label{tab:Fitting-results} The first four rows of the table show the results of fitting $p_0$ with true value $0.8$ and known $\tilde{\lambda}$ (second column), the last four the results of fitting $\lambda$ or $\lambda_0$ respectively with true value $0.5$ (and corresponding $\lambda_1=0.8$) and known $p_0$ (second column). The mean and median values of the 100 ``observations''  of the specific walk configuration are presented together with the corresponding ``confidence'', ``percentile'' and ``proximity'' intervals.  \emph{SP }stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}}
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline
  Type & $\tilde{\lambda}$ or $p_0$ & steps & mean & median & CI & percentile & proximity \tabularnewline
@@ -682,7 +682,7 @@ To evaluate the quality of the parameter fitting results four different testing 
 
 Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha=10)$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk. An example of the results can be seen in Table \ref{tab:Fitting-results}. Some results of the model prediction can be observed in Table \ref{tab:Fitting-results-model}
 
-For the \emph{success rewarded} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. Handling of such unwanted behavior will be subject of further research.
+For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<p_t<1, \forall t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. Handling of such unwanted behavior will be subject of further research.
 
 Full results of all testing setups as well as several values of parameter $\alpha$ can be seen in the GitHub repository (see the last paragraph of the paper). 
 
@@ -720,7 +720,7 @@ well processes where either a single or just a small number of events
 can significantly affect the future development of the process. Such
 processes can be found in reliability analysis, medical as well as
 econometric studies, and very often in sports modeling. The authors
-recently published a study where the success rewarded model was applied
+recently published a study where the success rewarding model was applied
 to predict the \emph{in-play} development of a Grand Slam tennis matches
 with compelling results when used for live betting against a bookmaker
 \cite{ja2019imam}.
