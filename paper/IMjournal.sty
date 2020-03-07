@@ -1,0 +1,124 @@
+% \ProvidesPackage{IMjournal}[package wrapper for journals published by IM]
+
+\def\ehyph{\language=0 }
+\catcode`@=11
+
+\newif\ifMB\newif\ifAM\newif\ifCMJ
+\textwidth=28.5cc \textheight=42cc  %%%%  format B 5
+\footskip3\baselineskip
+
+\normalparindent=10dd
+\parindent=\normalparindent
+\newdimen\footindent \footindent\parindent
+\smallskipamount=3dd plus 1dd minus 1dd
+\medskipamount=6dd plus 2dd minus 2dd
+\bigskipamount=12dd plus 4dd minus 4dd
+\normalbaselineskip=13dd
+\abovedisplayskip=12dd plus 3dd minus 6dd
+\belowdisplayskip=12dd plus 3dd minus 6dd
+\baselineskip 13dd
+\linespacing\baselineskip
+\emergencystretch 1em
+\clubpenalty 10000
+\widowpenalty 10000
+
+%% necessary fonts
+\font\ninerm cmr9
+\font\ninesc cmcsc9
+% \font\sprm   cmrr10
+\let\sprm\relax
+
+% \let\uppercasetext@\uppercasenonmath
+\def\uppercasetext@#1{%
+   {\spaceskip1.3\fontdimen2\the\font plus1.3\fontdimen3\the\font
+    \def\ss{SS}\let\i=I\let\j=J\let\ae\AE\let\oe\OE
+    \let\o\O\let\aa\AA\let\l\L\let\cprime\Cprime\let\cdprime\Cdprime
+    \skipmath@#1$\skipmath@$}}
+\def\skipmath@#1$#2${\uppercase{#1}%
+  \ifx\skipmath@#2\else$#2$\expandafter\skipmath@\fi}
+\def\titul#1{%\ifnews@\else\vfil\penalty-\@M %\eject
+%        \firstheadtrue\ifodd\pageno\else\advancePageno\fi
+%         \xdef\FP{\the\pageno}\global\FirstPage{\FP}\journalheading\fi
+%         \zerocounts
+        \vglue4cc
+%          \labeln@ 0 \titul@={#1} \footmarkcount@=1
+          {\let\\=\endgraf
+            \parindent=0pt \parskip=0pt
+          \leftskip=2em plus1fill minus 1em\rightskip=\leftskip
+          \baselineskip=15dd{\rm\uppercasetext@{#1}}\par\vskip1cc}
+%            \def\rhead{\let\\=\relax #1}\global\news@false
+           }
+\def\autor#1\par{%\global\ZBLautor{}\global\zblautor{}%
+    {\def\and{and}%
+     \def\|##1 |##2|{{\frenchspacing\ninesc ##1\unskip~##2}%
+%         \global\autor@{##1 ##2}\global\Autor@={##2, ##1}%
+%         \edef\ZBLa{\the\ZBLautor}\edef\zbla{\the\zblautor}%
+%         \edef\tmp{\ifx\empty\zbla\else\the\zblautor;\space\fi\the\Autor@}%
+%         \global\zblautor=\expandafter{\tmp}%
+%         \edef\tmpp{\ifx\empty\ZBLa\else\the\ZBLautor,\space\fi\the\autor@}%
+%         \global\ZBLautor=\expandafter{\tmpp}%
+%       \if@bsah
+%         \immediate\write\cont{\string\aName{\the\autor@}}%
+%         \immediate\write\Cont{\string\aName{\the\Autor@}}\fi
+}%
+        \let\\=\endgraf\parindent=0pt
+          \leftskip=2em plus1fill \rightskip=\leftskip
+           {\ninerm #1}%\if@bsah\writ@\fi
+           \vskip3cc}}
+\let\title\titul
+\let\author\autor
+\let\endauthor\par
+\let\maketitle\relax
+\let\normalsize\relax
+
+\def\rec#1\par{\removelastskip\vskip.8cc
+       {\hbox to\textwidth{\hss(\ninerm \ifcase\language Received \or
+                                              Eingegangen am \or\or
+                                              Re\c cu \or
+                                              Received \else
+                                              Do\v{s}lo
+                                \fi #1\unskip)\hss}\vskip3cc}}
+\def\abstract{\begingroup%\ZBLtextrecenze{#1}%
+    \small{\it Abstract.} \ignorespaces}
+\def\endabstract{\par\endgroup\vskip3cc}
+\def\key#1\par{%\ZBLklicovaslova{#1}
+       \par\removelastskip\medskip
+        {\small{\it Keywords}: #1\vskip3cc}}
+\def\keywords{\par\removelastskip\medskip
+        \begingroup\small{\it Keywords}: \ignorespaces}
+\def\endkeywords{\vskip3cc\endgroup}
+\def\AMS#1\par{%\ZBLklasifikace{#1}
+   \par\removelastskip\medskip
+    {\small{\it MSC 2010}: #1}\vskip3cc}
+\def\subjclass
+   {\par\removelastskip\medskip
+    \begingroup\small{\it MSC 2010}: \ignorespaces}
+\def\endsubjclass{\vskip3cc\endgroup}
+\def\thanks #1\endthanks{{\let\@thefnmark\relax\@footnotetext{#1}}}
+
+\pagestyle{plain}
+\def\pagestyle#1{}
+
+\def\th@plain{%
+  \let\thm@indent\indent %  indent
+  \thm@headfont{\bfseries}% heading font is bold
+%%  \thm@notefont{}% same as heading font
+  \thm@headpunct{.}% add period after heading
+  \let\thm@swap\@gobble
+%%  \thm@preskip\topsep
+%%  \thm@postskip\theorempreskipamount
+  \slshape % body font
+}
+\def\th@definition{%
+  \normalfont % body font
+}
+\def\th@remark{%
+  \thm@headfont{\itshape}%
+  \normalfont % body font
+  \thm@preskip\topsep \divide\thm@preskip\tw@
+  \thm@postskip\thm@preskip
+}
+\let\thm@indent\indent
+
+\AtBeginDocument{}
+\endinput
