@@ -427,7 +427,7 @@ statement follows directly from Proposition \ref{PropReward2}.
 \end{proof}
 
 \begin{prop}
-Bernoulli $(0,\,1)$ distribution with parameter $q$ is the stationary distribution of the random sequence
+Bernoulli $(0,\,1)$ distribution with parameter $q$ is  {\color{red}a} stationary distribution of the random sequence
 ${\{P_{t}\}}_{t=1}^{\infty}$.
 \end{prop}
 \begin{proof}
@@ -440,8 +440,8 @@ $P_{t-1}$.
 \end{proof}
 
 Now to calculate the expected position of the walker at a given
-step $t\geq1$, it is easy to see that
-$E(S_{t})=S_{t-1}+2P_{t-1}-1$. From this, we can prove the
+step $t\geq1$, {\color{red} the definition of the walk can be used to to prove that $E(X_{t}|S_{t-1})=E(X_{t}|P_{t-1}) = 2P_{t-1}-1$ and thus}
+$E(S_{t}\color{red}|S_{t-1})=S_{t-1}+2P_{t-1}-1$. From this, we can prove the
 following statement about the expected position of the walker
 after step $t$ just from the knowledge of the input parameters.
 
@@ -454,7 +454,7 @@ E(S_{t})=S_{0}+t(2p_{0}-1).
 \begin{proof}
 Using the result of Proposition \ref{PropReward2} we get
 \[
-E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{t-1}-1)]=
+E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{ \color{red}t}-1)]=
 ES_{t}+(2p_{0}-1)
 \]
 
