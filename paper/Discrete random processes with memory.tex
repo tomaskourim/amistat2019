@@ -62,7 +62,7 @@
     \endthanks
 
 
-    \section{Introduction}
+    \section{Introduction}\label{sec:introduction}
     One of the most
     common types of a discrete random process is a random walk,
     first introduced by K.Pearson in 1905~\cite{pearson1905problem}.
@@ -99,7 +99,7 @@
     the work.
 
 
-    \section{Random walk with varying probabilities\label{sec:Random-walk-with}}
+    \section{Random walk with varying probabilities}\label{sec:Random-walk-with}
 
     The random walk with varying probabilities is based on a standard
     Bernoulli random walk~\cite{feller1957introduction} with some starting
@@ -231,7 +231,7 @@
         \begin{equation}
             Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
         \end{equation}
-        $E(P_{t})$ is given by (\ref{eq:EPt}), therefore in order to prove
+        $E(P_{t})$ is given by~\eqref{eq:EPt}, therefore in order to prove
         the proposition it is sufficient to prove the following statement
         \begin{equation}
             E(P_{t}^{2})=(3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i}.\label{eq:EPt2-finalvzorec}
@@ -357,13 +357,14 @@
     \end{figure}
 
 
-    \section{Random walk with varying transition probability - alternatives\label{sec:Random-walk-aternatives}}
+    \section{Random walk with varying transition probability - alternatives}\label{sec:Random-walk-aternatives}
 
-    \subsection{Success rewarding model}
+    \subsection{Success rewarding model}\label{subsec:success-rewarding-model}
 
     The basic definition of the random walk (Definition~\ref{success_punished})
     presents a \emph{success punishing} model, meaning that the probability
-    of an event is decreased every time that event occurs. Opposite situation
+    of an event is decreased every time that event occurs.
+    Opposite situation
     can be considered, where the probability of an event is increased
     with each event's occurrence.
     Formally, such a random walk is defined
@@ -572,7 +573,7 @@
         As $E(X_t)=2p_0-1$ and $E(X_t^2)=1$ the proof follows similarly as in Proposition~\ref{propVarX} directly from the definition of variance.
     \end{proof}
 
-    \subsection{Two-parameter models}
+    \subsection{Two-parameter models}\label{subsec:two-parameter-models}
 
     Another level of complexity can be added by using separate $\lambda$
     parameters for each direction of the walk.
@@ -637,7 +638,7 @@
         \end{center}
     \end{figure}
 
-    \subsection{Other alternatives}
+    \subsection{Other alternatives}\label{subsec:other-alternatives}
 
     The presented model of a random walk can be further developed and
     more versions can be derived and described.
@@ -653,10 +654,11 @@
     problems will by subject of a further study.
 
 
-    \section{Simulations\label{sec:Simulations}}
+    \section{Simulations}\label{sec:Simulations}
 
     Testing dataset was generated in order to validate the quality of
-    the model and its ability to be fitted on a real life problem. The
+    the model and its ability to be fitted on a real life problem.
+    The
     data generation was performed using the Python programming language
     and its package NumPy. Following values of input parameters were chosen.
     The memory coefficient values varied in $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
@@ -712,7 +714,6 @@
                 SR2 & 0.498 & 0.026 & 0.501 & $[0.452;0.535]$ \tabularnewline
                 \hline
             \end{tabular}
-            \par
         \end{centering}
     \end{table}
 
@@ -757,7 +758,7 @@
     \end{table}
 
 
-    \section{Conclusion\label{sec:Conclusion}}
+    \section{Conclusion}\label{sec:Conclusion}
 
     This work follows up on the recent results on random walks with varying
     probabilities.
