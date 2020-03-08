@@ -44,6 +44,7 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     data = check_prediction(data, result_row["model_type"][0], result_row["prediction_type"][0], true_value)
     mean = float(np.mean(data))
     median = float(np.median(data))
+    stdev = float(np.std(data))
     conf_int = st.t.interval(1 - CONFIDENCE_INTERVAL_SIZE, len(data) - 1, loc=mean, scale=st.sem(data))
     percentile_int = [np.percentile(data, int(CONFIDENCE_INTERVAL_SIZE / 2 * 100), interpolation='midpoint'),
                       np.percentile(data, int((1 - CONFIDENCE_INTERVAL_SIZE / 2) * 100), interpolation='midpoint')]
@@ -55,6 +56,7 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     near_median_success = in_interval(median, near_int)
     result_row[f"mean_predicted_{name}"] = mean
     result_row[f"median_predicted_{name}"] = median
+    result_row[f"stdev_predicted_{name}"] = stdev
     result_row[f"predicted_{name}_conf_int_LB"] = conf_int[0]
     result_row[f"predicted_{name}_conf_int_UB"] = conf_int[1]
     result_row[f"predicted_{name}_percentile_LB"] = percentile_int[0]
@@ -131,7 +133,8 @@ def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict)
 def analyze_results(results: pd.DataFrame):
     columns = MODEL_PARAMETERS
     columns.extend(["prediction_type", "mean_predicted_lambda", "mean_predicted_lambda0", "mean_predicted_lambda1",
-                    "mean_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0",
+                    "mean_predicted_p0", "stdev_predicted_lambda", "stdev_predicted_lambda0", "stdev_predicted_lambda1",
+                    "stdev_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0",
                     "median_predicted_lambda1", "median_predicted_p0"])
     columns.extend(["predicted_lambda_conf_int_LB", "predicted_lambda_conf_int_UB", "predicted_lambda_percentile_LB",
                     "predicted_lambda_percentile_UP", "predicted_lambda_near_value_LB",
