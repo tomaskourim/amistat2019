@@ -33,7 +33,8 @@
 
     \abstract The contribution focuses on Bernoulli-like random walks
     where the past events affect significantly the walk's future
-    development. The main concern of the paper is therefore the
+    development.
+    The main concern of the paper is therefore the
     formulation of models describing the dependence of transition
     probabilities on the process history.
     Such an impact can be
@@ -75,7 +76,7 @@
     One of such modifications is the random walk with varying
     step size introduced in $2010$ by Turban~\cite{turban2010random}
     which, together with the idea of \emph{self-exciting point processes}
-   ~\cite{hawkes1971spectra} and the perspective of model applications
+    ~\cite{hawkes1971spectra} and the perspective of model applications
     in reliability analysis and also in sports statistics, served as an
     inspiration to the random walk with varying transition probabilities
     introduced by Kou\v{r}im~\cite{ja2017ddny, ja2019teze}.
@@ -91,7 +92,7 @@
 
     The rest of the paper is organized as follows.
     Sections
-   ~\ref{sec:Random-walk-with} and~\ref{sec:Random-walk-aternatives}
+    ~\ref{sec:Random-walk-with} and~\ref{sec:Random-walk-aternatives}
     describe the properties of different versions of the model,
     section~\ref{sec:Simulations} provides results from simulated
     model {\color{red}evaluation} and finally section~\ref{sec:Conclusion} concludes
@@ -139,7 +140,7 @@
     \subsection{Properties}\label{subsec:properties}
 
     The random walk with varying probabilities was first introduced in
-   ~\cite{ja2017ddny} and further elaborated in~\cite{ja2019teze}.
+    ~\cite{ja2017ddny} and further elaborated in~\cite{ja2019teze}.
     Following properties of the walk were described in these previous
     papers.
 
@@ -158,7 +159,8 @@
     \begin{equation}
         ES_{t}=S_{0}+(2p_{0}-1)\frac{1-(2\lambda-1)^{t}}{2(1-\lambda)}\label{eq:ESt}
     \end{equation}
-    for all $t\geq1$. This further yields $EP_{t}\rightarrow\frac{1}{2}$
+    for all $t\geq1$.
+    This further yields $EP_{t}\rightarrow\frac{1}{2}$
     and $ES_{t}\rightarrow S_{0}+\frac{2p_{0}-1}{2(1-\lambda)}$ for $t\rightarrow+\infty$.
 
     Now to describe the walk in more detail, let us
@@ -204,7 +206,7 @@
     \begin{rem}
         For $p_0=\frac{1}{2}$ and $t\ge1$ or $\lambda = \frac{1}{2}$ and $t\ge2$ it hods that $X_t$ is the stationary
         random sequence with the distribution given by Corollary
-       ~\ref{cor-stac-dist}.
+        ~\ref{cor-stac-dist}.
     \end{rem}
 
     \begin{prop}
@@ -224,7 +226,8 @@
 
     \begin{proof}
         To prove the proposition several support formulas has to be derived
-        first. From the definition of variance it follows
+        first.
+        From the definition of variance it follows
         \begin{equation}
             Var(P_{t})=E(P_{t}^{2})-E(P_{t})^{2}.\label{eq:VarP-definition}
         \end{equation}
@@ -326,7 +329,8 @@
     \end{cor}
 
     The variance of the position of the walker was studied with the help of computer simulations, presented in Figure~\ref{fig:position-punished}.
-    The simulations show that the variance grows to infinity with $t\rightarrow\infty$ depending on both $p_0$ and $\lambda$. The derivation of an exact formula will be subject of further studies.
+    The simulations show that the variance grows to infinity with $t\rightarrow\infty$ depending on both $p_0$ and $\lambda$.
+    The derivation of an exact formula will be subject of further studies.
 
     \begin{figure}
         \begin{center}
@@ -335,7 +339,8 @@
             average transition probability (dotted, upper part of the figure)
                 of a \emph{success punishing} version of the random walk and its observed
                 variance (dot-dashed lines, lower part of the figure) compared to
-                the theoretical values computed using~\eqref{eq:EPt} and Proposition~\ref{PropVarP-succes} (same colors, solid lines). The values were
+                the theoretical values computed using~\eqref{eq:EPt} and Proposition~\ref{PropVarP-succes} (same colors, solid lines).
+                The values were
                 computed from 1000 simulated realizations of each parameter combination.}
         \end{center}
     \end{figure}
@@ -345,7 +350,8 @@
             \includegraphics[width=1\textwidth]{../simulations/e_position_1000_walks_100_steps_type_success_punished}
             \caption{\label{fig:position-punished}The observed
             average position of the walker (dotted, ``thicker'')
-                of a \emph{success punishing} version of the random walk and its variance (dot-dashed lines, ``thinner''). The values were
+                of a \emph{success punishing} version of the random walk and its variance (dot-dashed lines, ``thinner'').
+                The values were
                 computed from 1000 simulated realizations of each parameter combination.}
         \end{center}
     \end{figure}
@@ -359,12 +365,14 @@
     presents a \emph{success punishing} model, meaning that the probability
     of an event is decreased every time that event occurs. Opposite situation
     can be considered, where the probability of an event is increased
-    with each event's occurrence. Formally, such a random walk is defined
+    with each event's occurrence.
+    Formally, such a random walk is defined
     in a following manner~\cite{ja2019teze}:
 
     \begin{defn}
         \label{succes_rewarded}Let ${\{X_{n}\}}_{n=1}^{\infty}$, $p_{0}$
-        and $\lambda$ be as in Definition~\ref{success_punished}. Further
+        and $\lambda$ be as in Definition~\ref{success_punished}.
+        Further
         let ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence of discrete random
         variables given by
         \begin{equation}
@@ -378,7 +386,8 @@
         rewarding}.
     \end{defn}
     In this section, all variables ($P,\,X,\,S$) are related to the
-    \emph{success rewarding} model. This version of the model behaves differently
+    \emph{success rewarding} model.
+    This version of the model behaves differently
     than the \emph{success punishing} version, which can be observed with
     the help of the following propositions.
 
@@ -458,7 +467,8 @@
 
     Now to calculate the expected position of the walker at a given
     step $t\geq1$, {\color{red} the definition of the walk can be used to to prove that $E(X_{t}|S_{t-1})=E(X_{t}|P_{t-1}) = 2P_{t-1}-1$ and thus}
-    $E(S_{t}{\color{red}|S_{t-1}})=S_{t-1}+2P_{t-1}-1$. From this, we can prove the
+    $E(S_{t}{\color{red}|S_{t-1}})=S_{t-1}+2P_{t-1}-1$.
+    From this, we can prove the
     following statement about the expected position of the walker
     after step $t$ just from the knowledge of the input parameters.
 
@@ -504,7 +514,8 @@
         \begin{equation}
             E(P_{t}^{2})=(2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i}.\label{eq:Ept2-finalvzorec-reward}
         \end{equation}
-        The proof will be done using mathematical induction again. First observe that
+        The proof will be done using mathematical induction again.
+        First observe that
         \[
             E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t}))^{2}|P_{t-1}]=
         \]
@@ -512,11 +523,13 @@
             =EP_{t-1}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2},\label{eq:EPt-EPt-1-reward}
         \end{equation}
         where the facts that $E[(1+X_{t})^{2}|P_{t-1}]=4P_{t-1}$, $E[(1+X_{t})|P_{t-1}]=2P_{t-1}$
-        and Proposition~\ref{PropReward2} were used. Now for $t=1$ we get
+        and Proposition~\ref{PropReward2} were used.
+        Now for $t=1$ we get
         \[
             EP_{1}=p_{0}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=(2\lambda-\lambda^{2})^{1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{1}(2\lambda-\lambda^{2})^{1-i}
         \]
-        and thus~\eqref{eq:Ept2-finalvzorec-reward} holds for $t=1$. For the induction step $t\rightarrow t+1$
+        and thus~\eqref{eq:Ept2-finalvzorec-reward} holds for $t=1$.
+        For the induction step $t\rightarrow t+1$
         we get from the induction assumption and (\ref{eq:EPt-EPt-1-reward})
         \[
             E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
@@ -562,12 +575,14 @@
     \subsection{Two-parameter models}
 
     Another level of complexity can be added by using separate $\lambda$
-    parameters for each direction of the walk. Again, two ways of handling
+    parameters for each direction of the walk.
+    Again, two ways of handling
     success are available.
 
     \begin{defn}
         \label{2lambdas}Let ${\{X_{n}\}}_{n=1}^{\infty}$ and $p_{0}$ be
-        as in Definition~\ref{success_punished}. Further let $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
+        as in Definition~\ref{success_punished}.
+        Further let $\lambda_{0},\,\lambda_{1}\in(0,\,1)$
         be constant coefficients and ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence
         of discrete random variables given by
         \begin{equation}
@@ -596,13 +611,16 @@
         rewarding}.
     \end{defn}
 
-    Derivation of model properties is not so straightforward. The development
+    Derivation of model properties is not so straightforward.
+    The development
     of transition probability and its variance for different starting
     probabilities $p_{0}$ and memory coefficients pairs $ [\lambda_{0},\,\lambda_{1}]=\bar{\lambda}$
     for the \emph{two-parameter success punishing} version of the model
-    is shown on Figure~\ref{fig:Development-punish2l}. Similarly as in
+    is shown on Figure~\ref{fig:Development-punish2l}.
+    Similarly as in
     the single $\lambda$ version of the model, the variance seems to
-    depend on the $\bar{\lambda}$ pair only. The expected transition
+    depend on the $\bar{\lambda}$ pair only.
+    The expected transition
     probability seems to converge to a constant value independently on
     both the starting probability $p_{0}$ and memory coefficients $\bar{\lambda}$.
     This interesting property of the walk will be subject of a further study.
@@ -612,7 +630,8 @@
             \includegraphics[width=1\textwidth]{../simulations/e_probability_1000_walks_100_steps_type_success_punished_two_lambdas}
             \caption{\label{fig:Development-punish2l}The development of the observed average
             transition probability (dotted, upper part of the figure) of a \emph{two-parameter success
-            punishing} version of the random walk and its variance (dot-dashed lines, lower part of the figure). The values
+            punishing} version of the random walk and its variance (dot-dashed lines, lower part of the figure).
+            The values
             were computed from 1000 simulated realizations of each parameter
             combination.}
         \end{center}
@@ -621,13 +640,15 @@
     \subsection{Other alternatives}
 
     The presented model of a random walk can be further developed and
-    more versions can be derived and described. These variants include,
+    more versions can be derived and described.
+    These variants include,
     but are not limited to, a multidimensional walk (with either one or multiple
     $\lambda$ parameters, \emph{success rewarding} or \emph{success
     punishing}), a walk with the transition probability explicitly dependent
     on more than the last step, i.e. $P_{t}(k)\sim P_{t}(X_{t},\,X_{t-1},\dots,X_{t-(k-1)})$,
     or a walk with $\lambda$ parameter not constant, but a function
-    of the time $t$, i.e. $P_{t}(\lambda(t)$). Detailed properties of
+    of the time $t$, i.e. $P_{t}(\lambda(t)$).
+    Detailed properties of
     such walks together with their possible applications on real life
     problems will by subject of a further study.
 
@@ -642,10 +663,14 @@
     and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$, further denoted as $\tilde{\lambda}$.
     The starting transition probability $p_{0}$ was chosen from the set
     $P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$ and the length of the walk varied in
-    \textbf{${\color{red}length}\in\{5,\,10,\,50,\,100\}$}. All four described models of the random walk were tested. For each permutation of the
-    parameters and the model type $100$ walks were generated and considered as $1$ {\color{red}evaluation set}. Further, $100$ such {\color{red}evaluation sets} were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks.
+    \textbf{${\color{red}length}\in\{5,\,10,\,50,\,100\}$}.
+    All four described models of the random walk were tested.
+    For each permutation of the
+    parameters and the model type $100$ walks were generated and considered as $1$ {\color{red}evaluation set}.
+    Further, $100$ such {\color{red}evaluation sets} were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks.
 
-    Four different fitting tasks were performed on each of the $100$ {\color{red}evaluation sets}, generating $100$ different estimates for each walk configuration. The tasks were:
+    Four different fitting tasks were performed on each of the $100$ {\color{red}evaluation sets}, generating $100$ different estimates for each walk configuration.
+    The tasks were:
 
     \begin{itemize}
         \item find $\tilde{\lambda}$ with known $p_{0}$ and model type,
@@ -654,7 +679,9 @@
         \item find model type without any prior knowledge.
     \end{itemize}
 
-    The first three tasks consist of estimation of parameters and were based on the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}. The evaluation of the likelihood function for given parameters is easy, however the computation of the log-likelihood derivatives is hardly tractable. The ML estimates were therefore obtained using numerical methods with the help of the Python programming language and its scientific package SciPy. The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
+    The first three tasks consist of estimation of parameters and were based on the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
+    The evaluation of the likelihood function for given parameters is easy, however the computation of the log-likelihood derivatives is hardly tractable.
+    The ML estimates were therefore obtained using numerical methods with the help of the Python programming language and its scientific package SciPy. The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
 
     \begin{table}
         \color{red}
@@ -689,18 +716,30 @@
         \end{centering}
     \end{table}
 
-    To evaluate the quality of the parameter fitting results four different {\color{red}evaluation} criteria were tested. First, the standard $\color{red}(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval. Second, the $\frac{{\color{red}100}\alpha}{2}-th$ and ${\color{red}100(1}-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. {\color{red}For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {\color{red}$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether {\color{yellow}the mean} fitted parameter value and {\color{yellow} the median} fitted parameter value fell into that interval. To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
+    To evaluate the quality of the parameter fitting results four different {\color{red}evaluation} criteria were tested.
+    First, the standard $\color{red}(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
+    Second, the $\frac{{\color{red}100}\alpha}{2}-th$ and ${\color{red}100(1}-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. {\color{red}For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {\color{red}$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether {\color{yellow}the mean} fitted parameter value and {\color{yellow} the median} fitted parameter value fell into that interval.
+    To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
 
-    Together there were $1024$ different fitting setups. The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha={\color{red}0.1})$. As expected, the less parameters there were to estimate the better the results. Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length. This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk. An example of the results of parameters estimation (tasks 1-3) can be seen in Table~\ref{tab:Fitting-results}. Some results of the model type identification using the AIC (task 4) can be observed in Table~\ref{tab:Fitting-results-model}.
+    Together there were $1024$ different fitting setups.
+    The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha={\color{red}0.1})$.
+    As expected, the less parameters there were to estimate the better the results.
+    Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length.
+    This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
+    An example of the results of parameters estimation (tasks 1--3) can be seen in Table~\ref{tab:Fitting-results}.
+    Some results of the model type identification using the AIC (task 4) can be observed in Table~\ref{tab:Fitting-results-model}.
 
-    For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<{\color{red}P_t}<1$, {\color{red}for all} $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them. This is especially true for walks with more steps. Handling of such unwanted behavior will be subject of further research.
+    For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<{\color{red}P_t}<1$, {\color{red}for all} $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
+    This is especially true for walks with more steps.
+    Handling of such unwanted behavior will be subject of further research.
 
     Full results of all {\color{red}evaluation} setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
 
     \begin{table}
         \centering{}
 
-        {\caption{\label{tab:Fitting-results-model}The table shows the success {\color{red} rate} of model estimation. Model with the lowest value of AIC was selected.}
+        {\caption{\label{tab:Fitting-results-model}The table shows the success {\color{red} rate} of model estimation.
+        Model with the lowest value of AIC was selected.}
             \begin{tabular}{|c|c|c|c|c|}
                 \hline
                 True model & $\tilde{\lambda}$  & $p_0$  & steps & {\color{red}succ. rate} \tabularnewline
@@ -721,17 +760,24 @@
     \section{Conclusion\label{sec:Conclusion}}
 
     This work follows up on the recent results on random walks with varying
-    probabilities. It describes and proves certain properties of such
+    probabilities.
+    It describes and proves certain properties of such
     a walk, other properties have been studied with the help of numerical
-    methods. The study also shows the results of the maximum likelihood
+    methods.
+    The study also shows the results of the maximum likelihood
     and $AIC$ based estimations of model parameters and types using optimization
-    procedures. The method has been successfully tested on a set of randomly
-    generated data. The presented model has also many possible uses in
-    real life applications. Such a type of random walk describes especially
+    procedures.
+    The method has been successfully tested on a set of randomly
+    generated data.
+    The presented model has also many possible uses in
+    real life applications.
+    Such a type of random walk describes especially
     well processes where either a single or just a small number of events
-    can significantly affect the future development of the process. Such
+    can significantly affect the future development of the process.
+    Such
     processes can be found in reliability analysis, medical as well as
-    econometric studies, and very often in sports modeling. The authors
+    econometric studies, and very often in sports modeling.
+    The authors
     recently published a study where the \emph{\color{blue}success rewarding} model was applied
     to predict the \emph{in-play} development of a Grand Slam tennis matches
     with compelling results when used for live betting against a bookmaker~\cite{ja2019imam}.
