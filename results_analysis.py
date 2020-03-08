@@ -36,8 +36,8 @@ def select_results(results: pd.DataFrame, prediction_type: str, model_type: str,
     return results
 
 
-def in_interval(datapoint: float, interval: List[float]) -> bool:
-    return True if interval[0] <= datapoint <= interval[1] else False
+def in_interval(datapoint: float, interval: List[float]) -> int:
+    return 1 if interval[0] <= datapoint <= interval[1] else 0
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:

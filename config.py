@@ -16,7 +16,7 @@ PREDICTION_TYPES = ["only_lambda", "only_p0", "all_parameters", "everything"]
 
 OPTIMIZATION_ALGORITHM = 'Nelder-Mead'
 
-CONFIDENCE_INTERVAL_SIZE = 0.5
+CONFIDENCE_INTERVAL_SIZE = 0.1
 
 MODEL_PARAMETERS = ["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count"]
 PREDICTION_VALUES = ["predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1", "predicted_p0"]
