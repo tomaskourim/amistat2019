@@ -3,8 +3,6 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-\makeatletter
-
 \newtheorem{thm}{Theorem}[section]
 \theoremstyle{definition}
 \newtheorem{defn}[thm]{\protect\definitionname}
@@ -15,8 +13,6 @@
 \theoremstyle{plain}
 \newtheorem{rem}[thm]{\protect\remarkname}
 \numberwithin{equation}{section}
-
-\makeatother
 
 \providecommand{\corollaryname}{Corollary}
 \providecommand{\definitionname}{Definition}
@@ -57,7 +53,7 @@
     \endsubjclass
 
     \thanks
-    The research was supported by the grant No. 18-02739S of the Grant
+    The research was supported by the grant No. 18--02739S of the Grant
     Agency of the Czech Republic.
     \endthanks
 
@@ -176,12 +172,10 @@
     \begin{proof}
         Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be
         proved directly using~\eqref{eq:EPt} as
-        \[
-            E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=
-        \]
-        \[
-            =2((2\lambda-1)^{t-1}p_{0}+\frac{1-(2\lambda-1)^{t-1}}{2})-1=(2\lambda-1)^{t-1}(2p_{0}-1).
-        \]
+        \begin{gather*}
+            E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=\\
+            =2((2\lambda-1)^{t-1}p_{0}+\frac{1-(2\lambda-1)^{t-1}}{2})-1=(2\lambda-1)^{t-1}(2p_{0}-1).\\
+        \end{gather*}
     \end{proof}
 
     \begin{cor}
@@ -238,7 +232,7 @@
         \end{equation}
         To do so, let us first express the relation between $E(P_{t}^{2})$
         and $E(P_{t-1}^{2})$ and $E(P_{t-1}).$ From the definition of the
-        expected value and the definition of the walk (\ref{eq:Pi_def}) it follows
+        expected value and the definition of the walk~\eqref{eq:Pi_def} it follows
         \begin{equation}
             E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1-X_{t}))^{2}|P_{t-1}].\label{eq:EPt2-zaklad}
         \end{equation}
@@ -249,12 +243,10 @@
             =E[(2-2X_{t})|P_{t-1}]= 4(1-P_{t-1}).
         \]
         Equation (\ref{eq:EPt2-zaklad}) further yields
-        \[
-            E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=
-        \]
-        \[
-            =E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]
-        \]
+        \begin{gather*}
+            E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=\\
+            =E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]\\
+        \end{gather*}
         and finally
         \begin{equation}
             E(P_{t}^{2})=E(P_{t-1}^{2})(3\lambda^{2}-2\lambda)+EP_{t-1}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}.\label{eq:EPt2-pokrocile}
@@ -262,32 +254,23 @@
         Statement (\ref{eq:EPt2-finalvzorec}) can be proved using mathematical induction.
         Based on the trivial fact that $Ep_{0}=p_{0}$ and $E(p_{0})^{2}=p_{0}^{2}$,
         for $t=1$ we get
-        \[
-            E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^{2}-2\lambda)^{1-i}=(3\lambda^{2}-2\lambda)p_{0}^{2}+K(0)=
-        \]
-        \[
-            =(3\lambda^{2}-2\lambda)p_{0}^{2}+((2\lambda-1)^{0}p_{0}+\frac{1-(2\lambda-1)^{0}}{2})\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
-        \]
-        \[
-            =(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},
-        \]
+        \begin{gather*}
+            E(P_{1}^{2})=(3\lambda^{2}-2\lambda)^{1}p_{0}^{2}+\sum_{i=1}^{1}K(i-1)(3\lambda^{2}-2\lambda)^{1-i}=(3\lambda^{2}-2\lambda)p_{0}^{2}+K(0)=\\
+            =(3\lambda^{2}-2\lambda)p_{0}^{2}+((2\lambda-1)^{0}p_{0}+\frac{1-(2\lambda-1)^{0}}{2})\cdot(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=\\
+            =(3\lambda^{2}-2\lambda)p_{0}^{2}+p_{0}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2},\\
+        \end{gather*}
         and from (\ref{eq:EPt2-pokrocile}) it follows that~\eqref{eq:EPt2-finalvzorec}
-        holds for $t=1$. Now for the induction step $t\rightarrow t+1$ we get by substituting
-        (\ref{eq:EPt2-finalvzorec}) into (\ref{eq:EPt2-pokrocile})
-        \[
-            E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=
-        \]
-        \[
-            =((3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i})\cdot(3\lambda^{2}-2\lambda)+K(t)=
-        \]
-        \[
-            =(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}+K(t)=
-        \]
-        \[
-            =(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t+1}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}
-        \]
-        and the formula thus holds. Now substituting (\ref{eq:EPt}) and (\ref{eq:EPt2-finalvzorec})
-        into (\ref{eq:VarP-definition}) yields (\ref{eq:VarP-proposition})
+        holds for $t=1$.
+        Now for the induction step $t\rightarrow t+1$ we get by substituting~\eqref{eq:EPt2-finalvzorec} into~\eqref{eq:EPt2-pokrocile}
+        \begin{gather*}
+            E(P_{t+1}^{2})=E(P_{t}^{2})(3\lambda^{2}-2\lambda)+EP_{t}(-3\lambda^{2}+4\lambda-1)+(1-\lambda)^{2}=\\
+            =((3\lambda^{2}-2\lambda)^{t}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t-i})\cdot(3\lambda^{2}-2\lambda)+K(t)=\\
+            =(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}+K(t)=\\
+            =(3\lambda^{2}-2\lambda)^{t+1}p_{0}^{2}+\sum_{i=1}^{t+1}K(i-1)(3\lambda^{2}-2\lambda)^{t+1-i}\\
+        \end{gather*}
+        and the formula thus holds.
+        Now substituting~\eqref{eq:EPt} and~\eqref{eq:EPt2-finalvzorec}
+        into~\eqref{eq:VarP-definition} yields~\eqref{eq:VarP-proposition}
         and proves the Proposition.
     \end{proof}
     From Proposition~\ref{PropVarP-succes} the limit behavior of $Var(P_{t})$
@@ -400,30 +383,23 @@
     \end{prop}
 
     \begin{proof}
-        The Proposition is proved using mathematical induction. For $t=2$ using (\ref{eq:P1_def-reward})
+        The Proposition is proved using mathematical induction.
+        For $t=2$ using (\ref{eq:P1_def-reward})
         and (\ref{eq:Pi_def-reward}) it holds that
-        \[
-            P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=
-        \]
-
-        \[
-            =p_{0}\lambda^{2}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{2}\lambda^{2-i}(1+X_{i}),
-        \]
-        which is in accordance with (\ref{eq:propSuccess1}). Now for the
+        \begin{gather*}
+            P_{2}=\lambda P_{1}+\frac{1}{2}(1-\lambda)(1+X_{2})=\lambda(\lambda p_{0}+\frac{1}{2}(1-\lambda)(1+X_{1}))+\frac{1}{2}(1-\lambda)(1+X_{2})=\\
+            =p_{0}\lambda^{2}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{2}\lambda^{2-i}(1+X_{i}),\\
+        \end{gather*}
+        which is in accordance with~\eqref{eq:propSuccess1}.
+        Now for the
         induction step $t\rightarrow t+1$ we obtain from (\ref{eq:Pi_def-reward})
         and the induction assumption
-        \[
-            P_{t+1}=\lambda P_{t}+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
-        \]
-        \[
-            =\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
-        \]
-        \[
-            =p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+X_{t+1})=
-        \]
-        \[
-            =p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t+1}\lambda^{t+1-i}(1+X_{i}).
-        \]
+        \begin{gather*}
+            P_{t+1}=\lambda P_{t}+\frac{1}{2}(1-\lambda)(1+X_{t+1})=\\
+            =\lambda(p_{0}\lambda^{t}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i}(1+X_{i}))+\frac{1}{2}(1-\lambda)(1+X_{t+1})=\\
+            =p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t}\lambda^{t-i+1}(1+X_{i})+\frac{1}{2}(1-\lambda)(1+X_{t+1})=\\
+            =p_{0}\lambda^{t+1}+\frac{1}{2}(1-\lambda)\sum_{i=1}^{t+1}\lambda^{t+1-i}(1+X_{i}).\\
+        \end{gather*}
     \end{proof}
 
     \begin{prop}
@@ -432,12 +408,10 @@
     \begin{proof}
         Using $E(X_{t}|P_{t-1})=2P_{t-1}-1$ and (\ref{eq:Pi_def-reward})
         we obtain
-        \[
-            EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=
-        \]
-        \[
-            =E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})= E(P_{t-1}).
-        \]
+        \begin{gather*}
+            EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=\\
+            =E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})= E(P_{t-1}).\\
+        \end{gather*}
         Recursively we get
         \begin{equation}
             E(P_{t})=E(p_{0})=p_{0}.\label{eq:EPt-reward-formula}
@@ -459,7 +433,8 @@
     \end{prop}
     \begin{proof}
         Let $P_{t-1}=1$ with probability $q$, then $X_t=1$, or
-        $P_{t-1}=0$ with $1-q$, then $X_t=-1$. From~\eqref{eq:Pi_def-reward} it follows that with probability
+        $P_{t-1}=0$ with $1-q$, then $X_t=-1$.
+        From~\eqref{eq:Pi_def-reward} it follows that with probability
         $q$ $P_t=\lambda\cdot 1+(1-\lambda)\cdot 2/2=1$, while with
         probability $1-q$ $P_t=\lambda\cdot 0+(1-\lambda)\cdot 0/2=0$.
         It means that $P_t$ has the same Bernoulli distribution as
@@ -518,7 +493,7 @@
         The proof will be done using mathematical induction again.
         First observe that
         \[
-            E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t}))^{2}|P_{t-1}]=
+            E(P_{t}^{2})=E[E(P_{t}^{2}|P_{t-1})]=E\left[E\left(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})\right)^{2}|P_{t-1}\right]=
         \]
         \begin{equation}
             =EP_{t-1}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2},\label{eq:EPt-EPt-1-reward}
@@ -532,19 +507,12 @@
         and thus~\eqref{eq:Ept2-finalvzorec-reward} holds for $t=1$.
         For the induction step $t\rightarrow t+1$
         we get from the induction assumption and (\ref{eq:EPt-EPt-1-reward})
-        \[
-            E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
-        \]
-        \[
-            =((2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i})\cdot(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=
-        \]
-
-        \[
-            =(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i+1}+p_{0}(1-\lambda)^{2}=
-        \]
-        \[
-            =(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t+1}(2\lambda-\lambda^{2})^{t+1-i}.
-        \]
+        \begin{gather*}
+            E(P_{t+1}^{2})=EP_{t}^{2}(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=\\
+            =((2\lambda-\lambda^{2})^{t}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i})\cdot(2\lambda-\lambda^{2})+p_{0}(1-\lambda)^{2}=\\
+            =(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t}(2\lambda-\lambda^{2})^{t-i+1}+p_{0}(1-\lambda)^{2}=\\
+            =(2\lambda-\lambda^{2})^{t+1}p_{0}^{2}+p_{0}(1-\lambda)^{2}\sum_{i=1}^{t+1}(2\lambda-\lambda^{2})^{t+1-i}.\\
+        \end{gather*}
         The Proposition is then proved by substituting (\ref{eq:EPt-reward-formula})
         and (\ref{eq:Ept2-finalvzorec-reward}) into~\eqref{eq:VarP-definition}.
     \end{proof}
@@ -602,12 +570,10 @@
         be as in Definition~\ref{success_punished}, $\lambda_{0},\,\lambda_{1}$
         as in Definition~\ref{2lambdas} and ${\{P_{n}\}}_{n=1}^{\infty}$ be a sequence
         of discrete random variables given by
-        \[
-            P_{1}=\frac{1}{2}[(1-X_{1})\lambda_{0}p_{0}+(1+X_{1})(1-\lambda_{1}(1-p_{0}))]
-        \]
-        \[
-            P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.
-        \]
+        \begin{gather*}
+            P_{1}=\frac{1}{2}[(1-X_{1})\lambda_{0}p_{0}+(1+X_{1})(1-\lambda_{1}(1-p_{0}))]\\
+            P_{i}=\frac{1}{2}[(1-X_{i})\lambda_{0}P_{i-1}+(1+X_{i})(1-\lambda_{1}(1-P_{i-1}))]\;\;\forall i\geq2.\\
+        \end{gather*}
         The sequence ${\{S_{n}\}}{}_{n=0}^{\infty},$ given as in Definition~\ref{success_punished}, is a random walk with varying probabilities - \emph{two-parameter success
         rewarding}.
     \end{defn}
@@ -719,7 +685,7 @@
 
     To evaluate the quality of the parameter fitting results four different {\color{red}evaluation} criteria were tested.
     First, the standard $\color{red}(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
-    Second, the $\frac{{\color{red}100}\alpha}{2}-th$ and ${\color{red}100(1}-\frac{\alpha}{2})-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. {\color{red}For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {\color{red}$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether {\color{yellow}the mean} fitted parameter value and {\color{yellow} the median} fitted parameter value fell into that interval.
+    Second, the $\frac{{\color{red}100}\alpha}{2}-th$ and $\color{red}100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. {\color{red}For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {\color{red}$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether {\color{yellow}the mean} fitted parameter value and {\color{yellow} the median} fitted parameter value fell into that interval.
     To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
 
     Together there were $1024$ different fitting setups.
@@ -730,7 +696,8 @@
     An example of the results of parameters estimation (tasks 1--3) can be seen in Table~\ref{tab:Fitting-results}.
     Some results of the model type identification using the AIC (task 4) can be observed in Table~\ref{tab:Fitting-results-model}.
 
-    For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all. The reason for such behavior can be explained be the difference between the theoretical model (where $0<{\color{red}P_t}<1$, {\color{red}for all} $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
+    For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all.
+    The reason for such behavior can be explained be the difference between the theoretical model (where $0<{\color{red}P_t}<1$, {\color{red}for all} $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
     This is especially true for walks with more steps.
     Handling of such unwanted behavior will be subject of further research.
 
