@@ -13,7 +13,8 @@ import pandas as pd
 import scipy.optimize as opt
 
 from common import get_current_probability
-from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES
+from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK, \
+    REPETITIONS_OF_WALK_SERIES
 
 
 # compare with reality
@@ -305,7 +306,7 @@ def main():
                 f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
                 f"{iterations - i - 1}/{iterations}; {datafile}")
 
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_constrained.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f:
         pickle.dump([results], f)
 
 
