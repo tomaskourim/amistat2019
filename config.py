@@ -2,7 +2,7 @@ C_LAMBDAS = [0.5, 0.8, 0.9, 0.99]
 C_LAMBDA_PAIRS = [[0.5, 0.8], [0.1, 0.5], [0.5, 0.99], [0.99, 0.9]]
 START_PROBABILITIES = [0.5, 0.8, 0.9, 0.99]
 STEP_COUNTS = [5, 10, 50, 100]
-REPETITIONS_OF_WALK = 1000
+REPETITIONS_OF_WALK = 10
 REPETITIONS_OF_WALK_SERIES = 100
 
 C_LAMBDAS_TESTING = [0.2, 0.75, 0.95]
@@ -16,7 +16,7 @@ PREDICTION_TYPES = ["only_lambda", "only_p0", "all_parameters", "everything"]
 
 OPTIMIZATION_ALGORITHM = 'Nelder-Mead'
 
-CONFIDENCE_INTERVAL_SIZE = 0.05
+CONFIDENCE_INTERVAL_SIZE = 0.5
 
 MODEL_PARAMETERS = ["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count"]
 PREDICTION_VALUES = ["predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1", "predicted_p0"]
