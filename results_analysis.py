@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 import scipy.stats as st
 
-from config import CONFIDENCE_INTERVAL_SIZE, MODEL_PARAMETERS, PREDICTION_VALUES
-from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, \
-    PREDICTION_TYPES
+from config import CONFIDENCE_INTERVAL_SIZE, MODEL_PARAMETERS, PREDICTION_VALUES, C_LAMBDAS, START_PROBABILITIES, \
+    STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, PREDICTION_TYPES, REPETITIONS_OF_WALK, REPETITIONS_OF_WALK_SERIES, \
+    OPTIMIZATION_ALGORITHM
 
 
 def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> pd.Series:
@@ -171,11 +171,12 @@ def analyze_results(results: pd.DataFrame):
                                                          p0)
                         fitting_results = fitting_results.append(
                             analyze_prediction_combination(current_results, columns))
-    fitting_results.to_excel(f"fitting_evaluation_interval_size_{CONFIDENCE_INTERVAL_SIZE}.xlsx")
+    fitting_results.to_excel(
+        f"fitting_evaluation_interval_size_{CONFIDENCE_INTERVAL_SIZE}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}_{OPTIMIZATION_ALGORITHM}.xlsx")
 
 
 def main():
-    with open(f"results_total.pkl", 'rb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'rb') as f:
         results = pickle.load(f)  # load data
 
     analyze_results(results)
