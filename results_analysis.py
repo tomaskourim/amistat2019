@@ -179,7 +179,7 @@ def main():
     with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'rb') as f:
         results = pickle.load(f)  # load data
 
-    analyze_results(results)
+    analyze_results(results[0])
 
 
 if __name__ == '__main__':
