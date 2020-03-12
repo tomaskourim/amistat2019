@@ -1,7 +1,7 @@
 import logging
 import pickle
 from datetime import datetime
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -12,14 +12,17 @@ from config import CONFIDENCE_INTERVAL_SIZE, MODEL_PARAMETERS, PREDICTION_VALUES
     OPTIMIZATION_ALGORITHM
 
 
-def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> pd.Series:
+def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> Tuple[
+    pd.Series, int]:
+    not_fitted = 0
     if (prediction == 'not_fitted').any():
+        not_fitted = sum(prediction == 'not_fitted')
         prediction = prediction[prediction != 'not_fitted']
     if max(prediction) >= 1 or min(prediction) <= 0:
         logging.error(
             f"Wrong prediction {min(prediction), max(prediction)}. Model {model_type}, prediction type "
             f"{prediction_type}, true value {true_value}")
-    return prediction
+    return prediction, not_fitted
 
 
 def select_results(results: pd.DataFrame, prediction_type: str, model_type: str, c_lambdas: List[float],
@@ -41,7 +44,7 @@ def in_interval(datapoint: float, interval: List[float]) -> int:
 
 
 def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_value: float, name: str) -> pd.DataFrame:
-    data = check_prediction(data, result_row["model_type"][0], result_row["prediction_type"][0], true_value)
+    data, not_fitted = check_prediction(data, result_row["model_type"][0], result_row["prediction_type"][0], true_value)
     mean = float(np.mean(data))
     median = float(np.median(data))
     stdev = float(np.std(data))
@@ -67,6 +70,7 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     result_row[f"predicted_{name}_percentile_success"] = percentile_success
     result_row[f"predicted_{name}_near_value_mean_success"] = near_mean_success
     result_row[f"predicted_{name}_near_value_median_success"] = near_median_success
+    result_row[f"not_fitted_{name}_count"] = not_fitted
     return result_row
 
 
@@ -93,11 +97,15 @@ def evaluate_p0_prediction(result_row: pd.DataFrame, current_results: pd.DataFra
 
 def evaluate_model_prediction(result_row: pd.DataFrame, current_results: pd.DataFrame, model_type: str) -> pd.DataFrame:
     data = current_results.predicted_model
+    not_fitted = 0
+    if (data == 'not_fitted').any():
+        not_fitted = sum(data == 'not_fitted')
     result_row["predicted_model_success_rate"] = len(data[data == model_type]) / len(data)
     result_row["mean_predicted_lambda"] = ""
     result_row["mean_predicted_lambda0"] = ""
     result_row["mean_predicted_lambda1"] = ""
     result_row["mean_predicted_p0"] = ""
+    result_row["not_fitted_model_count"] = not_fitted
     return result_row
 
 
@@ -135,7 +143,9 @@ def analyze_results(results: pd.DataFrame):
     columns.extend(["prediction_type", "mean_predicted_lambda", "mean_predicted_lambda0", "mean_predicted_lambda1",
                     "mean_predicted_p0", "stdev_predicted_lambda", "stdev_predicted_lambda0", "stdev_predicted_lambda1",
                     "stdev_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0",
-                    "median_predicted_lambda1", "median_predicted_p0"])
+                    "median_predicted_lambda1", "median_predicted_p0", "not_fitted_lambda_count",
+                    "not_fitted_lambda0_count", "not_fitted_lambda1_count", "not_fitted_p0_count",
+                    "not_fitted_model_count"])
     columns.extend(["predicted_lambda_conf_int_LB", "predicted_lambda_conf_int_UB", "predicted_lambda_percentile_LB",
                     "predicted_lambda_percentile_UP", "predicted_lambda_near_value_LB",
                     "predicted_lambda_near_value_UP"])
