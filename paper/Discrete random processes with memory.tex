@@ -429,20 +429,6 @@
         statement follows directly from Proposition~\ref{PropReward2}.
     \end{proof}
 
-    \begin{prop}
-        Bernoulli $(0,\,1)$ distribution with parameter $q$ is  {\color{red}a} stationary distribution of the random sequence
-        ${\{P_{t}\}}_{t=1}^{\infty}$.
-    \end{prop}
-    \begin{proof}
-        Let $P_{t-1}=1$ with probability $q$, then $X_t=1$, or
-        $P_{t-1}=0$ with $1-q$, then $X_t=-1$.
-        From~\eqref{eq:Pi_def-reward} it follows that with probability
-        $q$ $P_t=\lambda\cdot 1+(1-\lambda)\cdot 2/2=1$, while with
-        probability $1-q$ $P_t=\lambda\cdot 0+(1-\lambda)\cdot 0/2=0$.
-        It means that $P_t$ has the same Bernoulli distribution as
-        $P_{t-1}$.
-    \end{proof}
-
     Now to calculate the expected position of the walker at a given
     step $t\geq1$, {\color{red} the definition of the walk can be used to to prove that $E(X_{t}|S_{t-1})=E(X_{t}|P_{t-1}) = 2P_{t-1}-1$ and thus}
     $E(S_{t}{\color{red}|S_{t-1}})=S_{t-1}+2P_{t-1}-1$.
