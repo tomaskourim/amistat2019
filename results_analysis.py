@@ -197,8 +197,9 @@ def main():
         with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
                   'rb') as f:
             results = pickle.load(f)  # load data
-
-        analyze_results(results[0], repetitions_of_walk)
+            if isinstance(results, list):
+                results = results[0]
+            analyze_results(results, repetitions_of_walk)
 
 
 if __name__ == '__main__':
