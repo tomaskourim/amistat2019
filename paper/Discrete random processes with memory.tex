@@ -2,6 +2,8 @@
 \usepackage{amsmath,amsthm,amssymb,IMjournal}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
 
 \newtheorem{thm}{Theorem}[section]
 \theoremstyle{definition}
@@ -622,23 +624,13 @@
 
     \section{Simulations}\label{sec:Simulations}
 
-    Testing dataset was generated in order to validate the quality of
-    the model and its ability to be fitted on a real life problem.
-    The
-    data generation was performed using the Python programming language
-    and its package NumPy. Following values of input parameters were chosen.
-    The memory coefficient values varied in $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$
-    and similarly the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$, further denoted as $\tilde{\lambda}$.
-    The starting transition probability $p_{0}$ was chosen from the set
-    $P_{0}=\{0.5,\,0.8,\,0.9,\,0.99\}$ and the length of the walk varied in
-    \textbf{${\color{red}length}\in\{5,\,10,\,50,\,100\}$}.
-    All four described models of the random walk were tested.
-    For each permutation of the
-    parameters and the model type $100$ walks were generated and considered as $1$ {\color{red}evaluation set}.
-    Further, $100$ such {\color{red}evaluation sets} were generated, which then formed a dataset consisting of $100\cdot100\cdot4^4=2\,560\,000$ random walks.
-
-    Four different fitting tasks were performed on each of the $100$ {\color{red}evaluation sets}, generating $100$ different estimates for each walk configuration.
-    The tasks were:
+    One of possible applications of the described random walk model in real life is on processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
+    Namely is it the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
+    In order to verify the possible usage of the presented model in real life situations an evaluation dataset was created with variable walk length $n\in\{5,\,10,\,50,\,100\}$, starting probability $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$,
+    memory coefficient $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ or the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
+    (further let $\tilde{\lambda}$ denote either $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ depending on the walk type).
+    Each walk configuration was then generated $K\in\{5,\,100\}$ times to simulate the repeating observations of the same walk.
+    We then tried to estimate the parameter values from these sets of K walks, specifically following tasks were performed:
 
     \begin{itemize}
         \item find $\tilde{\lambda}$ with known $p_{0}$ and model type,
@@ -647,70 +639,84 @@
         \item find model type without any prior knowledge.
     \end{itemize}
 
-    The first three tasks consist of estimation of parameters and were based on the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
-    The evaluation of the likelihood function for given parameters is easy, however the computation of the log-likelihood derivatives is hardly tractable.
-    The ML estimates were therefore obtained using numerical methods with the help of the Python programming language and its scientific package SciPy. The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
+    Tasks 1--3 were solved using the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
+    The derivation of the theoretical likelihood values is rather complicated, numerical approach was used instead.
+    The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
+
+    As mentioned above, we were not able to use standard approach to confidence intervals.
+    Each experiment was therefore repeated independently $N=100$ times for each parameter combination and a sample of $N$ values was obtained.
+    Sample characteristics were then computed, namely the mean, median, standard deviation and empirical versions of confidence intervals.
+    To assess the quality of the parameter fitting results four different evaluation criteria were tested.
+    First, the standard $(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
+    Second, the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval.
+    {For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether
+    {the mean} fitted parameter value and { the median} fitted parameter value fell into that interval.
+    To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
+
+    The above mentioned criteria serve only as an approximate tool to evaluate estimate quality, however the results show that the model can be successfully fitted on empirical data.
+    For $K=100$ and $\alpha=0.1$, $89\%$ of all four evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
+    As expected, the results are less convincing for $K=5$, with only $71\%$ of all evaluation criteria being successful and $70\%$ of correctly found models.
 
     \begin{table}
-        \color{red}
         \begin{centering}
         {\caption{\label{tab:Fitting-results} The table shows an example of evaluation results.
         The first four rows show the results of fitting $\lambda$ or $\lambda_{0}$ with true value $0.5$ (and corresponding $\lambda_{1}=0.8$), known $p_0=0.5$ and walk length $5$, the last four rows the results of the same parameter combination but with walk length $100$.
         The mean value and its standard deviation and the median and the corresponding ``percentile'' interval of the 100 evaluation sets are presented.
             \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}}
-            \begin{tabular}{|c|c|c|c|c|}
-                \hline
-                Type & mean & st. dev. & median & percentile \tabularnewline
-                \hline
-                SP & 0.505 & 0.043 & 0.504 & $[0.439;0.576]$ \tabularnewline
-                \hline
-                SR & 0.502 & 0.033 & 0.503 & $[0.451;0.549]$ \tabularnewline
-                \hline
-                SP2 & 0.505 & 0.060 & 0.501 & $[0.399;0.606]$ \tabularnewline
-                \hline
-                SR2 & 0.491 & 0.047 & 0.490 & $[0.415;0.564]$ \tabularnewline
-                \hline
-                \hline
-                SP & 0.499 & 0.008 & 0.499 & $[0.484;0.511]$ \tabularnewline
-                \hline
-                SR & - & - & - & - \tabularnewline
-                \hline
-                SP2 & 0.502 & 0.012 & 0.502 & $[0.478;0.521]$ \tabularnewline
-                \hline
-                SR2 & 0.498 & 0.026 & 0.501 & $[0.452;0.535]$ \tabularnewline
-                \hline
+            \begin{tabular}{c|c|c|c|c|c|c}
+                \toprule
+                \multicolumn{2}{c|}{} & \textbf{Type} & \textbf{mean} & \textbf{st. dev.} & \textbf{median} & \textbf{percentile} \tabularnewline
+                \midrule
+                \multirow{8}{*}{\rotatebox[origin=c]{90}{$K=100$}}
+                & \multirow{4}{*}{\rotatebox[origin=c]{90}{$n=5$}}
+                & SP & 0.505 & 0.043 & 0.504 & $[0.439;0.576]$ \tabularnewline
+                & & SR & 0.502 & 0.033 & 0.503 & $[0.451;0.549]$ \tabularnewline
+                & & SP2 & 0.505 & 0.060 & 0.501 & $[0.399;0.606]$ \tabularnewline
+                & & SR2 & 0.491 & 0.047 & 0.490 & $[0.415;0.564]$ \tabularnewline
+                \cmidrule{2-7}
+                & \multirow{4}{*}{\rotatebox[origin=c]{90}{$n=100$}}
+                & SP & 0.499 & 0.008 & 0.499 & $[0.484;0.511]$ \tabularnewline
+                & & SR & - & - & - & - \tabularnewline
+                & & SP2 & 0.502 & 0.012 & 0.502 & $[0.478;0.521]$ \tabularnewline
+                & & SR2 & 0.498 & 0.026 & 0.501 & $[0.452;0.535]$ \tabularnewline
+                \midrule
+                \multirow{8}{*}{\rotatebox[origin=c]{90}{$K=5$}}
+                & \multirow{4}{*}{\rotatebox[origin=c]{90}{$n=5$}}
+                & SP & 0.468 & 0.155 & 0.495 & $[0.214;0.690]$ \tabularnewline
+                & & SR & 0.489 & 0.214 & 0.499 & $[0.000;0.830]$ \tabularnewline
+                & & SP2 & 0.462 & 0.209 & 0.464 & $[0.139;0.780]$ \tabularnewline
+                & & SR2 & 0.521 & 0.211 & 0.527 & $[0.123;0.923]$ \tabularnewline
+                \cmidrule{2-7}
+                & \multirow{4}{*}{\rotatebox[origin=c]{90}{$n=100$}}
+                & SP & 0.493 & 0.037 & 0.494 & $[0.419;0.554]$ \tabularnewline
+                & & SR & 0.376 & 0.056 & 0.382 & $[0.382;0.382]$ \tabularnewline
+                & & SP2 & 0.497 & 0.056 & 0.498 & $[0.405;0.586]$ \tabularnewline
+                & & SR2 & 0.461 & 0.173 & 0.513 & $[0.001;0.655]$ \tabularnewline
+                \bottomrule
             \end{tabular}
         \end{centering}
     \end{table}
 
-    To evaluate the quality of the parameter fitting results four different {\color{red}evaluation} criteria were tested.
-    First, the standard $\color{red}(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
-    Second, the $\frac{{\color{red}100}\alpha}{2}-th$ and $\color{red}100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval. {\color{red}For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {\color{red}$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether {\color{yellow}the mean} fitted parameter value and {\color{yellow} the median} fitted parameter value fell into that interval.
-    To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
-
-    Together there were $1024$ different fitting setups.
-    The overall performance of the fitting is rather satisfying with average success rate of the tests at about $80\%$ (for $\alpha={\color{red}0.1})$.
-    As expected, the less parameters there were to estimate the better the results.
     Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance in finding correct $p_0$ seems independent on the walk's length.
     This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
     An example of the results of parameters estimation (tasks 1--3) can be seen in Table~\ref{tab:Fitting-results}.
     Some results of the model type identification using the AIC (task 4) can be observed in Table~\ref{tab:Fitting-results-model}.
 
     For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all.
-    The reason for such behavior can be explained be the difference between the theoretical model (where $0<{\color{red}P_t}<1$, {\color{red}for all} $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
+    The reason for such behavior can be explained be the difference between the theoretical model (where $0<P_t<1$, for all $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
     This is especially true for walks with more steps.
     Handling of such unwanted behavior will be subject of further research.
 
-    Full results of all {\color{red}evaluation} setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
+    Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
 
     \begin{table}
         \centering{}
 
-        {\caption{\label{tab:Fitting-results-model}The table shows the success {\color{red} rate} of model estimation.
+        {\caption{\label{tab:Fitting-results-model}The table shows the success rate of model estimation.
         Model with the lowest value of AIC was selected.}
             \begin{tabular}{|c|c|c|c|c|}
                 \hline
-                True model & $\tilde{\lambda}$  & $p_0$  & steps & {\color{red}succ. rate} \tabularnewline
+                True model & $\tilde{\lambda}$  & $p_0$  & steps & succ. rate \tabularnewline
                 \hline
                 SR & $0.5$  & $0.5$  & 50 & 0.85 \tabularnewline
                 \hline
