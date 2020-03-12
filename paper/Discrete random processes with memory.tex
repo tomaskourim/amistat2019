@@ -429,12 +429,7 @@
         statement follows directly from Proposition~\ref{PropReward2}.
     \end{proof}
 
-    Now to calculate the expected position of the walker at a given
-    step $t\geq1$, {\color{red} the definition of the walk can be used to to prove that $E(X_{t}|S_{t-1})=E(X_{t}|P_{t-1}) = 2P_{t-1}-1$ and thus}
-    $E(S_{t}{\color{red}|S_{t-1}})=S_{t-1}+2P_{t-1}-1$.
-    From this, we can prove the
-    following statement about the expected position of the walker
-    after step $t$ just from the knowledge of the input parameters.
+    {\color{red}Further we can} calculate the expected position of the walker at a given step $t$ just from the knowledge of the input parameters.
 
     \begin{prop}
         For all $t\geq1,$
@@ -443,9 +438,9 @@
         \]
     \end{prop}
     \begin{proof}
-        Using the result of Proposition~\ref{PropReward2} we get
+    {\color{red}As $EX_{t+1}=E[E(X_{t+1}|X_t)]=E[E(X_{t+1}|P_t)]=E(2P_t -1)$, u}sing the result of Proposition~\ref{PropReward2} we get
         \[
-            E(S_{t+1})=E[E(S_{t+1}|S_{t})]=E[S_{t}+(2P_{ \color{red}t}-1)]=
+            E(S_{t+1})= {\color{red}E(S_{t}+X_{t+1}) = ES_{t}+E(2P_{ \color{red}t}-1)}=
             ES_{t}+(2p_{0}-1)
         \]
 
