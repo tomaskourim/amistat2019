@@ -170,9 +170,9 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
     columns.append("predicted_model_success_rate")
     columns.extend(["not_fitted_lambda_count", "not_fitted_lambda0_count", "not_fitted_lambda1_count",
                     "not_fitted_p0_count", "not_fitted_model_count"])
-    fitting_results = pd.DataFrame(columns=columns)
 
     for confidence_interval_size in CONFIDENCE_INTERVAL_SIZES:
+        fitting_results = pd.DataFrame(columns=columns)
         for index, c_lambda in enumerate(C_LAMBDAS):
             for p0 in START_PROBABILITIES:
                 for step_count in STEP_COUNTS:
