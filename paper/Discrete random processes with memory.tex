@@ -606,6 +606,7 @@
 
     \section{Simulations}\label{sec:Simulations}
 
+    \color{red}
     One of possible applications of the described random walk model in real life is on processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
     Namely is it the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
     In order to verify the possible usage of the presented model in real life situations an evaluation dataset was created with variable walk length $n\in\{5,\,10,\,50,\,100\}$, starting probability $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$,
@@ -681,10 +682,10 @@
         \end{centering}
     \end{table}
 
-
-    For the \emph{success rewarding} version of the model the fitting results were sometimes unsatisfactory and the optimization algorithm often provided a very bad estimate or did not converge at all.
-    The reason for such behavior can be explained be the difference between the theoretical model (where $0<P_t<1$, for all $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
-    This is especially true for walks with more steps.
+    A known drawback of the presented simulation experiment is the discrepancy between the theoretical model (where $0<P_t<1$, for all $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
+    This rounding causes the optimization algorithm to produce inaccurate estimates or not to converge at all.
+    It affects only the \emph{success rewarding} version of the model, the estimation of $\lambda$ parameter and only cases with $K=100$ and $n\geq50$ ($63\%$ not converged estimations).
+    The effect of this phenomenon on other model configurations is negligible.
     Handling of such unwanted behavior will be subject of further research.
 
     Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
