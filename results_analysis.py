@@ -143,7 +143,7 @@ def analyze_prediction_combination(current_results: pd.DataFrame, columns: dict,
 
 
 def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
-    columns = MODEL_PARAMETERS
+    columns = MODEL_PARAMETERS.copy()
     columns.extend(["prediction_type", "mean_predicted_lambda", "mean_predicted_lambda0", "mean_predicted_lambda1",
                     "mean_predicted_p0", "stdev_predicted_lambda", "stdev_predicted_lambda0", "stdev_predicted_lambda1",
                     "stdev_predicted_p0", "median_predicted_lambda", "median_predicted_lambda0",
@@ -197,9 +197,9 @@ def main():
         with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
                   'rb') as f:
             results = pickle.load(f)  # load data
-            if isinstance(results, list):
-                results = results[0]
-            analyze_results(results, repetitions_of_walk)
+        if isinstance(results, list):
+            results = results[0]
+        analyze_results(results, repetitions_of_walk)
 
 
 if __name__ == '__main__':
