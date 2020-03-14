@@ -606,21 +606,18 @@
 
     \section{Simulations}\label{sec:Simulations}
 
-    \color{red}
     One of possible applications of the described random walk model in real life is on processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
-    Namely is it the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
+    Namely it is the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
     In order to verify the possible usage of the presented model in real life situations an evaluation dataset was created with variable walk length $n\in\{5,\,10,\,50,\,100\}$, starting probability $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$,
     memory coefficient $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ or the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
     (further let $\tilde{\lambda}$ denote either $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ depending on the walk type).
     Each walk configuration was generated $K\in\{5,\,100\}$ times to simulate the repeating observations of the same walk.
-    Model parameters were then estimated from these sets of K walks, specifically following tasks were performed:
+    Model parameters were then estimated from these sets of K walks, specifically following tasks were performed{\color{red};
+        $(1)$ find $\tilde{\lambda}$ with known $p_{0}$ and model type,
+        $(2)$ find $p_{0}$ with known $\tilde{\lambda}$ and model type,
+        $(3)$ find $p_{0}$ and $\tilde{\lambda}$ with known model type and
+        $(4)$ find model type without any prior knowledge.}
 
-    \begin{itemize}
-        \item find $\tilde{\lambda}$ with known $p_{0}$ and model type,
-        \item find $p_{0}$ with known $\tilde{\lambda}$ and model type,
-        \item find $p_{0}$ and $\tilde{\lambda}$ with known model type,
-        \item find model type without any prior knowledge.
-    \end{itemize}
 
     Tasks 1--3 were solved using the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
     The derivation of the theoretical likelihood values is rather complicated, therefore numerical approach was used.
@@ -640,13 +637,14 @@
     As expected, the results are less convincing for $K=5$, with only $71\%$ of all evaluation criteria being successful and $70\%$ of correctly found models.
     Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
     This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
-    An example of the parameter estimation evaluation (tasks 1--3) can be seen in Table~\ref{tab:Fitting-results}, where $\lambda$ or $\lambda_{0}$ with true value $0.5$ (and corresponding $\lambda_{1}=0.8$) was estimated, with known $p_0=0.5$.
-    The mean value and its standard deviation and the median and the corresponding ``percentile'' interval are presented.
-    An example of the model type identification results (task 4) can be observed in Table~\ref{tab:Fitting-results-model}.
+    An example of the parameter estimation evaluation (tasks~1--3) can be seen in Table~\ref{tab:Fitting-results}, {\color{red}an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.}
+    {\color{red}Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).}
 
     \begin{table}
         \begin{centering}
-        {\caption{\label{tab:Fitting-results} The table shows an example of evaluation results.
+        {\caption{\label{tab:Fitting-results} The table shows an example of {\color{red} task $1$} evaluation results{\color{red},
+        with $\lambda=0.5$ or $\lambda_{0}=0.5$ (and corresponding $\lambda_{1}=0.8$), $p_0=0.5$, $\alpha=0.1$.
+        The mean value and its standard deviation and the median and the corresponding ``percentile'' interval are presented.}
             \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}}
             \begin{tabular}{c|c|c|c|c|c|c}
                 \toprule
@@ -687,8 +685,6 @@
     It affects only the \emph{success rewarding} version of the model, the estimation of $\lambda$ parameter and only cases with $K=100$ and $n\geq50$ ($63\%$ not converged estimations).
     The effect of this phenomenon on other model configurations is negligible.
     Handling of such unwanted behavior will be subject of further research.
-
-    Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
 
     \begin{table}
         \centering{}
