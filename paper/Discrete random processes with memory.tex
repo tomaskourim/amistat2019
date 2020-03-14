@@ -412,7 +412,7 @@
         we obtain
         \begin{gather*}
             EP_{t}=E[E(P_{t}|P_{t-1})]=E[E(\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+X_{t})|P_{t-1})]=\\
-            =E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})= E(P_{t-1}).\\
+            =E[\lambda P_{t-1}+\frac{1}{2}(1-\lambda)(1+2P_{t-1}-1)]=E[\lambda P_{t-1}+(1-\lambda)P_{t-1})=E(P_{t-1}).
         \end{gather*}
         Recursively we get
         \begin{equation}
@@ -438,7 +438,7 @@
         \]
     \end{prop}
     \begin{proof}
-    {\color{red}As $EX_{t+1}=E[E(X_{t+1}|X_t)]=E[E(X_{t+1}|P_t)]=E(2P_t -1)$, u}
+    {\color{red}As $EX_{t+1}=E[E(X_{t+1}|P_t)]=E(2P_t -1)$, u}
         sing the result of Proposition~\ref{PropReward2} we get
         \[
             E(S_{t+1})= {\color{red}E(S_{t}+X_{t+1}) = ES_{t}+E(2P_{ \color{red}t}-1)}=
@@ -629,7 +629,8 @@
     Second, the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval.
     {\color{red}Finally}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$}.
     {\color{red}The third test was positive if the mean fitted parameter value fell into that interval and the fourth test checked whether the median fitted parameter value was within the ``proximity'' interval.}
-    To evaluate the quality of model type estimation {\color{red}(task~4)} the proportion of correctly  {\color{red}chosen} model types for the given walk configuration was computed.
+    {\color{red}For task~4, the model was estimated using the \emph{AIC} on each set of $K$ walks.
+    To evaluate the quality of such estimation} the proportion of correctly {\color{red}chosen} model types for the given walk configuration was computed {\color{red}as $\frac{\#\,correctly\,chosen}{N}$}.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
     For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
@@ -734,7 +735,7 @@
     The authors
     recently  {\color{blue}presented} a study where the \emph{\color{blue}success rewarding} model was applied
     to predict the \emph{in-play} development of a Grand Slam tennis matches
-    with compelling results when used for live betting against a bookmaker~\cite{ja2019imam}.
+    with compelling results when used for live betting against a bookmaker~{\color{blue}\cite{ ja2019mathsport_proc,ja2019imam}}.
 
     The source code containing all functionality mentioned in this article
     is freely available as open source at
