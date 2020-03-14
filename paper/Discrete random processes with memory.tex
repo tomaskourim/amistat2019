@@ -606,39 +606,40 @@
 
     \section{Simulations}\label{sec:Simulations}
 
-    One of possible applications of the described random walk model in real life is on processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
-    Namely it is the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
-    In order to verify the possible usage of the presented model in real life situations an evaluation dataset was created with variable walk length $n\in\{5,\,10,\,50,\,100\}$, starting probability $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$,
-    memory coefficient $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ or the pair of memory coefficients $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
-    (further let $\tilde{\lambda}$ denote either $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ depending on the walk type).
-    Each walk configuration was generated $K\in\{5,\,100\}$ times to simulate the repeating observations of the same walk.
-    Model parameters were then estimated from these sets of K walks, specifically following tasks were performed{\color{red};
+    {\color{red}A simulation study was performed in order to verify the possible usage of the presented model in real life situations, namely on} processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
+    {\color{red}Such processes include for example} the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
+    {\color{red}The experiment consisted in generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
+    Four different task were considered:
         $(1)$ find $\tilde{\lambda}$ with known $p_{0}$ and model type,
         $(2)$ find $p_{0}$ with known $\tilde{\lambda}$ and model type,
         $(3)$ find $p_{0}$ and $\tilde{\lambda}$ with known model type and
-        $(4)$ find model type without any prior knowledge.}
+        $(4)$ find model type without any prior knowledge.
+    Following parameter values were considered for data generation: $K\in\{5,\,100\}$, $n\in\{5,\,10,\,50,\,100\}$, $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$, $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ and $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
+        (further let $\tilde{\lambda}$ denote either $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ depending on the walk type).}
 
 
     Tasks 1--3 were solved using the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
-    The derivation of the theoretical likelihood values is rather complicated, therefore numerical approach was used.
+    The derivation of the theoretical likelihood values is rather complicated, therefore numerical approach {\color{red}using the Python programming language and its scientific package SciPy was applied}.
     The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
 
     As mentioned above, we were not able to use standard approach to confidence intervals.
-    Each experiment was therefore repeated independently $N=100$ times for each parameter combination and sample characteristics were computed from the $100$ parameter estimates, namely the mean, median, standard deviation and empirical versions of confidence intervals.
-    To assess the quality of the parameter estimation four different evaluation criteria were tested.
+    Each experiment was therefore repeated independently $N=100$ times for each parameter combination and sample characteristics were computed from the $100$ parameter estimates.
+    To assess the quality of the parameter estimation {\color{red}(tasks~1--3)} four different evaluation criteria were tested.
     First, the standard $(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
     Second, the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval.
-    {For the last two criteria}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$} and it was tested whether
-    {the mean} fitted parameter value and { the median} fitted parameter value fell into that interval.
-    To evaluate the quality of model type estimation simply the proportion of correctly predicted model types for the given walk configuration was computed.
+    {\color{red}Finally}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$}.
+    {\color{red}The third test was positive if the mean fitted parameter value fell into that interval and the fourth test checked whether the median fitted parameter value was within the ``proximity'' interval.}
+    To evaluate the quality of model type estimation {\color{red}(task~4)} the proportion of correctly  {\color{red}chosen} model types for the given walk configuration was computed.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
-    For $K=100$ and $\alpha=0.1$, $89\%$ of all four evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
+    For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
     As expected, the results are less convincing for $K=5$, with only $71\%$ of all evaluation criteria being successful and $70\%$ of correctly found models.
-    Longer walks show better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
+    Longer walks show  {\color{red}generally} better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
     This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
+    {\color{red}As expected, tasks~1--2 show better results than task~3, as there are less parameters to estimate.}
     An example of the parameter estimation evaluation (tasks~1--3) can be seen in Table~\ref{tab:Fitting-results}, {\color{red}an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.}
-    {\color{red}Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).}
+    {\color{red}Both tables contain only a brief illustration of results due to space limitations.
+    Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).}
 
     \begin{table}
         \begin{centering}
@@ -680,17 +681,19 @@
         \end{centering}
     \end{table}
 
-    A known drawback of the presented simulation experiment is the discrepancy between the theoretical model (where $0<P_t<1$, for all $t$) and its representation in computer simulation, where the limited precision handles values very close to $1$ or $0$ as equal to them.
-    This rounding causes the optimization algorithm to produce inaccurate estimates or not to converge at all.
-    It affects only the \emph{success rewarding} version of the model, the estimation of $\lambda$ parameter and only cases with $K=100$ and $n\geq50$ ($63\%$ not converged estimations).
+    A drawback of the presented simulation experiment is the discrepancy between the theoretical model (where $0<P_t<1$, for all $t$) and its representation in computer simulation, where the limited precision {\color{red}rounds values very close to $1$}.
+    This rounding causes the optimization algorithm to produce inaccurate estimates or to not converge at all.
+    It affects only the \emph{success rewarding} version of the model {\color{red}when estimating the} $\lambda$ parameter and only cases with $K=100$ and $n\geq50$ ($63\%$ not converged estimations){\color{red}, independent of the choice of $\lambda$ or $p_0$ parameters.
+    An example can seen in Table~\ref{tab:Fitting-results} (row $6$)}.
     The effect of this phenomenon on other model configurations is negligible.
     Handling of such unwanted behavior will be subject of further research.
 
     \begin{table}
         \centering{}
 
-        {\caption{\label{tab:Fitting-results-model}The table shows the success rate of model estimation.
-        Same notation and parameter configuration as in Table~\ref{tab:Fitting-results}.}
+        {\caption{\label{tab:Fitting-results-model}The table shows {\color{red}model estimation} success rate.
+            {\color{red}Notation and parameter configuration is the same as in Table~\ref{tab:Fitting-results}.}
+        }
             \begin{tabular}{c|c|c|c|c|c}
                 \toprule
                 \textbf{K} & \textbf{n} & \textbf{SP} & \textbf{SR} & \textbf{SP2} & \textbf{SR2} \tabularnewline
@@ -729,7 +732,7 @@
     processes can be found in reliability analysis, medical as well as
     econometric studies, and very often in sports modeling.
     The authors
-    recently published a study where the \emph{\color{blue}success rewarding} model was applied
+    recently  {\color{blue}presented} a study where the \emph{\color{blue}success rewarding} model was applied
     to predict the \emph{in-play} development of a Grand Slam tennis matches
     with compelling results when used for live betting against a bookmaker~\cite{ja2019imam}.
 
