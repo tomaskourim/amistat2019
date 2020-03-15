@@ -1,4 +1,4 @@
-# code used to analyze generalized data
+# code used fit models onto generalized data
 
 import logging
 import pickle
@@ -13,7 +13,8 @@ import pandas as pd
 import scipy.optimize as opt
 
 from common import get_current_probability
-from config import DATA_DIRNAME
+from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK, \
+    REPETITIONS_OF_WALK_SERIES
 
 
 # compare with reality
@@ -23,6 +24,8 @@ from config import DATA_DIRNAME
 
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
                                    walk: List[int], walk_type: str, starting_index: int) -> float:
+    if starting_probability >= 1 or starting_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
+        return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
@@ -77,11 +80,14 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        error_value = 'not_fitted'
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(walk_type, starting_probability, walks))
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
-        opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method='Nelder-Mead',
+        bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
+        error_value = np.repeat('not_fitted', len(guess))
+        opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
                                   args=(walk_type, starting_probability, walks))
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
@@ -90,10 +96,7 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-            return -10000
-        elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-            return [-10000, -10000]
+        return error_value
 
 
 # lambda known, get p0
@@ -104,81 +107,92 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return -10000
+        return 'not_fitted'
 
 
 # get lambda and p0
 def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[float]:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
         guess = np.array([0.5, 0.5])
+        bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5, 0.5])
+        bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     else:
         raise Exception(f'Unexpected walk type: {walk_type}')
 
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(walk_type, walks))
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM,
+                              args=(walk_type, walks))
     if opt_result.success:
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-            return [-10000, -10000]
-        elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-            return [-10000, -10000, -10000]
+        return np.repeat('not_fitted', len(guess))
+
+
+def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
+                min_akaike: float, bounds: opt.Bounds) -> Tuple[float, List[float], str]:
+    opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM,
+                              args=(model, walks))
+    akaike = 2 * len(guess) + 2 * opt_result.fun
+    if opt_result.success and akaike < min_akaike:
+        min_akaike = akaike
+        current_model = model
+        result = opt_result.x
+    return min_akaike, result, current_model
 
 
 # find the best suitable model & parameter values
 def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
-    result = None
-    current_model = ''
-    min_log_likelihood = sys.float_info.max
+    """
+    Uses the Akaike information criterion
+    https://en.wikipedia.org/wiki/Akaike_information_criterion#Modification_for_small_sample_size
+    to get the optimal model.
+    AIC = 2k - 2ln(L)
+    opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks)) returns directly
+    - ln(L)
+    :param walks:
+    :return found parameters, best model:
+    """
+    result = ['not_fitted', 'not_fitted']
+    current_model = 'not_fitted'
+    min_akaike = sys.float_info.max
 
     # single lambda models
     guess = np.array([0.5, 0.5])
+    bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     model = 'success_punished'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
     model = 'success_rewarded'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
     # two lambdas models
     guess = np.array([0.5, 0.5, 0.5])
+    bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     model = 'success_punished_two_lambdas'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
     model = 'success_rewarded_two_lambdas'
-    opt_result = opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks))
-    if opt_result.success and opt_result.fun < min_log_likelihood:
-        min_log_likelihood = opt_result.fun
-        current_model = model
-        result = opt_result.x
+    min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
     return result, current_model
 
 
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
-    results = pd.DataFrame(
-        columns=["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count", "prediction_type",
-                 "predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1",
-                 "predicted_p0"])
+    columns = MODEL_PARAMETERS
+    columns.append("prediction_type")
+    columns.extend(PREDICTION_VALUES)
+    columns.append("repetition")
+    results = pd.DataFrame(columns=columns)
     start_time_loop = datetime.now()
+    iterations = len(generated_data)
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
-            walks, walk_type, starting_probability, c_lambdas, step_count = pickle.load(f)  # load data
+            walks, walk_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
+            # TODO here are actually just walk steps but want to use complete walks
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 c_lambda = c_lambdas[0]
                 c_lambda0 = ""
@@ -212,7 +226,8 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": ""}
+                              "predicted_p0": "",
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
@@ -227,7 +242,8 @@ def main():
                               "predicted_lambda": "",
                               "predicted_lambda0": "",
                               "predicted_lambda1": "",
-                              "predicted_p0": estimated_p0}
+                              "predicted_p0": estimated_p0,
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_params = get_parameters_estimate(walk_type, walks)
@@ -252,7 +268,8 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0]}
+                              "predicted_p0": estimated_params[0],
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             estimated_params, estimated_model = get_model_estimate(walks)
@@ -263,7 +280,7 @@ def main():
             elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
                 estimated_lambda = ""
                 estimated_lambda0 = estimated_params[1]
-                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else -10000
+                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
             current_result = {"model_type": walk_type,
@@ -277,16 +294,19 @@ def main():
                               "predicted_lambda": estimated_lambda,
                               "predicted_lambda0": estimated_lambda0,
                               "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0]}
+                              "predicted_p0": estimated_params[0],
+                              "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
             end_time_iter = datetime.now()
             time_curr = end_time_iter - start_time_iter
             time_per_iter = (end_time_iter - start_time_loop) / (i + 1)
-            eta = (len(generated_data) - i - 1) * time_per_iter
-            logging.info(f"Current iteration: {time_curr}. Per iter {time_per_iter}. ETA: {eta}")
+            eta = (iterations - i - 1) * time_per_iter
+            logging.info(
+                f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
+                f"{iterations - i - 1}/{iterations}; {datafile}")
 
-    with open("results.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f:
         pickle.dump([results], f)
 
 
@@ -322,4 +342,4 @@ if __name__ == '__main__':
 
     main()
     end_time = datetime.now()
-    logging.info(f"\nDuration: {(end_time - start_time)}")
+    logging.info(f"Duration: {(end_time - start_time)}")
