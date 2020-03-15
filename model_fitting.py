@@ -12,9 +12,9 @@ import numpy as np
 import pandas as pd
 import scipy.optimize as opt
 
-from common import get_current_probability
-from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK, \
-    REPETITIONS_OF_WALK_SERIES
+from common import get_current_probability, list_walks2list_lists
+from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK_S, \
+    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE
 
 
 # compare with reality
@@ -39,8 +39,7 @@ def get_multiple_walks_log_likelihood(c_lambdas: List[float], starting_probabili
     log_likelihood = 0
     for walk in walks:
         log_likelihood = get_single_walk_log_likelihood(log_likelihood, c_lambdas, starting_probability, walk,
-                                                        walk_type,
-                                                        starting_index)
+                                                        walk_type, starting_index)
     return log_likelihood
 
 
@@ -80,13 +79,13 @@ def negative_log_likelihood_params(params: List[float], walk_type: str, walks: L
 # p0 known, get lambda
 def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-        error_value = 'not_fitted'
+        error_value = ERROR_VALUE
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(walk_type, starting_probability, walks))
     elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
-        error_value = np.repeat('not_fitted', len(guess))
+        error_value = np.repeat(ERROR_VALUE, len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
                                   args=(walk_type, starting_probability, walks))
     else:
@@ -107,7 +106,7 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return 'not_fitted'
+        return ERROR_VALUE
 
 
 # get lambda and p0
@@ -127,7 +126,7 @@ def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[floa
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return np.repeat('not_fitted', len(guess))
+        return np.repeat(ERROR_VALUE, len(guess))
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
@@ -154,8 +153,8 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     :param walks:
     :return found parameters, best model:
     """
-    result = ['not_fitted', 'not_fitted']
-    current_model = 'not_fitted'
+    result = [ERROR_VALUE, ERROR_VALUE]
+    current_model = ERROR_VALUE
     min_akaike = sys.float_info.max
 
     # single lambda models
@@ -280,7 +279,7 @@ def main():
             elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
                 estimated_lambda = ""
                 estimated_lambda0 = estimated_params[1]
-                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
+                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else ERROR_VALUE
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
             current_result = {"model_type": walk_type,

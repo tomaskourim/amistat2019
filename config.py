@@ -22,3 +22,5 @@ MODEL_PARAMETERS = ["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "s
 PREDICTION_VALUES = ["predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1", "predicted_p0"]
 
 DATA_OVERFLOW_CONSTANT = 1000000
+
+ERROR_VALUE = 'not_fitted'
