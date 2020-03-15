@@ -4,6 +4,7 @@ import logging
 import os
 import pickle
 from datetime import datetime
+from decimal import *
 from typing import List
 
 import numpy as np
@@ -13,7 +14,7 @@ from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, 
     REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES
 
 
-def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int) -> \
+def generate_random_walk(walk_type: str, starting_probability: Decimal, c_lambdas: List[float], walk_steps: int) -> \
         CompleteWalk:
     steps = [0]  # in the model, probabilities start with p0, but steps with x1
     development = [0]
@@ -26,7 +27,7 @@ def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas:
     return CompleteWalk(probabilities, steps, development)
 
 
-def generate_random_walks(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int,
+def generate_random_walks(walk_type: str, starting_probability: Decimal, c_lambdas: List[float], walk_steps: int,
                           repetitions: int) -> List[CompleteWalk]:
     complete_walks = []
     for j in range(0, repetitions):
@@ -39,7 +40,7 @@ def save_walks(walks: List[CompleteWalk], walk_type: str, starting_probability: 
     if not os.path.exists(DATA_DIRNAME):
         os.mkdir(DATA_DIRNAME)
     filename = f"{DATA_DIRNAME}/{walk_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
-    with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
+    with open(filename, 'wb') as f:
         pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count, repetition], f)
 
 
@@ -61,7 +62,7 @@ def main():
                             c_lambdas = [c_lambda]
                         # TODO better handle repetitions of walks
                         walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count,
-                                                      REPETITIONS_OF_WALK_S[2])
+                                                      REPETITIONS_OF_WALK_S[0])
                         save_walks(walks, walk_type, starting_probability, c_lambdas, step_count, repetition)
 
 

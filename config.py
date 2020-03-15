@@ -1,6 +1,8 @@
+from decimal import Decimal
+
 C_LAMBDAS = [0.5, 0.8, 0.9, 0.99]
 C_LAMBDA_PAIRS = [[0.5, 0.8], [0.1, 0.5], [0.5, 0.99], [0.99, 0.9]]
-START_PROBABILITIES = [0.5, 0.8, 0.9, 0.99]
+START_PROBABILITIES = map(Decimal, [0.5, 0.8, 0.9, 0.99])
 STEP_COUNTS = [5, 10, 50, 100]
 REPETITIONS_OF_WALK_S = [5, 10, 100]
 REPETITIONS_OF_WALK_SERIES = 100
