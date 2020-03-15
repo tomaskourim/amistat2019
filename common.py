@@ -102,7 +102,6 @@ def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float, walk
     return e
 
 
-
 def expected_p_t_squared(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
     """
     Support function to get the variance
@@ -135,3 +134,19 @@ def var_p_t_array(step_count: int, p0: float, c_lambda: float, walk_type: str) -
         ep = expected_p_t(step, p0, c_lambda, walk_type)
         var_array.append(ep2 - ep ** 2)
     return var_array
+
+
+def list_walks2list_lists(walks):
+    """
+    Takes a list of complete walks on the input and returns it as a list of lists.
+    :param walks:
+    :return:
+    """
+    walks_steps = []
+    walks_developments = []
+    walks_probabilities = []
+    for walk in walks:
+        walks_steps.append(walk.steps)
+        walks_developments.append(walk.development)
+        walks_probabilities.append(walk.probabilities)
+    return [walks_probabilities, walks_steps, walks_developments]

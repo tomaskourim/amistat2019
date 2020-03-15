@@ -10,7 +10,7 @@ import numpy as np
 
 from common import bernoulli2ising, get_current_probability, CompleteWalk
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME, MODEL_TYPES, \
-    REPETITIONS_OF_WALK, REPETITIONS_OF_WALK_SERIES
+    REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES
 
 
 def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int) -> \
@@ -34,24 +34,13 @@ def generate_random_walks(walk_type: str, starting_probability: float, c_lambdas
     return complete_walks
 
 
-def save_walks(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambdas: List[float],
+def save_walks(walks: List[CompleteWalk], walk_type: str, starting_probability: float, c_lambdas: List[float],
                step_count: int, repetition: int):
     if not os.path.exists(DATA_DIRNAME):
         os.mkdir(DATA_DIRNAME)
     filename = f"{DATA_DIRNAME}/{walk_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
         pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count, repetition], f)
-
-
-def list_walks2list_lists(walks):
-    walks_steps = []
-    walks_developments = []
-    walks_probabilities = []
-    for walk in walks:
-        walks_steps.append(walk.steps)
-        walks_developments.append(walk.development)
-        walks_probabilities.append(walk.probabilities)
-    return [walks_probabilities, walks_steps, walks_developments]
 
 
 def main():
@@ -72,9 +61,8 @@ def main():
                             c_lambdas = [c_lambda]
 
                         walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count,
-                                                      REPETITIONS_OF_WALK)
-                        walks_steps = list_walks2list_lists(walks)[1]
-                        save_walks(walks_steps, walk_type, starting_probability, c_lambdas, step_count, repetition)
+                                                      REPETITIONS_OF_WALK_S[2])
+                        save_walks(walks, walk_type, starting_probability, c_lambdas, step_count, repetition)
 
 
 if __name__ == '__main__':

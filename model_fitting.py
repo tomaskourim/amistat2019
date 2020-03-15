@@ -191,6 +191,7 @@ def main():
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
+            walks_steps = list_walks2list_lists(walks)[1]
             # TODO here are actually just walk steps but want to use complete walks
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 c_lambda = c_lambdas[0]
@@ -203,7 +204,7 @@ def main():
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
 
-            estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
+            estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks_steps)
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 estimated_lambda = estimated_lambdas
                 estimated_lambda0 = ""
@@ -229,7 +230,7 @@ def main():
                               "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
-            estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+            estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks_steps)
             current_result = {"model_type": walk_type,
                               "c_lambda": c_lambda,
                               "c_lambda0": c_lambda0,
@@ -245,7 +246,7 @@ def main():
                               "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
-            estimated_params = get_parameters_estimate(walk_type, walks)
+            estimated_params = get_parameters_estimate(walk_type, walks_steps)
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 estimated_lambda = estimated_params[1]
                 estimated_lambda0 = ""
@@ -271,7 +272,7 @@ def main():
                               "repetition": repetition}
             results = results.append(current_result, ignore_index=True)
 
-            estimated_params, estimated_model = get_model_estimate(walks)
+            estimated_params, estimated_model = get_model_estimate(walks_steps)
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 estimated_lambda = estimated_params[1]
                 estimated_lambda0 = ""
