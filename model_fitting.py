@@ -306,7 +306,7 @@ def main():
                 f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
                 f"{iterations - i - 1}/{iterations}; {datafile}")
 
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK_S[2]}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f: # TODO better handle repetitions of walks
         pickle.dump([results], f)
 
 

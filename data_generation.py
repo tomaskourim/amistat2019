@@ -59,7 +59,7 @@ def main():
                             c_lambdas = C_LAMBDA_PAIRS[index]
                         else:
                             c_lambdas = [c_lambda]
-
+                        # TODO better handle repetitions of walks
                         walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count,
                                                       REPETITIONS_OF_WALK_S[2])
                         save_walks(walks, walk_type, starting_probability, c_lambdas, step_count, repetition)
