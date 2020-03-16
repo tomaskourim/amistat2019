@@ -626,13 +626,16 @@
 
     As mentioned above, we were not able to use standard approach to confidence intervals.
     Each experiment was therefore repeated independently $N=100$ times for each parameter combination and sample characteristics were computed from the $100$ parameter estimates.
-    To assess the quality of the parameter estimation {\color{red}(tasks~1--3)} four different evaluation criteria were tested.
-    First, the standard $(1-\alpha)$ two-sided confidence interval around the mean was constructed and the test was positive if the true parameter value was in that interval.
-    Second, the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile were chosen as a lower and upper bounds of a ``percentile'' interval and again the test was positive if the true parameter value fell within the interval.
-    {\color{red}Finally}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$}.
-    {\color{red}The third test was positive if the mean fitted parameter value fell into that interval and the fourth test checked whether the median fitted parameter value was within the ``proximity'' interval.}
-    {\color{red}For task~4, the model was estimated using the \emph{AIC} on each set of $K$ walks.
-    To evaluate the quality of such estimation} the proportion of correctly {\color{red}chosen} model types for the given walk configuration was computed {\color{red}as the proportion of the number of correctly chosen models to the number of analyzed models}.
+    To assess the quality of the parameter estimation (tasks~1--3) four different evaluation criteria were tested.
+    \begin{enumerate}
+        \color{red}
+        \item true parameter value lies within the standard $(1-\alpha)$ two-sided confidence interval around the mean,
+        \item true parameter value lies within the ``percentile'' interval, i.e. between the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile,
+        \item the mean fitted parameter value lies within the ``proximity'' interval around the true parameter value $\omega$, computed as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$,
+        \item the median fitted parameter value lies within the ``proximity'' interval.
+    \end{enumerate}
+    For task~4, the model was estimated using the \emph{AIC} on each set of $K$ walks.
+    To evaluate the quality of such estimation the proportion of correctly chosen model types for the given walk configuration was computed {\color{red}as the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$}.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
     For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
