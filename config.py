@@ -21,4 +21,4 @@ CONFIDENCE_INTERVAL_SIZES = [0.05, 0.1, 0.5]
 MODEL_PARAMETERS = ["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "step_count"]
 PREDICTION_VALUES = ["predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1", "predicted_p0"]
 
-ERROR_VALUE='not_fitted'
+ERROR_VALUE = 'not_fitted'

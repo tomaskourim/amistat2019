@@ -14,7 +14,7 @@ import scipy.optimize as opt
 
 from common import get_current_probability
 from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK_S, \
-    REPETITIONS_OF_WALK_SERIES
+    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE
 
 
 # compare with reality
@@ -79,13 +79,13 @@ def negative_log_likelihood_params(params: List[float], model_type: str, walks: 
 # p0 known, get lambda
 def get_lambda_estimate(model_type: str, starting_probability: float, walks: List[List[int]]) -> float:
     if model_type == 'success_punished' or model_type == 'success_rewarded':
-        error_value = 'not_fitted'
+        error_value = ERROR_VALUE
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(model_type, starting_probability, walks))
     elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
-        error_value = np.repeat('not_fitted', len(guess))
+        error_value = np.repeat(ERROR_VALUE, len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
                                   args=(model_type, starting_probability, walks))
     else:
@@ -106,7 +106,7 @@ def get_p0_estimate(model_type: str, c_lambdas: List[float], walks: List[List[in
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return 'not_fitted'
+        return ERROR_VALUE
 
 
 # get lambda and p0
@@ -126,7 +126,7 @@ def get_parameters_estimate(model_type: str, walks: List[List[int]]) -> List[flo
         logging.debug("Fitted successfully.")
         return opt_result.x
     else:
-        return np.repeat('not_fitted', len(guess))
+        return np.repeat(ERROR_VALUE, len(guess))
 
 
 def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: List[float], current_model: str,
@@ -153,8 +153,8 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     :param walks:
     :return found parameters, best model:
     """
-    result = ['not_fitted', 'not_fitted']
-    current_model = 'not_fitted'
+    result = [ERROR_VALUE, ERROR_VALUE]
+    current_model = ERROR_VALUE
     min_akaike = sys.float_info.max
 
     # single lambda models
