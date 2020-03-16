@@ -35,10 +35,10 @@ def generate_random_walks(model_type: str, starting_probability: float, c_lambda
 
 
 def save_walks(walks: List[List[int]], model_type: str, starting_probability: float, c_lambdas: List[float],
-               step_count: int, repetition: int):
+               step_count: int, repetitions_of_walk: int, repetition: int):
     if not os.path.exists(DATA_DIRNAME):
         os.mkdir(DATA_DIRNAME)
-    filename = f"{DATA_DIRNAME}/{model_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
+    filename = f"{DATA_DIRNAME}/K{repetitions_of_walk}/{model_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
         pickle.dump([walks, model_type, starting_probability, c_lambdas, step_count, repetition], f)
 
@@ -55,10 +55,10 @@ def list_walks2list_lists(walks):
 
 
 def generate_and_save_walks(model_type: str, starting_probability: float, c_lambdas: List[float], step_count: int,
-                            repetition: int) -> List[List[int]]:
-    walks = generate_random_walks(model_type, starting_probability, c_lambdas, step_count, repetition)
+                            repetitions_of_walk: int, repetition: int) -> List[List[int]]:
+    walks = generate_random_walks(model_type, starting_probability, c_lambdas, step_count, repetitions_of_walk)
     walks_steps = list_walks2list_lists(walks)[1]
-    save_walks(walks_steps, model_type, starting_probability, c_lambdas, step_count, repetition)
+    save_walks(walks_steps, model_type, starting_probability, c_lambdas, step_count, repetitions_of_walk, repetition)
     return walks_steps
 
 
@@ -79,7 +79,7 @@ def main():
                         else:
                             c_lambdas = [c_lambda]
                         generate_and_save_walks(model_type, starting_probability, c_lambdas, step_count,
-                                                REPETITIONS_OF_WALK_S[0])
+                                                REPETITIONS_OF_WALK_S[0], repetition)
 
 
 if __name__ == '__main__':
