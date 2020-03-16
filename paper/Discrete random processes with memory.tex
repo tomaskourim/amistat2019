@@ -650,10 +650,10 @@
 
     \begin{table}
         \begin{centering}
-        {\caption{\label{tab:Fitting-results} The table shows an example of {\color{red} task $1$} evaluation results{\color{red},
-        with $\lambda=0.5$ or $\lambda_{0}=0.5$ (and corresponding $\lambda_{1}=0.8$), $p_0=0.5$, $\alpha=0.1$.
-        The mean value and its standard deviation and the median and the corresponding ``percentile'' interval are presented.}
-            \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}}
+            \caption{\label{tab:Fitting-results} The table shows an example of task $1$ evaluation results,
+            with {\color{red}true} parameter value $\lambda=0.5$ or $\lambda_{0}=0.5$ (and corresponding $\lambda_{1}=0.8$), {\color{red}and} $p_0=0.5$, $\alpha=0.1$.
+            The mean {\color{red}estimated parameter} value and its standard deviation and the median {\color{red}estimated parameter} value and the corresponding ``percentile'' interval are presented.
+                \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}
             \begin{tabular}{c|c|c|c|c|c|c}
                 \toprule
                 \multicolumn{2}{c|}{} & \textbf{Type} & \textbf{mean} & \textbf{st. dev.} & \textbf{median} & \textbf{percentile} \tabularnewline
@@ -698,23 +698,22 @@
     \begin{table}
         \centering{}
 
-        {\caption{\label{tab:Fitting-results-model}The table shows model estimation success rate.
+        \caption{\label{tab:Fitting-results-model}The table shows model estimation success rate.
         Notation and parameter configuration is the same as in Table~\ref{tab:Fitting-results}.
         }
-            \begin{tabular}{c|c|c|c|c|c}
-                \toprule
-                \textbf{K} & \textbf{n} & \textbf{SP} & \textbf{SR} & \textbf{SP2} & \textbf{SR2} \tabularnewline
-                \midrule
-                \multirow{2}{*}{\rotatebox[origin=c]{90}{$100$}}
-                & 5 & 83\% & 80\% & 100\% & 100\% \tabularnewline
-                & 100 & 86\% & 88\% & 100\% & 100\% \tabularnewline
-                \midrule
-                \multirow{2}{*}{\rotatebox[origin=c]{90}{$5$}}
-                & 5 & 84\% & 85\% & 42\% & 34\% \tabularnewline
-                & 100 & 82\%  & 80\% & 100\% & 93\% \tabularnewline
-                \bottomrule
-            \end{tabular}
-        }
+        \begin{tabular}{c|c|c|c|c|c}
+            \toprule
+            \textbf{K} & \textbf{n} & \textbf{SP} & \textbf{SR} & \textbf{SP2} & \textbf{SR2} \tabularnewline
+            \midrule
+            \multirow{2}{*}{\rotatebox[origin=c]{90}{$100$}}
+            & 5 & 83\% & 80\% & 100\% & 100\% \tabularnewline
+            & 100 & 86\% & 88\% & 100\% & 100\% \tabularnewline
+            \midrule
+            \multirow{2}{*}{\rotatebox[origin=c]{90}{$5$}}
+            & 5 & 84\% & 85\% & 42\% & 34\% \tabularnewline
+            & 100 & 82\%  & 80\% & 100\% & 93\% \tabularnewline
+            \bottomrule
+        \end{tabular}
     \end{table}
 
 
