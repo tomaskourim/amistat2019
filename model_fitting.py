@@ -23,74 +23,73 @@ from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDI
 
 
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
-                                   walk: List[int], walk_type: str, starting_index: int) -> float:
+                                   walk: List[int], model_type: str, starting_index: int) -> float:
     if starting_probability >= 1 or starting_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
         return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
-        current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], walk_type)
+        current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], model_type)
         log_likelihood = log_likelihood + 0.5 * ((1 + walk[i]) * np.log(current_probability) + (1 - walk[i]) * np.log(
             1 - current_probability))
     return log_likelihood
 
 
 def get_multiple_walks_log_likelihood(c_lambdas: List[float], starting_probability: float, walks: List[List[int]],
-                                      walk_type: str, starting_index: int):
+                                      model_type: str, starting_index: int):
     log_likelihood = 0
     for walk in walks:
         log_likelihood = get_single_walk_log_likelihood(log_likelihood, c_lambdas, starting_probability, walk,
-                                                        walk_type,
-                                                        starting_index)
+                                                        model_type, starting_index)
     return log_likelihood
 
 
-def negative_log_likelihood_single_lambda(c_lambda: float, walk_type: str, starting_probability: float,
+def negative_log_likelihood_single_lambda(c_lambda: float, model_type: str, starting_probability: float,
                                           walks: List[List[int]]) -> float:
     starting_index = 2
-    log_likelihood = get_multiple_walks_log_likelihood([c_lambda], starting_probability, walks, walk_type,
+    log_likelihood = get_multiple_walks_log_likelihood([c_lambda], starting_probability, walks, model_type,
                                                        starting_index)
     return -log_likelihood
 
 
-def negative_log_likelihood_multiple_lambda(c_lambdas: List[float], walk_type: str, starting_probability: float,
+def negative_log_likelihood_multiple_lambda(c_lambdas: List[float], model_type: str, starting_probability: float,
                                             walks: List[List[int]]) -> float:
     starting_index = 2
-    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, model_type,
                                                        starting_index)
     return -log_likelihood
 
 
-def negative_log_likelihood_p0(starting_probability: float, walk_type: str, c_lambdas: List[float],
+def negative_log_likelihood_p0(starting_probability: float, model_type: str, c_lambdas: List[float],
                                walks: List[List[int]]) -> float:
     starting_index = 1
-    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, model_type,
                                                        starting_index)
     return -log_likelihood
 
 
-def negative_log_likelihood_params(params: List[float], walk_type: str, walks: List[List[int]]) -> float:
+def negative_log_likelihood_params(params: List[float], model_type: str, walks: List[List[int]]) -> float:
     starting_probability = params[0]
     c_lambdas = params[1:]
     starting_index = 1
-    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, walk_type,
+    log_likelihood = get_multiple_walks_log_likelihood(c_lambdas, starting_probability, walks, model_type,
                                                        starting_index)
     return -log_likelihood
 
 
 # p0 known, get lambda
-def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List[List[int]]) -> float:
-    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+def get_lambda_estimate(model_type: str, starting_probability: float, walks: List[List[int]]) -> float:
+    if model_type == 'success_punished' or model_type == 'success_rewarded':
         error_value = 'not_fitted'
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
-                                         args=(walk_type, starting_probability, walks))
-    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+                                         args=(model_type, starting_probability, walks))
+    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
         error_value = np.repeat('not_fitted', len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
-                                  args=(walk_type, starting_probability, walks))
+                                  args=(model_type, starting_probability, walks))
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
 
     if opt_result.success:
         logging.debug("Fitted successfully.")
@@ -100,9 +99,9 @@ def get_lambda_estimate(walk_type: str, starting_probability: float, walks: List
 
 
 # lambda known, get p0
-def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int]]) -> float:
+def get_p0_estimate(model_type: str, c_lambdas: List[float], walks: List[List[int]]) -> float:
     opt_result = opt.minimize_scalar(negative_log_likelihood_p0, bounds=(0, 1), method='bounded',
-                                     args=(walk_type, c_lambdas, walks))
+                                     args=(model_type, c_lambdas, walks))
     if opt_result.success:
         logging.debug("Fitted successfully.")
         return opt_result.x
@@ -111,18 +110,18 @@ def get_p0_estimate(walk_type: str, c_lambdas: List[float], walks: List[List[int
 
 
 # get lambda and p0
-def get_parameters_estimate(walk_type: str, walks: List[List[int]]) -> List[float]:
-    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+def get_parameters_estimate(model_type: str, walks: List[List[int]]) -> List[float]:
+    if model_type == 'success_punished' or model_type == 'success_rewarded':
         guess = np.array([0.5, 0.5])
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
-    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         guess = np.array([0.5, 0.5, 0.5])
         bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
 
     opt_result = opt.minimize(negative_log_likelihood_params, guess, method=OPTIMIZATION_ALGORITHM,
-                              args=(walk_type, walks))
+                              args=(model_type, walks))
     if opt_result.success:
         logging.debug("Fitted successfully.")
         return opt_result.x
@@ -179,20 +178,20 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     return result, current_model
 
 
-def estimate_current_walks_lambda(walks: List[List[int]], walk_type: str, starting_probability: float,
+def estimate_current_walks_lambda(walks: List[List[int]], model_type: str, starting_probability: float,
                                   basic_result: dict) -> dict:
     current_result = basic_result.copy()
-    estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
-    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+    estimated_lambdas = get_lambda_estimate(model_type, starting_probability, walks)
+    if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_lambdas
         estimated_lambda0 = ""
         estimated_lambda1 = ""
-    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         estimated_lambda = ""
         estimated_lambda0 = estimated_lambdas[0]
         estimated_lambda1 = estimated_lambdas[1]
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
     current_result["prediction_type"] = "only_lambda"
     current_result["predicted_lambda"] = estimated_lambda
     current_result["predicted_lambda0"] = estimated_lambda0
@@ -200,28 +199,28 @@ def estimate_current_walks_lambda(walks: List[List[int]], walk_type: str, starti
     return current_result
 
 
-def estimate_current_walks_p0(walks: List[List[int]], walk_type: str, c_lambdas: List[float],
+def estimate_current_walks_p0(walks: List[List[int]], model_type: str, c_lambdas: List[float],
                               basic_result: dict) -> dict:
     current_result = basic_result.copy()
-    estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+    estimated_p0 = get_p0_estimate(model_type, c_lambdas, walks)
     current_result["prediction_type"] = "only_p0"
     current_result["predicted_p0"] = estimated_p0
     return current_result
 
 
-def estimate_current_walks_all(walks: List[List[int]], walk_type: str, basic_result: dict) -> dict:
+def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
     current_result = basic_result.copy()
-    estimated_params = get_parameters_estimate(walk_type, walks)
-    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+    estimated_params = get_parameters_estimate(model_type, walks)
+    if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_params[1]
         estimated_lambda0 = ""
         estimated_lambda1 = ""
-    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         estimated_lambda = ""
         estimated_lambda0 = estimated_params[1]
         estimated_lambda1 = estimated_params[2]
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
     current_result["prediction_type"] = "all_parameters"
     current_result["predicted_lambda"] = estimated_lambda
     current_result["predicted_lambda0"] = estimated_lambda0
@@ -230,19 +229,19 @@ def estimate_current_walks_all(walks: List[List[int]], walk_type: str, basic_res
     return current_result
 
 
-def estimate_current_walks_model(walks: List[List[int]], walk_type: str, basic_result: dict) -> dict:
+def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
     current_result = basic_result.copy()
     estimated_params, estimated_model = get_model_estimate(walks)
-    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+    if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_params[1]
         estimated_lambda0 = ""
         estimated_lambda1 = ""
-    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         estimated_lambda = ""
         estimated_lambda0 = estimated_params[1]
         estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
 
     current_result["prediction_type"] = "everything"
     current_result["predicted_model"] = estimated_model
@@ -251,6 +250,24 @@ def estimate_current_walks_model(walks: List[List[int]], walk_type: str, basic_r
     current_result["predicted_lambda1"] = estimated_lambda1
     current_result["predicted_p0"] = estimated_params[0]
     return current_result
+
+
+def get_basic_result(model_type: str, c_lambda: float, c_lambda0: float, c_lambda1: float, starting_probability: float,
+                     step_count: int, repetition: int) -> dict:
+    basic_result = {"model_type": model_type,
+                    "c_lambda": c_lambda,
+                    "c_lambda0": c_lambda0,
+                    "c_lambda1": c_lambda1,
+                    "p0": starting_probability,
+                    "step_count": step_count,
+                    "prediction_type": "",
+                    "predicted_model": "",
+                    "predicted_lambda": "",
+                    "predicted_lambda0": "",
+                    "predicted_lambda1": "",
+                    "predicted_p0": "",
+                    "repetition": repetition}
+    return basic_result
 
 
 def main():
@@ -266,41 +283,30 @@ def main():
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[0]}", datafile), 'rb') as f:
-            walks, walk_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
-        if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+            walks, model_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
+        if model_type == 'success_punished' or model_type == 'success_rewarded':
             c_lambda = c_lambdas[0]
             c_lambda0 = ""
             c_lambda1 = ""
-        elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
             c_lambda = ""
             c_lambda0 = c_lambdas[0]
             c_lambda1 = c_lambdas[1]
         else:
-            raise Exception(f'Unexpected walk type: {walk_type}')
-        basic_result = {"model_type": walk_type,
-                        "c_lambda": c_lambda,
-                        "c_lambda0": c_lambda0,
-                        "c_lambda1": c_lambda1,
-                        "p0": starting_probability,
-                        "step_count": step_count,
-                        "prediction_type": "",
-                        "predicted_model": "",
-                        "predicted_lambda": "",
-                        "predicted_lambda0": "",
-                        "predicted_lambda1": "",
-                        "predicted_p0": "",
-                        "repetition": repetition}
+            raise Exception(f'Unexpected walk type: {model_type}')
+        basic_result = get_basic_result(model_type, c_lambda, c_lambda0, c_lambda1, starting_probability, step_count,
+                                        repetition)
         # TODO here are actually just walk steps but want to use complete walks
-        current_result = estimate_current_walks_lambda(walks, walk_type, starting_probability, basic_result)
+        current_result = estimate_current_walks_lambda(walks, model_type, starting_probability, basic_result)
         results = results.append(current_result, ignore_index=True)
 
-        current_result = estimate_current_walks_p0(walks, walk_type, c_lambdas, basic_result)
+        current_result = estimate_current_walks_p0(walks, model_type, c_lambdas, basic_result)
         results = results.append(current_result, ignore_index=True)
 
-        current_result = estimate_current_walks_all(walks, walk_type, basic_result)
+        current_result = estimate_current_walks_all(walks, model_type, basic_result)
         results = results.append(current_result, ignore_index=True)
 
-        current_result = estimate_current_walks_model(walks, walk_type, basic_result)
+        current_result = estimate_current_walks_model(walks, model_type, basic_result)
         results = results.append(current_result, ignore_index=True)
 
         end_time_iter = datetime.now()

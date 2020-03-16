@@ -19,29 +19,29 @@ def bernoulli2ising(bernoulli: int) -> int:
         raise Exception(f'Unexpected value of Bernoulli distribution: {bernoulli}')
 
 
-def get_current_probability(c_lambdas: List[float], last_probability: float, step: int, walk_type: str) -> float:
+def get_current_probability(c_lambdas: List[float], last_probability: float, step: int, model_type: str) -> float:
     """
     Computes the transition probability for the next step according to the respective definition as in the paper.
     :param c_lambdas:
     :param last_probability:
     :param step: as Ising variable
-    :param walk_type:
+    :param model_type:
     :return:
     """
     if step == '' or step == 0:  # at the beginning of the walk just return p0
         return last_probability
-    if walk_type == 'success_punished':
+    if model_type == 'success_punished':
         return c_lambdas[0] * last_probability + 0.5 * (1 - c_lambdas[0]) * (1 - step)
-    elif walk_type == 'success_rewarded':
+    elif model_type == 'success_rewarded':
         return c_lambdas[0] * last_probability + 0.5 * (1 - c_lambdas[0]) * (1 + step)
-    elif walk_type == 'success_punished_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas':
         return 0.5 * ((1 + step) * c_lambdas[0] * last_probability + (1 - step) * (
                 1 - c_lambdas[1] * (1 - last_probability)))
-    elif walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_rewarded_two_lambdas':
         return 0.5 * ((1 - step) * c_lambdas[0] * last_probability + (1 + step) * (
                 1 - c_lambdas[1] * (1 - last_probability)))
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
 
 
 class CompleteWalk:
@@ -51,32 +51,32 @@ class CompleteWalk:
         self.development = development
 
 
-def expected_p_t_array(step_count: int, p0: float, c_lambda: float, walk_type: str) -> List[float]:
+def expected_p_t_array(step_count: int, p0: float, c_lambda: float, model_type: str) -> List[float]:
     e_array = []
     for step in range(0, step_count + 1):
-        e_array.append(expected_p_t(step, p0, c_lambda, walk_type))
+        e_array.append(expected_p_t(step, p0, c_lambda, model_type))
     return e_array
 
 
-def expected_p_t(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
+def expected_p_t(step: int, p0: float, c_lambda: float, model_type: str) -> float:
     """
     Computes expected value of transition probability according to theoretical results.
     :param step:
     :param p0:
     :param c_lambda:
-    :param walk_type:
+    :param model_type:
     :return:
     """
-    if walk_type == 'success_punished':
+    if model_type == 'success_punished':
         e = (2 * c_lambda - 1) ** step * p0 + (1 - (2 * c_lambda - 1) ** step) / 2 if c_lambda != 0.5 else 0.5
-    elif walk_type == 'success_rewarded':
+    elif model_type == 'success_rewarded':
         e = p0
-    elif walk_type == 'success_punished_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas':
         e = 0
-    elif walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_rewarded_two_lambdas':
         e = 0
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
     return e
 
 
@@ -85,53 +85,52 @@ def support_k(i: int, p0: float, c_lambda: float):
             1 - c_lambda) ** 2)
 
 
-def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
+def expected_p_t_squared_support_sum(step: int, p0: float, c_lambda: float, model_type: str) -> float:
     e = 0
     for i in range(1, step + 1):
-        if walk_type == 'success_punished':
+        if model_type == 'success_punished':
             summand = support_k(i - 1, p0, c_lambda) * (3 * c_lambda ** 2 - 2 * c_lambda) ** (step - i)
-        elif walk_type == 'success_rewarded':
+        elif model_type == 'success_rewarded':
             summand = (2 * c_lambda - c_lambda ** 2) ** (step - i)
-        elif walk_type == 'success_punished_two_lambdas':
+        elif model_type == 'success_punished_two_lambdas':
             summand = 0
-        elif walk_type == 'success_rewarded_two_lambdas':
+        elif model_type == 'success_rewarded_two_lambdas':
             summand = 0
         else:
-            raise Exception(f'Unexpected walk type: {walk_type}')
+            raise Exception(f'Unexpected walk type: {model_type}')
         e = e + summand
     return e
 
 
-
-def expected_p_t_squared(step: int, p0: float, c_lambda: float, walk_type: str) -> float:
+def expected_p_t_squared(step: int, p0: float, c_lambda: float, model_type: str) -> float:
     """
     Support function to get the variance
     :param step:
     :param p0:
     :param c_lambda:
-    :param walk_type:
+    :param model_type:
     :return:
     """
 
-    support_sum = expected_p_t_squared_support_sum(step, p0, c_lambda, walk_type)
+    support_sum = expected_p_t_squared_support_sum(step, p0, c_lambda, model_type)
 
-    if walk_type == 'success_punished':
+    if model_type == 'success_punished':
         e = (3 * c_lambda ** 2 - 2 * c_lambda) ** step + support_sum if c_lambda != 2 / 3 else 0
-    elif walk_type == 'success_rewarded':
+    elif model_type == 'success_rewarded':
         e = (2 * c_lambda - c_lambda ** 2) ** step * p0 ** 2 + p0 * (1 - c_lambda) ** 2 * support_sum
-    elif walk_type == 'success_punished_two_lambdas':
+    elif model_type == 'success_punished_two_lambdas':
         e = 0
-    elif walk_type == 'success_rewarded_two_lambdas':
+    elif model_type == 'success_rewarded_two_lambdas':
         e = 0
     else:
-        raise Exception(f'Unexpected walk type: {walk_type}')
+        raise Exception(f'Unexpected walk type: {model_type}')
     return e
 
 
-def var_p_t_array(step_count: int, p0: float, c_lambda: float, walk_type: str) -> List[float]:
+def var_p_t_array(step_count: int, p0: float, c_lambda: float, model_type: str) -> List[float]:
     var_array = [p0 * (1 - p0)]  # VarP(0)
     for step in range(1, step_count + 1):
-        ep2 = expected_p_t_squared(step, p0, c_lambda, walk_type)
-        ep = expected_p_t(step, p0, c_lambda, walk_type)
+        ep2 = expected_p_t_squared(step, p0, c_lambda, model_type)
+        ep = expected_p_t(step, p0, c_lambda, model_type)
         var_array.append(ep2 - ep ** 2)
     return var_array

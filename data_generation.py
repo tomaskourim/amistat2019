@@ -13,7 +13,7 @@ from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, 
     REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES
 
 
-def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int) -> \
+def generate_random_walk(model_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int) -> \
         CompleteWalk:
     steps = [0]  # in the model, probabilities start with p0, but steps with x1
     development = [0]
@@ -22,25 +22,25 @@ def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas:
         # next step using actual probability
         steps.append(bernoulli2ising(np.random.binomial(1, probabilities[i - 1], 1)[0]))
         development.append(development[i - 1] + steps[i])
-        probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], walk_type))
+        probabilities.append(get_current_probability(c_lambdas, probabilities[i - 1], steps[i], model_type))
     return CompleteWalk(probabilities, steps, development)
 
 
-def generate_random_walks(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int,
+def generate_random_walks(model_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int,
                           repetitions: int) -> List[CompleteWalk]:
     complete_walks = []
     for j in range(0, repetitions):
-        complete_walks.append(generate_random_walk(walk_type, starting_probability, c_lambdas, walk_steps))
+        complete_walks.append(generate_random_walk(model_type, starting_probability, c_lambdas, walk_steps))
     return complete_walks
 
 
-def save_walks(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambdas: List[float],
+def save_walks(walks: List[List[int]], model_type: str, starting_probability: float, c_lambdas: List[float],
                step_count: int, repetition: int):
     if not os.path.exists(DATA_DIRNAME):
         os.mkdir(DATA_DIRNAME)
-    filename = f"{DATA_DIRNAME}/{walk_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
+    filename = f"{DATA_DIRNAME}/{model_type}__start{starting_probability}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     with open(filename, 'wb') as f:  # Python 3: open(..., 'wb')
-        pickle.dump([walks, walk_type, starting_probability, c_lambdas, step_count, repetition], f)
+        pickle.dump([walks, model_type, starting_probability, c_lambdas, step_count, repetition], f)
 
 
 def list_walks2list_lists(walks):
@@ -54,11 +54,11 @@ def list_walks2list_lists(walks):
     return [walks_probabilities, walks_steps, walks_developments]
 
 
-def generate_and_save_walks(walk_type: str, starting_probability: float, c_lambdas: List[float], step_count: int,
+def generate_and_save_walks(model_type: str, starting_probability: float, c_lambdas: List[float], step_count: int,
                             repetition: int) -> List[List[int]]:
-    walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count, repetition)
+    walks = generate_random_walks(model_type, starting_probability, c_lambdas, step_count, repetition)
     walks_steps = list_walks2list_lists(walks)[1]
-    save_walks(walks_steps, walk_type, starting_probability, c_lambdas, step_count, repetition)
+    save_walks(walks_steps, model_type, starting_probability, c_lambdas, step_count, repetition)
     return walks_steps
 
 
@@ -73,12 +73,12 @@ def main():
         for index, c_lambda in enumerate(C_LAMBDAS):
             for starting_probability in START_PROBABILITIES:
                 for step_count in STEP_COUNTS:
-                    for walk_type in MODEL_TYPES:
-                        if 'two_lambdas' in walk_type:
+                    for model_type in MODEL_TYPES:
+                        if 'two_lambdas' in model_type:
                             c_lambdas = C_LAMBDA_PAIRS[index]
                         else:
                             c_lambdas = [c_lambda]
-                        generate_and_save_walks(walk_type, starting_probability, c_lambdas, step_count,
+                        generate_and_save_walks(model_type, starting_probability, c_lambdas, step_count,
                                                 REPETITIONS_OF_WALK_S[0])
 
 
