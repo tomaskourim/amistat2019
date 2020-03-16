@@ -10,7 +10,7 @@ import numpy as np
 
 from common import bernoulli2ising, get_current_probability, CompleteWalk
 from config import C_LAMBDAS, START_PROBABILITIES, STEP_COUNTS, C_LAMBDA_PAIRS, DATA_DIRNAME, MODEL_TYPES, \
-    REPETITIONS_OF_WALK, REPETITIONS_OF_WALK_SERIES
+    REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES
 
 
 def generate_random_walk(walk_type: str, starting_probability: float, c_lambdas: List[float], walk_steps: int) -> \
@@ -79,7 +79,7 @@ def main():
                         else:
                             c_lambdas = [c_lambda]
                         generate_and_save_walks(walk_type, starting_probability, c_lambdas, step_count,
-                                                REPETITIONS_OF_WALK)
+                                                REPETITIONS_OF_WALK_S[0])
 
 
 if __name__ == '__main__':
