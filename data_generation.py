@@ -51,6 +51,8 @@ def main():
     # repetitions
     # save into .csv?
 
+    getcontext().prec = 50
+
     for repetition in range(0, REPETITIONS_OF_WALK_SERIES):
         for index, c_lambda in enumerate(C_LAMBDAS):
             for starting_probability in START_PROBABILITIES:

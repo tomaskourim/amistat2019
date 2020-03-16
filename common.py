@@ -36,8 +36,8 @@ def get_current_probability(c_lambdas: List[float], last_probability: Decimal, s
     elif walk_type == 'success_rewarded':
         return Decimal(c_lambdas[0]) * last_probability + Decimal(0.5 * (1 - c_lambdas[0]) * (1 + step))
     elif walk_type == 'success_punished_two_lambdas':
-        return Decimal(0.5 * (1 + step) * c_lambdas[0]) * last_probability + (1 - step) * (
-            Decimal(1) - Decimal(c_lambdas[1]) * (Decimal(1) - last_probability))
+        return Decimal(0.5) * (Decimal((1 + step) * c_lambdas[0]) * last_probability + (1 - step) * (
+            Decimal(1) - Decimal(c_lambdas[1]) * (Decimal(1) - last_probability)))
     elif walk_type == 'success_rewarded_two_lambdas':
         return Decimal(0.5) * (Decimal((1 - step) * c_lambdas[0]) * last_probability + Decimal((1 + step) * (
                 1 - Decimal(c_lambdas[1]) * (1 - last_probability))))
