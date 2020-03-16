@@ -17,7 +17,8 @@ def get_walks(model_type: str, p0: float, c_lambdas: List[float], step_count: in
               repetitions_of_walk: int) -> List[List[int]]:
     filename = f"{DATA_DIRNAME}/K{repetitions_of_walk}/{model_type}__start{p0}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     if os.path.isfile(filename):
-        walks = pickle.load(filename)[0]  # load data
+        with open(filename, 'rb') as f:
+            walks = pickle.load(f)[0]  # load data
     else:
         walks = generate_and_save_walks(model_type, p0, c_lambdas, step_count, repetitions_of_walk)
     return walks
@@ -37,17 +38,15 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int):
 def update_results(results: pd.DataFrame, repetitions_of_walk: int):
     count = 0
     for index, result_row in results.iterrows():
-        if result_row.prediction_type == 'everything' and result_row.predicted_model == ERROR_VALUE:
+        new_results = fix_fitting(result_row, repetitions_of_walk)
+        if (result_row.prediction_type == 'everything' and result_row.predicted_model == ERROR_VALUE) or \
+                (result_row.prediction_type == 'only_lambda' and (
+                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE)) or \
+                (result_row.prediction_type == 'only_p0' and result_row.predicted_p0 == ERROR_VALUE) or \
+                (result_row.prediction_type == 'all_parameters' and (
+                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE or result_row.predicted_p0 == ERROR_VALUE)):
             count = count + 1
             new_results = fix_fitting(result_row, repetitions_of_walk)
-        elif result_row.prediction_type == 'only_lambda' and (
-                result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE):
-            count = count + 1
-        elif result_row.prediction_type == 'only_p0' and result_row.predicted_p0 == ERROR_VALUE:
-            count = count + 1
-        elif result_row.prediction_type == 'all_parameters' and (
-                result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE or result_row.predicted_p0 == ERROR_VALUE):
-            count = count + 1
     print(f"Count = {count}")
 
 

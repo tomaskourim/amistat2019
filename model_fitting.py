@@ -179,6 +179,113 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     return result, current_model
 
 
+def estimate_current_walks_lambda(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambda: float,
+                                  c_lambda0: float, c_lambda1: float, step_count: int, repetition: int) -> dict:
+    estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
+    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        estimated_lambda = estimated_lambdas
+        estimated_lambda0 = ""
+        estimated_lambda1 = ""
+    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        estimated_lambda = ""
+        estimated_lambda0 = estimated_lambdas[0]
+        estimated_lambda1 = estimated_lambdas[1]
+    else:
+        raise Exception(f'Unexpected walk type: {walk_type}')
+    current_result = {"model_type": walk_type,
+                      "c_lambda": c_lambda,
+                      "c_lambda0": c_lambda0,
+                      "c_lambda1": c_lambda1,
+                      "p0": starting_probability,
+                      "step_count": step_count,
+                      "prediction_type": "only_lambda",
+                      "predicted_model": "",
+                      "predicted_lambda": estimated_lambda,
+                      "predicted_lambda0": estimated_lambda0,
+                      "predicted_lambda1": estimated_lambda1,
+                      "predicted_p0": "",
+                      "repetition": repetition}
+    return current_result
+
+
+def estimate_current_walks_p0(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambda: float,
+                              c_lambda0: float, c_lambda1: float, c_lambdas: List[float], step_count: int,
+                              repetition: int) -> dict:
+    estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
+    current_result = {"model_type": walk_type,
+                      "c_lambda": c_lambda,
+                      "c_lambda0": c_lambda0,
+                      "c_lambda1": c_lambda1,
+                      "p0": starting_probability,
+                      "step_count": step_count,
+                      "prediction_type": "only_p0",
+                      "predicted_model": "",
+                      "predicted_lambda": "",
+                      "predicted_lambda0": "",
+                      "predicted_lambda1": "",
+                      "predicted_p0": estimated_p0,
+                      "repetition": repetition}
+    return current_result
+
+
+def estimate_current_walks_all(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambda: float,
+                               c_lambda0: float, c_lambda1: float, step_count: int, repetition: int) -> dict:
+    estimated_params = get_parameters_estimate(walk_type, walks)
+    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        estimated_lambda = estimated_params[1]
+        estimated_lambda0 = ""
+        estimated_lambda1 = ""
+    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        estimated_lambda = ""
+        estimated_lambda0 = estimated_params[1]
+        estimated_lambda1 = estimated_params[2]
+    else:
+        raise Exception(f'Unexpected walk type: {walk_type}')
+    current_result = {"model_type": walk_type,
+                      "c_lambda": c_lambda,
+                      "c_lambda0": c_lambda0,
+                      "c_lambda1": c_lambda1,
+                      "p0": starting_probability,
+                      "step_count": step_count,
+                      "prediction_type": "all_parameters",
+                      "predicted_model": "",
+                      "predicted_lambda": estimated_lambda,
+                      "predicted_lambda0": estimated_lambda0,
+                      "predicted_lambda1": estimated_lambda1,
+                      "predicted_p0": estimated_params[0],
+                      "repetition": repetition}
+    return current_result
+
+
+def estimate_current_walks_model(walks: List[List[int]], walk_type: str, starting_probability: float, c_lambda: float,
+                                 c_lambda0: float, c_lambda1: float, step_count: int, repetition: int) -> dict:
+    estimated_params, estimated_model = get_model_estimate(walks)
+    if walk_type == 'success_punished' or walk_type == 'success_rewarded':
+        estimated_lambda = estimated_params[1]
+        estimated_lambda0 = ""
+        estimated_lambda1 = ""
+    elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
+        estimated_lambda = ""
+        estimated_lambda0 = estimated_params[1]
+        estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
+    else:
+        raise Exception(f'Unexpected walk type: {walk_type}')
+    current_result = {"model_type": walk_type,
+                      "c_lambda": c_lambda,
+                      "c_lambda0": c_lambda0,
+                      "c_lambda1": c_lambda1,
+                      "p0": starting_probability,
+                      "step_count": step_count,
+                      "prediction_type": "everything",
+                      "predicted_model": estimated_model,
+                      "predicted_lambda": estimated_lambda,
+                      "predicted_lambda0": estimated_lambda0,
+                      "predicted_lambda1": estimated_lambda1,
+                      "predicted_p0": estimated_params[0],
+                      "repetition": repetition}
+    return current_result
+
+
 def main():
     generated_data = [f for f in listdir(DATA_DIRNAME) if isfile(join(DATA_DIRNAME, f))]
     columns = MODEL_PARAMETERS
@@ -192,7 +299,6 @@ def main():
         start_time_iter = datetime.now()
         with open(join(DATA_DIRNAME, datafile), 'rb') as f:
             walks, walk_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
-            # TODO here are actually just walk steps but want to use complete walks
             if walk_type == 'success_punished' or walk_type == 'success_rewarded':
                 c_lambda = c_lambdas[0]
                 c_lambda0 = ""
@@ -203,99 +309,21 @@ def main():
                 c_lambda1 = c_lambdas[1]
             else:
                 raise Exception(f'Unexpected walk type: {walk_type}')
-
-            estimated_lambdas = get_lambda_estimate(walk_type, starting_probability, walks)
-            if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-                estimated_lambda = estimated_lambdas
-                estimated_lambda0 = ""
-                estimated_lambda1 = ""
-            elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-                estimated_lambda = ""
-                estimated_lambda0 = estimated_lambdas[0]
-                estimated_lambda1 = estimated_lambdas[1]
-            else:
-                raise Exception(f'Unexpected walk type: {walk_type}')
-            current_result = {"model_type": walk_type,
-                              "c_lambda": c_lambda,
-                              "c_lambda0": c_lambda0,
-                              "c_lambda1": c_lambda1,
-                              "p0": starting_probability,
-                              "step_count": step_count,
-                              "prediction_type": "only_lambda",
-                              "predicted_model": "",
-                              "predicted_lambda": estimated_lambda,
-                              "predicted_lambda0": estimated_lambda0,
-                              "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": "",
-                              "repetition": repetition}
+            # TODO here are actually just walk steps but want to use complete walks
+            current_result = estimate_current_walks_lambda(walks, walk_type, starting_probability, c_lambda, c_lambda0,
+                                                           c_lambda1, step_count, repetition)
             results = results.append(current_result, ignore_index=True)
 
-            estimated_p0 = get_p0_estimate(walk_type, c_lambdas, walks)
-            current_result = {"model_type": walk_type,
-                              "c_lambda": c_lambda,
-                              "c_lambda0": c_lambda0,
-                              "c_lambda1": c_lambda1,
-                              "p0": starting_probability,
-                              "step_count": step_count,
-                              "prediction_type": "only_p0",
-                              "predicted_model": "",
-                              "predicted_lambda": "",
-                              "predicted_lambda0": "",
-                              "predicted_lambda1": "",
-                              "predicted_p0": estimated_p0,
-                              "repetition": repetition}
+            current_result = estimate_current_walks_p0(walks, walk_type, starting_probability, c_lambda, c_lambda0,
+                                                       c_lambda1, c_lambdas, step_count, repetition)
             results = results.append(current_result, ignore_index=True)
 
-            estimated_params = get_parameters_estimate(walk_type, walks)
-            if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-                estimated_lambda = estimated_params[1]
-                estimated_lambda0 = ""
-                estimated_lambda1 = ""
-            elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-                estimated_lambda = ""
-                estimated_lambda0 = estimated_params[1]
-                estimated_lambda1 = estimated_params[2]
-            else:
-                raise Exception(f'Unexpected walk type: {walk_type}')
-            current_result = {"model_type": walk_type,
-                              "c_lambda": c_lambda,
-                              "c_lambda0": c_lambda0,
-                              "c_lambda1": c_lambda1,
-                              "p0": starting_probability,
-                              "step_count": step_count,
-                              "prediction_type": "all_parameters",
-                              "predicted_model": "",
-                              "predicted_lambda": estimated_lambda,
-                              "predicted_lambda0": estimated_lambda0,
-                              "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0],
-                              "repetition": repetition}
+            current_result = estimate_current_walks_all(walks, walk_type, starting_probability, c_lambda, c_lambda0,
+                                                        c_lambda1, step_count, repetition)
             results = results.append(current_result, ignore_index=True)
 
-            estimated_params, estimated_model = get_model_estimate(walks)
-            if walk_type == 'success_punished' or walk_type == 'success_rewarded':
-                estimated_lambda = estimated_params[1]
-                estimated_lambda0 = ""
-                estimated_lambda1 = ""
-            elif walk_type == 'success_punished_two_lambdas' or walk_type == 'success_rewarded_two_lambdas':
-                estimated_lambda = ""
-                estimated_lambda0 = estimated_params[1]
-                estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
-            else:
-                raise Exception(f'Unexpected walk type: {walk_type}')
-            current_result = {"model_type": walk_type,
-                              "c_lambda": c_lambda,
-                              "c_lambda0": c_lambda0,
-                              "c_lambda1": c_lambda1,
-                              "p0": starting_probability,
-                              "step_count": step_count,
-                              "prediction_type": "everything",
-                              "predicted_model": estimated_model,
-                              "predicted_lambda": estimated_lambda,
-                              "predicted_lambda0": estimated_lambda0,
-                              "predicted_lambda1": estimated_lambda1,
-                              "predicted_p0": estimated_params[0],
-                              "repetition": repetition}
+            current_result = estimate_current_walks_model(walks, walk_type, starting_probability, c_lambda, c_lambda0,
+                                                          c_lambda1, step_count, repetition)
             results = results.append(current_result, ignore_index=True)
 
             end_time_iter = datetime.now()
@@ -306,7 +334,8 @@ def main():
                 f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
                 f"{iterations - i - 1}/{iterations}; {datafile}")
 
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK_S[0]}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f:
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK_S[0]}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
+              'wb') as f:
         pickle.dump([results], f)
 
 
