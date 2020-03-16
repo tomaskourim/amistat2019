@@ -172,10 +172,10 @@
         \end{equation}
     \end{prop}
     \begin{proof}
-        Using that $E(X_{t})=2P_{t-1}-1$ the proposition can be
+        Using that $E(X_{t}{\color{red}|P_{t-1}})=2P_{t-1}-1$ the proposition can be
         proved directly using~\eqref{eq:EPt} as
         \begin{gather*}
-            E(X_{t})=E(E(X_{t})|X_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=\\
+            E(X_{t})=E(E(X_{t}){\color{red}|P_{t-1}})=E(2P_{t-1}-1)=2E(P_{t-1})-1=\\
             =2((2\lambda-1)^{t-1}p_{0}+\frac{1-(2\lambda-1)^{t-1}}{2})-1=(2\lambda-1)^{t-1}(2p_{0}-1).\\
         \end{gather*}
     \end{proof}
@@ -242,9 +242,9 @@
         that
         \[
             E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]
-            =E[(2-2X_{t})|P_{t-1}]= 4(1-P_{t-1}).
+            =E[(2-2X_{t})|P_{t-1}]= 4(1-P_{t-1}),
         \]
-        Equation (\ref{eq:EPt2-zaklad}) further yields
+        equation (\ref{eq:EPt2-zaklad}) further yields
         \begin{gather*}
             E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=\\
             =E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]\\
@@ -608,13 +608,15 @@
 
     {\color{red}A simulation study was performed in order to verify the possible usage of the presented model in real life situations, namely on} processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
     {\color{red}Such processes include for example} the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
-    {\color{red}The experiment consisted in generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
+    {\color{red}The experiment consisted of generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
     Four different task were considered:
-        $(1)$ find $\tilde{\lambda}$ with known $p_{0}$ and model type,
-        $(2)$ find $p_{0}$ with known $\tilde{\lambda}$ and model type,
-        $(3)$ find $p_{0}$ and $\tilde{\lambda}$ with known model type and
-        $(4)$ find model type without any prior knowledge.
-    Following parameter values were considered for data generation: $K\in\{5,\,100\}$, $n\in\{5,\,10,\,50,\,100\}$, $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$, $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ and $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
+        \begin{enumerate}
+            \item find $\tilde{\lambda}$ with known $p_{0}$ and model type,
+            \item find $p_{0}$ with known $\tilde{\lambda}$ and model type,
+            \item find $p_{0}$ and $\tilde{\lambda}$ with known model type,
+            \item find model type without any prior knowledge.
+        \end{enumerate}
+        Following parameter values were considered for data generation: $K\in\{5,\,100\}$, $n\in\{5,\,10,\,50,\,100\}$, $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$, $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ and $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$
         (further let $\tilde{\lambda}$ denote either $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ depending on the walk type).}
 
 
@@ -630,7 +632,7 @@
     {\color{red}Finally}, a ``proximity'' interval was constructed based on the true parameter value {$\omega$ as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$}.
     {\color{red}The third test was positive if the mean fitted parameter value fell into that interval and the fourth test checked whether the median fitted parameter value was within the ``proximity'' interval.}
     {\color{red}For task~4, the model was estimated using the \emph{AIC} on each set of $K$ walks.
-    To evaluate the quality of such estimation} the proportion of correctly {\color{red}chosen} model types for the given walk configuration was computed {\color{red}as $\frac{\#\,correctly\,chosen}{N}$}.
+    To evaluate the quality of such estimation} the proportion of correctly {\color{red}chosen} model types for the given walk configuration was computed {\color{red}as the proportion of the number of correctly chosen models to the number of analyzed models}.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
     For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
@@ -638,7 +640,7 @@
     Longer walks show  {\color{red}generally} better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
     This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
     {\color{red}As expected, tasks~1--2 show better results than task~3, as there are less parameters to estimate.}
-    An example of the parameter estimation evaluation (tasks~1--3) can be seen in Table~\ref{tab:Fitting-results}, {\color{red}an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.}
+    An example of the parameter estimation evaluation can be seen in Table~\ref{tab:Fitting-results} {\color{red}(there just task~1), an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.}
     {\color{red}Both tables contain only a brief illustration of results due to space limitations.
     Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).}
 
