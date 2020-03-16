@@ -54,6 +54,14 @@ def list_walks2list_lists(walks):
     return [walks_probabilities, walks_steps, walks_developments]
 
 
+def generate_and_save_walks(walk_type: str, starting_probability: float, c_lambdas: List[float], step_count: int,
+                            repetition: int) -> List[List[int]]:
+    walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count, repetition)
+    walks_steps = list_walks2list_lists(walks)[1]
+    save_walks(walks_steps, walk_type, starting_probability, c_lambdas, step_count, repetition)
+    return walks_steps
+
+
 def main():
     # try different Random Walk with Varying Transition Probabilities definitions
     # different lambdas, starting probability, number of steps, multiple times with same starting variables
@@ -70,11 +78,8 @@ def main():
                             c_lambdas = C_LAMBDA_PAIRS[index]
                         else:
                             c_lambdas = [c_lambda]
-
-                        walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count,
-                                                      REPETITIONS_OF_WALK)
-                        walks_steps = list_walks2list_lists(walks)[1]
-                        save_walks(walks_steps, walk_type, starting_probability, c_lambdas, step_count, repetition)
+                        generate_and_save_walks(walk_type, starting_probability, c_lambdas, step_count,
+                                                REPETITIONS_OF_WALK)
 
 
 if __name__ == '__main__':
