@@ -6,7 +6,7 @@ import sys
 from datetime import datetime
 from os import listdir
 from os.path import isfile, join
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -77,13 +77,14 @@ def negative_log_likelihood_params(params: List[float], model_type: str, walks: 
 
 
 # p0 known, get lambda
-def get_lambda_estimate(model_type: str, starting_probability: float, walks: List[List[int]]) -> float:
+def get_lambda_estimate(model_type: str, starting_probability: float, walks: List[List[int]],
+                        base_guess: float) -> Union[float, List[float]]:
     if model_type == 'success_punished' or model_type == 'success_rewarded':
         error_value = ERROR_VALUE
         opt_result = opt.minimize_scalar(negative_log_likelihood_single_lambda, bounds=(0, 1), method='bounded',
                                          args=(model_type, starting_probability, walks))
     elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
-        guess = np.array([0.5, 0.5])
+        guess = np.repeat(base_guess, 2)
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
         error_value = np.repeat(ERROR_VALUE, len(guess))
         opt_result = opt.minimize(negative_log_likelihood_multiple_lambda, guess, method=OPTIMIZATION_ALGORITHM,
@@ -110,12 +111,12 @@ def get_p0_estimate(model_type: str, c_lambdas: List[float], walks: List[List[in
 
 
 # get lambda and p0
-def get_parameters_estimate(model_type: str, walks: List[List[int]]) -> List[float]:
+def get_parameters_estimate(model_type: str, walks: List[List[int]], base_guess: float) -> Union[List[float], np.array]:
     if model_type == 'success_punished' or model_type == 'success_rewarded':
-        guess = np.array([0.5, 0.5])
+        guess = np.repeat(base_guess, 2)
         bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
-        guess = np.array([0.5, 0.5, 0.5])
+        guess = np.repeat(base_guess, 3)
         bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     else:
         raise Exception(f'Unexpected walk type: {model_type}')
@@ -142,7 +143,7 @@ def find_akaike(guess: np.ndarray, model: str, walks: List[List[int]], result: L
 
 
 # find the best suitable model & parameter values
-def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
+def get_model_estimate(walks: List[List[int]], base_guess: float) -> Tuple[List[float], str]:
     """
     Uses the Akaike information criterion
     https://en.wikipedia.org/wiki/Akaike_information_criterion#Modification_for_small_sample_size
@@ -151,14 +152,15 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     opt.minimize(negative_log_likelihood_params, guess, method='Nelder-Mead', args=(model, walks)) returns directly
     - ln(L)
     :param walks:
-    :return found parameters, best model:
+    :param base_guess:
+    :return:
     """
     result = [ERROR_VALUE, ERROR_VALUE]
     current_model = ERROR_VALUE
     min_akaike = sys.float_info.max
 
     # single lambda models
-    guess = np.array([0.5, 0.5])
+    guess = np.repeat(base_guess, 2)
     bounds = opt.Bounds((0, 0), (1, 1), keep_feasible=True)
     model = 'success_punished'
     min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
@@ -167,7 +169,7 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
     min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
 
     # two lambdas models
-    guess = np.array([0.5, 0.5, 0.5])
+    guess = np.repeat(base_guess, 3)
     bounds = opt.Bounds((0, 0, 0), (1, 1, 1), keep_feasible=True)
     model = 'success_punished_two_lambdas'
     min_akaike, result, current_model = find_akaike(guess, model, walks, result, current_model, min_akaike, bounds)
@@ -179,9 +181,9 @@ def get_model_estimate(walks: List[List[int]]) -> Tuple[List[float], str]:
 
 
 def estimate_current_walks_lambda(walks: List[List[int]], model_type: str, starting_probability: float,
-                                  basic_result: dict) -> dict:
+                                  basic_result: dict, base_guess=0.5) -> dict:
     current_result = basic_result.copy()
-    estimated_lambdas = get_lambda_estimate(model_type, starting_probability, walks)
+    estimated_lambdas = get_lambda_estimate(model_type, starting_probability, walks, base_guess)
     if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_lambdas
         estimated_lambda0 = ""
@@ -208,9 +210,9 @@ def estimate_current_walks_p0(walks: List[List[int]], model_type: str, c_lambdas
     return current_result
 
 
-def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
+def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_result: dict, base_guess=0.5) -> dict:
     current_result = basic_result.copy()
-    estimated_params = get_parameters_estimate(model_type, walks)
+    estimated_params = get_parameters_estimate(model_type, walks, base_guess)
     if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_params[1]
         estimated_lambda0 = ""
@@ -229,9 +231,9 @@ def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_re
     return current_result
 
 
-def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
+def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_result: dict, base_guess=0.5) -> dict:
     current_result = basic_result.copy()
-    estimated_params, estimated_model = get_model_estimate(walks)
+    estimated_params, estimated_model = get_model_estimate(walks, base_guess)
     if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_params[1]
         estimated_lambda0 = ""
