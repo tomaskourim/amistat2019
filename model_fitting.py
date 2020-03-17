@@ -14,7 +14,7 @@ import scipy.optimize as opt
 
 from common import get_current_probability
 from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK_S, \
-    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE
+    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE, BASE_GUESSES
 
 
 # compare with reality
@@ -181,19 +181,23 @@ def get_model_estimate(walks: List[List[int]], base_guess: float) -> Tuple[List[
 
 
 def estimate_current_walks_lambda(walks: List[List[int]], model_type: str, starting_probability: float,
-                                  basic_result: dict, base_guess=0.5) -> dict:
+                                  basic_result: dict) -> dict:
+    estimated_lambda, estimated_lambda0, estimated_lambda1 = ERROR_VALUE, ERROR_VALUE, ERROR_VALUE
     current_result = basic_result.copy()
-    estimated_lambdas = get_lambda_estimate(model_type, starting_probability, walks, base_guess)
-    if model_type == 'success_punished' or model_type == 'success_rewarded':
-        estimated_lambda = estimated_lambdas
-        estimated_lambda0 = ""
-        estimated_lambda1 = ""
-    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
-        estimated_lambda = ""
-        estimated_lambda0 = estimated_lambdas[0]
-        estimated_lambda1 = estimated_lambdas[1]
-    else:
-        raise Exception(f'Unexpected walk type: {model_type}')
+    for base_guess in BASE_GUESSES:
+        estimated_lambdas = get_lambda_estimate(model_type, starting_probability, walks, base_guess)
+        if model_type == 'success_punished' or model_type == 'success_rewarded':
+            estimated_lambda = estimated_lambdas
+            estimated_lambda0 = ""
+            estimated_lambda1 = ""
+        elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
+            estimated_lambda = ""
+            estimated_lambda0 = estimated_lambdas[0]
+            estimated_lambda1 = estimated_lambdas[1]
+        else:
+            raise Exception(f'Unexpected walk type: {model_type}')
+        if estimated_lambda != ERROR_VALUE and estimated_lambda0 != ERROR_VALUE and estimated_lambda1 != ERROR_VALUE:
+            break
     current_result["prediction_type"] = "only_lambda"
     current_result["predicted_lambda"] = estimated_lambda
     current_result["predicted_lambda0"] = estimated_lambda0
@@ -210,30 +214,41 @@ def estimate_current_walks_p0(walks: List[List[int]], model_type: str, c_lambdas
     return current_result
 
 
-def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_result: dict, base_guess=0.5) -> dict:
+def estimate_current_walks_all(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
+    estimated_lambda, estimated_lambda0, estimated_lambda1, estimated_p0 = ERROR_VALUE, ERROR_VALUE, ERROR_VALUE, ERROR_VALUE
     current_result = basic_result.copy()
-    estimated_params = get_parameters_estimate(model_type, walks, base_guess)
-    if model_type == 'success_punished' or model_type == 'success_rewarded':
-        estimated_lambda = estimated_params[1]
-        estimated_lambda0 = ""
-        estimated_lambda1 = ""
-    elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
-        estimated_lambda = ""
-        estimated_lambda0 = estimated_params[1]
-        estimated_lambda1 = estimated_params[2]
-    else:
-        raise Exception(f'Unexpected walk type: {model_type}')
+    for base_guess in BASE_GUESSES:
+        estimated_params = get_parameters_estimate(model_type, walks, base_guess)
+        estimated_p0 = estimated_params[0]
+        if model_type == 'success_punished' or model_type == 'success_rewarded':
+            estimated_lambda = estimated_params[1]
+            estimated_lambda0 = ""
+            estimated_lambda1 = ""
+        elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
+            estimated_lambda = ""
+            estimated_lambda0 = estimated_params[1]
+            estimated_lambda1 = estimated_params[2]
+        else:
+            raise Exception(f'Unexpected walk type: {model_type}')
+        if estimated_p0 != ERROR_VALUE and estimated_lambda != ERROR_VALUE and estimated_lambda0 != ERROR_VALUE \
+                and estimated_lambda1 != ERROR_VALUE:
+            break
     current_result["prediction_type"] = "all_parameters"
     current_result["predicted_lambda"] = estimated_lambda
     current_result["predicted_lambda0"] = estimated_lambda0
     current_result["predicted_lambda1"] = estimated_lambda1
-    current_result["predicted_p0"] = estimated_params[0]
+    current_result["predicted_p0"] = estimated_p0
     return current_result
 
 
-def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_result: dict, base_guess=0.5) -> dict:
+def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_result: dict) -> dict:
+    estimated_params = [ERROR_VALUE, ERROR_VALUE]
+    estimated_model = ERROR_VALUE
     current_result = basic_result.copy()
-    estimated_params, estimated_model = get_model_estimate(walks, base_guess)
+    for base_guess in BASE_GUESSES:
+        estimated_params, estimated_model = get_model_estimate(walks, base_guess)
+        if estimated_model != ERROR_VALUE:
+            break
     if model_type == 'success_punished' or model_type == 'success_rewarded':
         estimated_lambda = estimated_params[1]
         estimated_lambda0 = ""
@@ -241,7 +256,7 @@ def estimate_current_walks_model(walks: List[List[int]], model_type: str, basic_
     elif model_type == 'success_punished_two_lambdas' or model_type == 'success_rewarded_two_lambdas':
         estimated_lambda = ""
         estimated_lambda0 = estimated_params[1]
-        estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else 'not_fitted'
+        estimated_lambda1 = estimated_params[2] if len(estimated_params) == 3 else ERROR_VALUE
     else:
         raise Exception(f'Unexpected walk type: {model_type}')
 

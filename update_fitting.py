@@ -39,14 +39,14 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> pd.Series:
                                     step_count, repetition)
     prediction_type = result_row.prediction_type
     success = False
-    base_guess = 0.2
     if prediction_type == 'everything':
-        current_result = estimate_current_walks_model(walks, model_type, basic_result, base_guess)
+        current_result = estimate_current_walks_model(walks, model_type, basic_result)
         if current_result['predicted_model'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'all_parameters':
-        current_result = estimate_current_walks_all(walks, model_type, basic_result, base_guess)
-        if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE and \
+        current_result = estimate_current_walks_all(walks, model_type, basic_result)
+        if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE \
+                and \
                 current_result['predicted_lambda1'] != ERROR_VALUE and current_result['predicted_p0'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'only_p0':
@@ -54,7 +54,7 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> pd.Series:
         if current_result['predicted_p0'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'only_lambda':
-        current_result = estimate_current_walks_lambda(walks, model_type, p0, basic_result, base_guess)
+        current_result = estimate_current_walks_lambda(walks, model_type, p0, basic_result)
         if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE \
                 and current_result['predicted_lambda1'] != ERROR_VALUE:
             success = True
@@ -62,7 +62,8 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> pd.Series:
         logging.exception(f"Wrong model type {model_type}")
         raise Exception(f"Wrong model type {model_type}")
     if not success:
-        print(f"fail {model_type}, {prediction_type}")
+        print(
+            f"fail {model_type}, {prediction_type}; {repetition}, walk_reps:{repetitions_of_walk}, step={step_count}, l={c_lambdas}, p0={p0}.")
     else:
         print(f"success {model_type}, prediction type {prediction_type}")
     return pd.Series(current_result)

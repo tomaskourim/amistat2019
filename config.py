@@ -22,3 +22,5 @@ MODEL_PARAMETERS = ["model_type", "c_lambda", "c_lambda0", "c_lambda1", "p0", "s
 PREDICTION_VALUES = ["predicted_model", "predicted_lambda", "predicted_lambda0", "predicted_lambda1", "predicted_p0"]
 
 ERROR_VALUE = 'not_fitted'
+
+BASE_GUESSES = [0.5, 0.8, 0.9, 0.7, 0.6, 0.2, 0.1, 0.4, 0.3]
