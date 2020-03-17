@@ -24,11 +24,11 @@ from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDI
 
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
                                    walk: List[int], model_type: str, starting_index: int) -> float:
-    if starting_probability >= 1 or starting_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
-        return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
     current_probability = starting_probability
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], model_type)
+        if current_probability >= 1 or current_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
+            return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
         log_likelihood = log_likelihood + 0.5 * ((1 + walk[i]) * np.log(current_probability) + (1 - walk[i]) * np.log(
             1 - current_probability))
     return log_likelihood
@@ -288,8 +288,9 @@ def get_basic_result(model_type: str, c_lambda: float, c_lambda0: float, c_lambd
 
 
 def main():
-    generated_data = [f for f in listdir(f"{DATA_DIRNAME}/K{REPETITIONS_OF_WALK_S[0]}") if
-                      isfile(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[0]}", f))]
+    repetitions_of_walk_index = 2
+    generated_data = [f for f in listdir(f"{DATA_DIRNAME}/K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}") if
+                      isfile(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}", f))]
     columns = MODEL_PARAMETERS
     columns.append("prediction_type")
     columns.extend(PREDICTION_VALUES)
@@ -299,7 +300,7 @@ def main():
     iterations = len(generated_data)
     for i, datafile in enumerate(generated_data):  # iterate over all generated cases
         start_time_iter = datetime.now()
-        with open(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[0]}", datafile), 'rb') as f:
+        with open(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}", datafile), 'rb') as f:
             walks, model_type, starting_probability, c_lambdas, step_count, repetition = pickle.load(f)  # load data
         if model_type == 'success_punished' or model_type == 'success_rewarded':
             c_lambda = c_lambdas[0]
@@ -334,8 +335,9 @@ def main():
             f"{time_curr}; AVG {time_per_iter}; ETA: {eta}. "
             f"{iterations - i - 1}/{iterations}; {datafile}")
 
-    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK_S[0]}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
-              'wb') as f:
+    with open(
+            f"results_{OPTIMIZATION_ALGORITHM}_K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
+            'wb') as f:
         pickle.dump([results], f)
 
 
