@@ -633,8 +633,10 @@
         \item the mean fitted parameter value lies within the ``proximity'' interval around the true parameter value $\omega$, computed as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$,
         \item the median fitted parameter value lies within the ``proximity'' interval.
     \end{enumerate}
-    For task~4, the model was estimated using the \emph{AIC} on each set of $K$ walks.
-    To evaluate the quality of such estimation the proportion of correctly chosen model types for the given walk configuration was computed as the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$.
+
+    {\color{red}To evaluate task~4, each of the four presented models was fitted on the set of $K$ walks and the \emph{AIC} was computed.
+    The model with the lowest \emph{AIC} value was then selected.
+    The quality of such estimation for the given walk configuration was then assesed using the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$}.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
     For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
@@ -650,7 +652,7 @@
         \begin{centering}
             \caption{\label{tab:Fitting-results} The table shows an example of task $1$ evaluation results,
             with true parameter value $\lambda=0.5$ or $\lambda_{0}=0.5$ (and corresponding $\lambda_{1}=0.8$), and $p_0=0.5$, $\alpha=0.1$.
-            The mean estimated parameter value and its standard deviation and the median estimated parameter value and the corresponding ``percentile'' interval are presented.
+            The mean {\color{red} of parameter estimates} and its standard deviation and the median {\color{red} of parameter estimates} and the corresponding ``percentile'' interval are presented.
                 \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}
             \begin{tabular}{c|c|c|c|c|c|c}
                 \toprule
