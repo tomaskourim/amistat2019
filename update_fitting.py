@@ -11,20 +11,23 @@ import pandas as pd
 from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, REPETITIONS_OF_WALK_S, \
     REPETITIONS_OF_WALK_SERIES, ERROR_VALUE
 from data_generation import generate_and_save_walks
+from model_fitting import get_basic_result, estimate_current_walks_model, estimate_current_walks_all, \
+    estimate_current_walks_lambda
 
 
 def get_walks(model_type: str, p0: float, c_lambdas: List[float], step_count: int, repetition: int,
               repetitions_of_walk: int) -> List[List[int]]:
-    filename = f"{DATA_DIRNAME}/K{repetitions_of_walk}/{model_type}__start{p0}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
+    filename = f"{DATA_DIRNAME}/K{repetitions_of_walk}/" \
+               f"{model_type}__start{p0}__lambdas{c_lambdas}__steps{step_count}__repetition{repetition}.pkl"
     if os.path.isfile(filename):
         with open(filename, 'rb') as f:
             walks = pickle.load(f)[0]  # load data
     else:
-        walks = generate_and_save_walks(model_type, p0, c_lambdas, step_count, repetitions_of_walk)
+        walks = generate_and_save_walks(model_type, p0, c_lambdas, step_count, repetitions_of_walk, repetition)
     return walks
 
 
-def fix_fitting(result_row: pd.Series, repetitions_of_walk: int):
+def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> dict:
     p0 = result_row.p0
     model_type = result_row.model_type
     c_lambdas = [result_row.c_lambda] if 'two_lambdas' not in model_type else [result_row.c_lambda0,
@@ -32,19 +35,54 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int):
     step_count = result_row.step_count
     repetition = result_row.repetition
     walks = get_walks(model_type, p0, c_lambdas, step_count, repetition, repetitions_of_walk)
-    pass
+    basic_result = get_basic_result(model_type, result_row.c_lambda, result_row.c_lambda0, result_row.c_lambda1, p0,
+                                    step_count, repetition)
+    prediction_type = result_row.prediction_type
+    success = False
+    if prediction_type == 'everything':
+        current_result = estimate_current_walks_model(walks, model_type, basic_result, base_guess=0.8)
+        if current_result['predicted_model'] != ERROR_VALUE:
+            success = True
+    elif prediction_type == 'all_parameters':
+        current_result = estimate_current_walks_all(walks, model_type, basic_result, base_guess=0.8)
+        if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE and \
+                current_result['predicted_lambda1'] != ERROR_VALUE and current_result['predicted_p0'] != ERROR_VALUE:
+            success = True
+    elif prediction_type == 'only_p0':
+        # current_result = estimate_current_walks_p0(walks, model_type, c_lambdas, basic_result)
+        current_result = result_row
+        if current_result['predicted_p0'] != ERROR_VALUE:
+            success = True
+    elif prediction_type == 'only_lambda':
+        if 'two_lambdas' not in model_type:
+            current_result = result_row
+        else:
+            current_result = estimate_current_walks_lambda(walks, model_type, p0, basic_result, base_guess=0.8)
+        if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE \
+                and current_result['predicted_lambda1'] != ERROR_VALUE:
+            success = True
+    else:
+        logging.exception(f"Wrong model type {model_type}")
+        raise Exception(f"Wrong model type {model_type}")
+    if not success:
+        print("fail")
+    else:
+        print(f"success {model_type}, prediction type {prediction_type}")
+    return current_result
 
 
 def update_results(results: pd.DataFrame, repetitions_of_walk: int):
     count = 0
     for index, result_row in results.iterrows():
-        new_results = fix_fitting(result_row, repetitions_of_walk)
+        # new_results = fix_fitting(result_row, repetitions_of_walk)
         if (result_row.prediction_type == 'everything' and result_row.predicted_model == ERROR_VALUE) or \
                 (result_row.prediction_type == 'only_lambda' and (
-                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE)) or \
+                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or
+                        result_row.predicted_lambda1 == ERROR_VALUE)) or \
                 (result_row.prediction_type == 'only_p0' and result_row.predicted_p0 == ERROR_VALUE) or \
                 (result_row.prediction_type == 'all_parameters' and (
-                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or result_row.predicted_lambda1 == ERROR_VALUE or result_row.predicted_p0 == ERROR_VALUE)):
+                        result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or
+                        result_row.predicted_lambda1 == ERROR_VALUE or result_row.predicted_p0 == ERROR_VALUE)):
             count = count + 1
             new_results = fix_fitting(result_row, repetitions_of_walk)
     print(f"Count = {count}")
