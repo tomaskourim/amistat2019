@@ -27,7 +27,7 @@ def get_walks(model_type: str, p0: float, c_lambdas: List[float], step_count: in
     return walks
 
 
-def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> dict:
+def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> pd.Series:
     p0 = result_row.p0
     model_type = result_row.model_type
     c_lambdas = [result_row.c_lambda] if 'two_lambdas' not in model_type else [result_row.c_lambda0,
@@ -65,14 +65,15 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> dict:
         logging.exception(f"Wrong model type {model_type}")
         raise Exception(f"Wrong model type {model_type}")
     if not success:
-        print("fail")
+        print(f"fail {model_type}, {prediction_type}")
     else:
         print(f"success {model_type}, prediction type {prediction_type}")
-    return current_result
+    return pd.Series(current_result)
 
 
 def update_results(results: pd.DataFrame, repetitions_of_walk: int):
-    count = 0
+    success_count = 0
+    error_count = 0
     for index, result_row in results.iterrows():
         # new_results = fix_fitting(result_row, repetitions_of_walk)
         if (result_row.prediction_type == 'everything' and result_row.predicted_model == ERROR_VALUE) or \
@@ -83,9 +84,16 @@ def update_results(results: pd.DataFrame, repetitions_of_walk: int):
                 (result_row.prediction_type == 'all_parameters' and (
                         result_row.predicted_lambda == ERROR_VALUE or result_row.predicted_lambda0 == ERROR_VALUE or
                         result_row.predicted_lambda1 == ERROR_VALUE or result_row.predicted_p0 == ERROR_VALUE)):
-            count = count + 1
+
             new_results = fix_fitting(result_row, repetitions_of_walk)
-    print(f"Count = {count}")
+            if (new_results == ERROR_VALUE).any():
+                error_count = error_count + 1
+            else:
+                success_count = success_count + 1
+            results.loc[index] = new_results
+    print(f"Success = {success_count}, Error = {error_count}")
+    with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl", 'wb') as f:
+        pickle.dump([results], f)
 
 
 def main():
