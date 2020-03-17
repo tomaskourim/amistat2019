@@ -200,7 +200,6 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
             pickle.dump(PREDICTION_CONFIGS, f)
 
 
-
 def main():
     global PREDICTION_CONFIGS
     for repetitions_of_walk in REPETITIONS_OF_WALK_S:
