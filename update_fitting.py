@@ -12,7 +12,7 @@ from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, REPETITIONS_OF_WALK_S, 
     REPETITIONS_OF_WALK_SERIES, ERROR_VALUE
 from data_generation import generate_and_save_walks
 from model_fitting import get_basic_result, estimate_current_walks_model, estimate_current_walks_all, \
-    estimate_current_walks_lambda
+    estimate_current_walks_lambda, estimate_current_walks_p0
 
 
 def get_walks(model_type: str, p0: float, c_lambdas: List[float], step_count: int, repetition: int,
@@ -39,25 +39,22 @@ def fix_fitting(result_row: pd.Series, repetitions_of_walk: int) -> pd.Series:
                                     step_count, repetition)
     prediction_type = result_row.prediction_type
     success = False
+    base_guess = 0.2
     if prediction_type == 'everything':
-        current_result = estimate_current_walks_model(walks, model_type, basic_result, base_guess=0.8)
+        current_result = estimate_current_walks_model(walks, model_type, basic_result, base_guess)
         if current_result['predicted_model'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'all_parameters':
-        current_result = estimate_current_walks_all(walks, model_type, basic_result, base_guess=0.8)
+        current_result = estimate_current_walks_all(walks, model_type, basic_result, base_guess)
         if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE and \
                 current_result['predicted_lambda1'] != ERROR_VALUE and current_result['predicted_p0'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'only_p0':
-        # current_result = estimate_current_walks_p0(walks, model_type, c_lambdas, basic_result)
-        current_result = result_row
+        current_result = estimate_current_walks_p0(walks, model_type, c_lambdas, basic_result)
         if current_result['predicted_p0'] != ERROR_VALUE:
             success = True
     elif prediction_type == 'only_lambda':
-        if 'two_lambdas' not in model_type:
-            current_result = result_row
-        else:
-            current_result = estimate_current_walks_lambda(walks, model_type, p0, basic_result, base_guess=0.8)
+        current_result = estimate_current_walks_lambda(walks, model_type, p0, basic_result, base_guess)
         if current_result['predicted_lambda'] != ERROR_VALUE and current_result['predicted_lambda0'] != ERROR_VALUE \
                 and current_result['predicted_lambda1'] != ERROR_VALUE:
             success = True
