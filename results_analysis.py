@@ -11,6 +11,8 @@ from config import CONFIDENCE_INTERVAL_SIZES, MODEL_PARAMETERS, PREDICTION_VALUE
     STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, PREDICTION_TYPES, REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES, \
     OPTIMIZATION_ALGORITHM
 
+PREDICTION_CONFIGS = []
+
 
 def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> \
         Tuple[pd.Series, int]:
@@ -49,6 +51,10 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     mean = float(np.mean(data))
     median = float(np.median(data))
     stdev = float(np.std(data))
+    if stdev <= 0.0000000001:
+        PREDICTION_CONFIGS.append(
+            [result_row.model_type, result_row.c_lambda, result_row.c_lambda0, result_row.c_lambda1, result_row.p0,
+             result_row.step_count, result_row.prediction_type])
     conf_int = st.t.interval(1 - confidence_interval_size, len(data) - 1, loc=mean, scale=st.sem(data))
     percentile_int = [np.percentile(data, int(confidence_interval_size / 2 * 100), interpolation='midpoint'),
                       np.percentile(data, int((1 - confidence_interval_size / 2) * 100), interpolation='midpoint')]
@@ -189,9 +195,14 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
         fitting_results.to_excel(
             f"fitting_evaluation_interval_size_{confidence_interval_size}_K{repetitions_of_walk}_"
             f"N{REPETITIONS_OF_WALK_SERIES}_{OPTIMIZATION_ALGORITHM}.xlsx")
+    if len(PREDICTION_CONFIGS) > 0:
+        with open(f"to-refit_K{repetitions_of_walk}.pkl", 'wb') as f:
+            pickle.dump(PREDICTION_CONFIGS, f)
+
 
 
 def main():
+    global PREDICTION_CONFIGS
     for repetitions_of_walk in REPETITIONS_OF_WALK_S:
         with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
                   'rb') as f:
@@ -199,6 +210,7 @@ def main():
         if isinstance(results, list):
             results = results[0]
         analyze_results(results, repetitions_of_walk)
+        PREDICTION_CONFIGS = []
 
 
 if __name__ == '__main__':

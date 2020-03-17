@@ -4,6 +4,7 @@ import logging
 import pickle
 import sys
 from datetime import datetime
+from decimal import *
 from os import listdir
 from os.path import isfile, join
 from typing import List, Tuple, Union
@@ -14,7 +15,7 @@ import scipy.optimize as opt
 
 from common import get_current_probability
 from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDICTION_VALUES, REPETITIONS_OF_WALK_S, \
-    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE, BASE_GUESSES
+    REPETITIONS_OF_WALK_SERIES, ERROR_VALUE, BASE_GUESSES, DECIMAL_PRECISION
 
 
 # compare with reality
@@ -24,18 +25,19 @@ from config import DATA_DIRNAME, OPTIMIZATION_ALGORITHM, MODEL_PARAMETERS, PREDI
 
 def get_single_walk_log_likelihood(log_likelihood: float, c_lambdas: List[float], starting_probability: float,
                                    walk: List[int], model_type: str, starting_index: int) -> float:
-    current_probability = starting_probability
+    current_probability = Decimal(starting_probability)
     for i in range(starting_index, len(walk)):
         current_probability = get_current_probability(c_lambdas, current_probability, walk[i - 1], model_type)
         if current_probability >= 1 or current_probability <= 0 or max(c_lambdas) >= 1 or min(c_lambdas) <= 0:
             return -(sys.float_info.max / 2 - 5)  # so that I dont get double overflow error
-        log_likelihood = log_likelihood + 0.5 * ((1 + walk[i]) * np.log(current_probability) + (1 - walk[i]) * np.log(
-            1 - current_probability))
+        log_likelihood = log_likelihood + float(Decimal(0.5) * (
+                Decimal(1 + walk[i]) * current_probability.ln() + Decimal(1 - walk[i]) * (
+                Decimal(1) - current_probability).ln()))
     return log_likelihood
 
 
 def get_multiple_walks_log_likelihood(c_lambdas: List[float], starting_probability: float, walks: List[List[int]],
-                                      model_type: str, starting_index: int):
+                                      model_type: str, starting_index: int) -> float:
     log_likelihood = 0
     for walk in walks:
         log_likelihood = get_single_walk_log_likelihood(log_likelihood, c_lambdas, starting_probability, walk,
@@ -288,6 +290,7 @@ def get_basic_result(model_type: str, c_lambda: float, c_lambda0: float, c_lambd
 
 
 def main():
+    getcontext().prec = DECIMAL_PRECISION
     repetitions_of_walk_index = 2
     generated_data = [f for f in listdir(f"{DATA_DIRNAME}/K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}") if
                       isfile(join(DATA_DIRNAME, f"K{REPETITIONS_OF_WALK_S[repetitions_of_walk_index]}", f))]
