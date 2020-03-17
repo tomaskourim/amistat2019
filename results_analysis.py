@@ -183,8 +183,7 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
                             c_lambdas = [c_lambda]
                         for prediction_type in PREDICTION_TYPES:
                             current_results = select_results(results, prediction_type, model_type, c_lambdas,
-                                                             step_count,
-                                                             p0)
+                                                             step_count, p0)
                             fitting_results = fitting_results.append(
                                 analyze_prediction_combination(current_results, columns, confidence_interval_size))
         fitting_results.to_excel(
