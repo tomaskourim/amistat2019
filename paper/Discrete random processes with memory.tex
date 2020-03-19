@@ -611,7 +611,7 @@
     The experiment consisted of generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
     Four different task were considered:
     \begin{enumerate}
-        \item find {\color{red}$\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ (further denoted as $\tilde{\lambda}$)} with known $p_{0}$ and model type,
+        \item find $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ (further denoted as $\tilde{\lambda}$) with known $p_{0}$ and model type,
         \item find $p_{0}$ with known $\tilde{\lambda}$ and model type,
         \item find $p_{0}$ and $\tilde{\lambda}$ with known model type,
         \item find model type without any prior knowledge.
@@ -633,9 +633,9 @@
         \item the median fitted parameter value lies within the ``proximity'' interval.
     \end{enumerate}
 
-    {\color{red}To evaluate task~4, each of the four presented models was fitted on the set of $K$ walks and the \emph{AIC} was computed.
+    To evaluate task~4, each of the four presented models was fitted on the set of $K$ walks and the \emph{AIC} was computed.
     The model with the lowest \emph{AIC} value was then selected.
-    The quality of such estimation for the given walk configuration was then assesed using the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$}.
+    The quality of such estimation for the given walk configuration was then assessed using the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$.
 
     The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
     For $K=100$ and $\alpha=0.1$, $89\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
@@ -651,7 +651,7 @@
         \begin{centering}
             \caption{\label{tab:Fitting-results} The table shows an example of task $1$ evaluation results,
             with true parameter value $\lambda=0.5$ or $\lambda_{0}=0.5$ (and corresponding $\lambda_{1}=0.8$), and $p_0=0.5$, $\alpha=0.1$.
-            The mean {\color{red} of parameter estimates} and its standard deviation and the median {\color{red} of parameter estimates} and the corresponding ``percentile'' interval are presented.
+            The mean of parameter estimates and its standard deviation and the median of parameter estimates and the corresponding ``percentile'' interval are presented.
                 \emph{SP} stands for \emph{success punishing}, \emph{SR} for \emph{success rewarding}, the number $2$ denotes the model with two $\lambda$ parameters.}
             \begin{tabular}{c|c|c|c|c|c|c}
                 \toprule
