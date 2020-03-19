@@ -51,7 +51,7 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     mean = float(np.mean(data))
     median = float(np.median(data))
     stdev = float(np.std(data))
-    if stdev <= 0.0000000001:
+    if stdev <= 0.0000000001 or (data == 0.3819660112501051).any():
         PREDICTION_CONFIGS.append(
             [result_row.model_type, result_row.c_lambda, result_row.c_lambda0, result_row.c_lambda1, result_row.p0,
              result_row.step_count, result_row.prediction_type])

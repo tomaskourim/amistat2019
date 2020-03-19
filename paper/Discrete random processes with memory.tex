@@ -606,47 +606,6 @@
 
     \section{Simulations}\label{sec:Simulations}
 
-    A simulation study was performed in order to verify the possible usage of the presented model in real life situations, namely on processes with relatively few events (i.e. short walks), which can be (under certain assumptions) observed repetitively.
-    Such processes include for example the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
-    The experiment consisted of generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
-    Four different task were considered:
-    \begin{enumerate}
-        \item find $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ (further denoted as $\tilde{\lambda}$) with known $p_{0}$ and model type,
-        \item find $p_{0}$ with known $\tilde{\lambda}$ and model type,
-        \item find $p_{0}$ and $\tilde{\lambda}$ with known model type,
-        \item find model type without any prior knowledge.
-    \end{enumerate}
-    Following parameter values were considered for data generation: $K\in\{5,\,100\}$, $n\in\{5,\,10,\,50,\,100\}$, $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$, $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ and $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$.
-
-
-    Tasks 1--3 were solved using the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
-    The derivation of the theoretical likelihood values is rather complicated, therefore numerical approach using the Python programming language and its scientific package SciPy was applied.
-    The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
-
-    As mentioned above, we were not able to use standard approach to confidence intervals.
-    Each experiment was therefore repeated independently $N=100$ times for each parameter combination and sample characteristics were computed from the $100$ parameter estimates.
-    To assess the quality of the parameter estimation (tasks~1--3) four different evaluation criteria were tested.
-    \begin{enumerate}
-        \item true parameter value lies within the standard $(1-\alpha)$ two-sided confidence interval around the mean,
-        \item true parameter value lies within the ``percentile'' interval, i.e. between the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile,
-        \item the mean fitted parameter value lies within the ``proximity'' interval around the true parameter value $\omega$, computed as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$,
-        \item the median fitted parameter value lies within the ``proximity'' interval.
-    \end{enumerate}
-
-    To evaluate task~4, each of the four presented models was fitted on the set of $K$ walks and the \emph{AIC} was computed.
-    The model with the lowest \emph{AIC} value was then selected.
-    The quality of such estimation for the given walk configuration was then assessed using the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$.
-
-    The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
-    For $K=100$ and $\alpha=0.1$, $\color{red}92\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
-    As expected, the results are less convincing for $K=5$, with only $72\%$ of all evaluation criteria being successful and $70\%$ of correctly found models.
-    Longer walks show generally better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
-    This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
-    As expected, tasks~1--2 show better results than task~3, as there are less parameters to estimate.
-    An example of the parameter estimation evaluation can be seen in Table~\ref{tab:Fitting-results} (there just task~1), an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.
-    Both tables contain only a brief illustration of results due to space limitations.
-    Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
-
     \begin{table}
         \begin{centering}
             \caption{\label{tab:Fitting-results} The table shows an example of task $1$ evaluation results,
@@ -686,6 +645,49 @@
             \end{tabular}
         \end{centering}
     \end{table}
+
+    A simulation study was performed in order to verify the possible usage of the presented model in real life situations, namely on {\color{red}multiple} processes with relatively few events (i.e. {\color{red}multiple} short walks {\color{red}of the same kind}).
+    Such processes include for example the recurrence of diseases (few recurrences but many patients), reliability of machines (few failures but multiple same machines) or the modelling of sports (few significant events in a match but multiple matches).
+    The experiment consisted of generating $K$ random walks of length $n$, of the same walk type and parameter configuration, and estimating the walk type and parameter values from the generated data.
+    Four different task were considered:
+    \begin{enumerate}
+        \item find $\lambda$ or $[\lambda_{0},\,\lambda_{1}]$ (further denoted as $\tilde{\lambda}$) with known $p_{0}$ and model type,
+        \item find $p_{0}$ with known $\tilde{\lambda}$ and model type,
+        \item find $p_{0}$ and $\tilde{\lambda}$ with known model type,
+        \item find model type without any prior knowledge.
+    \end{enumerate}
+    Following parameter values were considered for data generation: $K\in\{5,\,100\}$, $n\in\{5,\,10,\,50,\,100\}$, $p_{0}\in\{0.5,\,0.8,\,0.9,\,0.99\}$, $\lambda\in\{0.5,\,0.8,\,0.9,\,0.99\}$ and $[\lambda_{0},\,\lambda_{1}]\in\{[0.5,\,0.8],\,[0.1,\,0.5],\,[0.5,\,0.99],\,[0.99,\,0.9]\}$.
+
+
+    Tasks 1--3 were solved using the maximum likelihood estimate (MLE)~\cite{rossi2018mathematical}.
+    The derivation of the theoretical likelihood values is rather complicated, therefore numerical approach using the Python programming language and its scientific package SciPy was applied.
+    The Akaike Information Criterion $AIC=2k-2ln(\hat{L})$, where $k$ is the number of model parameters and $\hat{L}$ is the maximal likelihood, was then used for the last task.
+
+    As mentioned above, we were not able to use standard approach to confidence intervals {\color{red}construction}.
+    Each experiment was therefore repeated independently $N=100$ times for each parameter combination and sample characteristics were computed from the $100$ parameter estimates.
+    To assess the quality of the parameter estimation (tasks~1--3) four different evaluation criteria were tested.
+    \begin{enumerate}
+        \item true parameter value lies within the standard $(1-\alpha)$ two-sided confidence interval around the mean,
+        \item true parameter value lies within the ``percentile'' interval, i.e. between the $\frac{{100}\alpha}{2}-th$ and $100\left(1-\frac{\alpha}{2}\right)-th$ percentile,
+        \item the mean fitted parameter value lies within the ``proximity'' interval around the true parameter value $\omega$, computed as $[\omega-\frac{\alpha}{2}\omega,\,\omega+\frac{\alpha}{2}\omega]$,
+        \item the median fitted parameter value lies within the ``proximity'' interval.
+    \end{enumerate}
+
+    To evaluate task~4, each of the four presented models was fitted on the set of $K$ walks and the \emph{AIC} was computed.
+    The model with the lowest \emph{AIC} value was then selected.
+    The quality of such estimation for the given walk configuration was then assessed using the proportion of the number of correctly chosen models to the number of analyzed walk sets $N$.
+
+    The above mentioned criteria serve only as an approximate tool to evaluate the estimate quality, however the results show that the model can be successfully fitted on empirical data.
+    For $K=100$ and $\alpha=0.1$, $92\%$ of all evaluation criteria (for tasks 1--3) were successful and the correct model was found in $85\%$ of cases (task~4).
+    As expected, the results are less convincing for $K=5$, with only $72\%$ of all evaluation criteria being successful and $70\%$ of correctly found models.
+    Longer walks show generally better results when finding the coefficients $\tilde{\lambda}$ while the performance of finding correct $p_0$ seems independent on the walk's length.
+    This is not surprising as the parameter $p_0$ affects mostly the first few steps of the walk, while $\tilde{\lambda}$ play their role thorough the entire course of the walk.
+    As expected, tasks~1--2 show better results than task~3, as there are less parameters to estimate.
+    An example of the parameter estimation evaluation can be seen in Table~\ref{tab:Fitting-results} (there just task~1), an example of the model type identification results (task~4) can be observed in Table~\ref{tab:Fitting-results-model}.
+    Both tables contain only a brief illustration of results due to space limitations.
+    Full results of all evaluation setups as well as several values of parameter $\alpha$ can be found in the GitHub repository (see the last paragraph of the paper).
+
+
 
 
     \begin{table}
