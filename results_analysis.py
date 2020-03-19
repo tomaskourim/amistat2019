@@ -177,6 +177,7 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
     columns.extend(["not_fitted_lambda_count", "not_fitted_lambda0_count", "not_fitted_lambda1_count",
                     "not_fitted_p0_count", "not_fitted_model_count"])
 
+    global PREDICTION_CONFIGS
     for confidence_interval_size in CONFIDENCE_INTERVAL_SIZES:
         fitting_results = pd.DataFrame(columns=columns)
         for index, c_lambda in enumerate(C_LAMBDAS):
@@ -195,13 +196,13 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
         fitting_results.to_excel(
             f"fitting_evaluation_interval_size_{confidence_interval_size}_K{repetitions_of_walk}_"
             f"N{REPETITIONS_OF_WALK_SERIES}_{OPTIMIZATION_ALGORITHM}.xlsx")
-    if len(PREDICTION_CONFIGS) > 0:
-        with open(f"to-refit_K{repetitions_of_walk}.pkl", 'wb') as f:
-            pickle.dump(PREDICTION_CONFIGS, f)
+        if len(PREDICTION_CONFIGS) > 0:
+            with open(f"to-refit_K{repetitions_of_walk}.pkl", 'wb') as f:
+                pickle.dump(PREDICTION_CONFIGS, f)
+            PREDICTION_CONFIGS = []
 
 
 def main():
-    global PREDICTION_CONFIGS
     for repetitions_of_walk in REPETITIONS_OF_WALK_S:
         with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
                   'rb') as f:
@@ -209,7 +210,6 @@ def main():
         if isinstance(results, list):
             results = results[0]
         analyze_results(results, repetitions_of_walk)
-        PREDICTION_CONFIGS = []
 
 
 if __name__ == '__main__':

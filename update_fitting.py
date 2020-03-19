@@ -63,9 +63,6 @@ def update_results_selected(results: pd.DataFrame, repetitions_of_walk: int):
 
         prediction_type = refitting[6][0]
         model_type = refitting[0][0]
-        if model_type != 'success_rewarded_two_lambdas':
-            refit.pop(0)
-            continue
         if 'two_lambdas' in model_type:
             c_lambdas = [refitting[2][0], refitting[3][0]]
         else:
@@ -76,8 +73,6 @@ def update_results_selected(results: pd.DataFrame, repetitions_of_walk: int):
         current_results = select_results(results, prediction_type, model_type, c_lambdas, step_count, p0)
 
         for index, result_row in current_results.iterrows():
-            if not (prediction_type == "only_p0" and result_row.predicted_p0 == 0.3819660112501051):
-                continue
             new_results = fix_fitting(result_row, repetitions_of_walk)
             refitting_count = refitting_count + 1
             results.loc[index] = new_results
@@ -86,7 +81,8 @@ def update_results_selected(results: pd.DataFrame, repetitions_of_walk: int):
                 pickle.dump([results], f)
             print(f"Success = {refitting_count}, remaining = {len(refit) * 100}")
         refit.pop(0)
-        print(f"Success = {refitting_count}, remaining = {len(refit) * 100}")
+        with open(f"to-refit_K{repetitions_of_walk}.pkl", 'wb') as f:
+            pickle.dump(refit, f)
 
 
 def update_results_not_fitted(results: pd.DataFrame, repetitions_of_walk: int):
