@@ -58,6 +58,15 @@ def update_results_selected(results: pd.DataFrame, repetitions_of_walk: int):
     refitting_count = 0
     with open(f"to-refit_K{repetitions_of_walk}.pkl", 'rb') as f:
         refit = pickle.load(f)
+    # refit = []
+    # refit.append([["success_punished"], [0.5], [""], [""], [0.5], [5], ["only_lambda"]])
+    # refit.append([["success_rewarded"], [0.5], [""], [""], [0.5], [5], ["only_lambda"]])
+    # refit.append([["success_punished_two_lambdas"], [""], [0.5], [0.8], [0.5], [5], ["only_lambda"]])
+    # refit.append([["success_rewarded_two_lambdas"], [""], [0.5], [0.8], [0.5], [5], ["only_lambda"]])
+    # refit.append([["success_punished"], [0.5], [""], [""], [0.5], [100], ["only_lambda"]])
+    # refit.append([["success_rewarded"], [0.5], [""], [""], [0.5], [100], ["only_lambda"]])
+    # refit.append([["success_punished_two_lambdas"], [""], [0.5], [0.8], [0.5], [100], ["only_lambda"]])
+    # refit.append([["success_rewarded_two_lambdas"], [""], [0.5], [0.8], [0.5], [100], ["only_lambda"]])
     while len(refit) > 0:
         refitting = refit[0]
 
@@ -73,8 +82,8 @@ def update_results_selected(results: pd.DataFrame, repetitions_of_walk: int):
         current_results = select_results(results, prediction_type, model_type, c_lambdas, step_count, p0)
 
         for index, result_row in current_results.iterrows():
-            new_results = fix_fitting(result_row, repetitions_of_walk)
             refitting_count = refitting_count + 1
+            new_results = fix_fitting(result_row, repetitions_of_walk)
             results.loc[index] = new_results
             with open(f"results_{OPTIMIZATION_ALGORITHM}_K{repetitions_of_walk}_N{REPETITIONS_OF_WALK_SERIES}.pkl",
                       'wb') as f:
