@@ -11,6 +11,8 @@ from config import CONFIDENCE_INTERVAL_SIZES, MODEL_PARAMETERS, PREDICTION_VALUE
     STEP_COUNTS, C_LAMBDA_PAIRS, MODEL_TYPES, PREDICTION_TYPES, REPETITIONS_OF_WALK_S, REPETITIONS_OF_WALK_SERIES, \
     OPTIMIZATION_ALGORITHM
 
+PREDICTION_CONFIGS = []
+
 
 def check_prediction(prediction: pd.Series, model_type: str, prediction_type: str, true_value: float) -> \
         Tuple[pd.Series, int]:
@@ -49,6 +51,10 @@ def evaluate_point_prediction(result_row: pd.DataFrame, data: pd.Series, true_va
     mean = float(np.mean(data))
     median = float(np.median(data))
     stdev = float(np.std(data))
+    if stdev <= 0.0000000001 or (data == 0.3819660112501051).any():
+        PREDICTION_CONFIGS.append(
+            [result_row.model_type, result_row.c_lambda, result_row.c_lambda0, result_row.c_lambda1, result_row.p0,
+             result_row.step_count, result_row.prediction_type])
     conf_int = st.t.interval(1 - confidence_interval_size, len(data) - 1, loc=mean, scale=st.sem(data))
     percentile_int = [np.percentile(data, int(confidence_interval_size / 2 * 100), interpolation='midpoint'),
                       np.percentile(data, int((1 - confidence_interval_size / 2) * 100), interpolation='midpoint')]
@@ -171,6 +177,7 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
     columns.extend(["not_fitted_lambda_count", "not_fitted_lambda0_count", "not_fitted_lambda1_count",
                     "not_fitted_p0_count", "not_fitted_model_count"])
 
+    global PREDICTION_CONFIGS
     for confidence_interval_size in CONFIDENCE_INTERVAL_SIZES:
         fitting_results = pd.DataFrame(columns=columns)
         for index, c_lambda in enumerate(C_LAMBDAS):
@@ -183,13 +190,16 @@ def analyze_results(results: pd.DataFrame, repetitions_of_walk: int):
                             c_lambdas = [c_lambda]
                         for prediction_type in PREDICTION_TYPES:
                             current_results = select_results(results, prediction_type, model_type, c_lambdas,
-                                                             step_count,
-                                                             p0)
+                                                             step_count, p0)
                             fitting_results = fitting_results.append(
                                 analyze_prediction_combination(current_results, columns, confidence_interval_size))
         fitting_results.to_excel(
             f"fitting_evaluation_interval_size_{confidence_interval_size}_K{repetitions_of_walk}_"
             f"N{REPETITIONS_OF_WALK_SERIES}_{OPTIMIZATION_ALGORITHM}.xlsx")
+        if len(PREDICTION_CONFIGS) > 0:
+            with open(f"to-refit_K{repetitions_of_walk}.pkl", 'wb') as f:
+                pickle.dump(PREDICTION_CONFIGS, f)
+            PREDICTION_CONFIGS = []
 
 
 def main():
