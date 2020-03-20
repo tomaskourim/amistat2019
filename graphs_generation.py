@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import expected_p_t_array, var_p_t_array
-from config import MODEL_TYPES, REPETITIONS_OF_WALK, \
+from config import MODEL_TYPES, REPETITIONS_OF_WALK_S, \
     C_LAMBDAS_TESTING, START_PROBABILITIES_TESTING, STEP_COUNTS_TESTING, C_LAMBDA_PAIRS_TESTING
 from data_generation import generate_random_walks, list_walks2list_lists
 
@@ -18,8 +18,8 @@ def main(simulated_property="probability"):
     var_styles = ['g-.', 'r-.', 'b-.']
     expected_styles = ['g-', 'r-', 'b-']
     for step_count in STEP_COUNTS_TESTING:
-        for walk_type in MODEL_TYPES:
-            if 'two_lambdas' in walk_type:
+        for model_type in MODEL_TYPES:
+            if 'two_lambdas' in model_type:
                 two_lambda = True
             else:
                 two_lambda = False
@@ -40,8 +40,8 @@ def main(simulated_property="probability"):
                     else:
                         c_lambdas = [c_lambda]
                         label = r'$\lambda=%.2f$' % c_lambda
-                    walks = generate_random_walks(walk_type, starting_probability, c_lambdas, step_count,
-                                                  REPETITIONS_OF_WALK)
+                    walks = generate_random_walks(model_type, starting_probability, c_lambdas, step_count,
+                                                  REPETITIONS_OF_WALK_S[0])
                     probabilities, steps, developments = list_walks2list_lists(walks)
 
                     if simulated_property == "probability":
@@ -55,17 +55,18 @@ def main(simulated_property="probability"):
                     plt.plot(mean, mean_styles[index], label=label)
                     plt.plot(variance, var_styles[index])
                     if not two_lambda and simulated_property == "probability":
-                        plt.plot(expected_p_t_array(step_count, starting_probability, c_lambda, walk_type),
+                        plt.plot(expected_p_t_array(step_count, starting_probability, c_lambda, model_type),
                                  expected_styles[index], linewidth=0.7)
-                        plt.plot(var_p_t_array(step_count, starting_probability, c_lambda, walk_type),
+                        plt.plot(var_p_t_array(step_count, starting_probability, c_lambda, model_type),
                                  expected_styles[index], linewidth=0.7)
                     plt.legend(loc='best', fontsize='xx-large', markerscale=3)
 
             fig = plt.gcf()
             fig.set_size_inches(18.5, 10.5)
             fig.show()
-            fig.savefig(f'e_{simulated_property}_{REPETITIONS_OF_WALK}_walks_{step_count}_steps_type_{walk_type}.pdf',
-                        dpi=100)
+            fig.savefig(
+                f'e_{simulated_property}_{REPETITIONS_OF_WALK_S[0]}_walks_{step_count}_steps_type_{model_type}.pdf',
+                dpi=100)
 
 
 if __name__ == '__main__':
