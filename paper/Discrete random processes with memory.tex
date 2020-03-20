@@ -94,7 +94,7 @@
     ~\ref{sec:Random-walk-with} and~\ref{sec:Random-walk-aternatives}
     describe the properties of different versions of the model,
     section~\ref{sec:Simulations} provides results from simulated
-    model {\color{red}evaluation} and finally section~\ref{sec:Conclusion} concludes
+    model evaluation and finally section~\ref{sec:Conclusion} concludes
     the work.
 
 
@@ -173,10 +173,10 @@
         \end{equation}
     \end{prop}
     \begin{proof}
-        Using that $E(X_{t}{\color{red}|P_{t-1}})=2P_{t-1}-1$ the proposition can be
+        Using that $E(X_{t}|P_{t-1})=2P_{t-1}-1$ the proposition can be
         proved directly using~\eqref{eq:EPt} as
         \begin{gather*}
-            E(X_{t})=E(E(X_{t}){\color{red}|P_{t-1}})=E(2P_{t-1}-1)=2E(P_{t-1})-1=\\
+            E(X_{t})=E(E(X_{t})|P_{t-1})=E(2P_{t-1}-1)=2E(P_{t-1})-1=\\
             =2((2\lambda-1)^{t-1}p_{0}+\frac{1-(2\lambda-1)^{t-1}}{2})-1=(2\lambda-1)^{t-1}(2p_{0}-1).\\
         \end{gather*}
     \end{proof}
@@ -245,7 +245,7 @@
             E[(1-X_{t})^{2}|P_{t-1}]=E[(1-2X_{t}+X_{t}^{2})|P_{t-1}]
             =E[(2-2X_{t})|P_{t-1}]= 4(1-P_{t-1}),
         \]
-        {\color{blue}equation} (\ref{eq:EPt2-zaklad}) further yields
+        equation (\ref{eq:EPt2-zaklad}) further yields
         \begin{gather*}
             E(P_{t}^{2})=E[\lambda^{2}P_{t-1}^{2}+\lambda P_{t-1}(1-\lambda)E(1-X_{t}|P_{t-1})+\frac{1}{4}(1-\lambda)^{2}E((1-X_{t})^{2}|P_{t-1})]=\\
             =E[\lambda^{2}P_{t-1}^{2}+2\lambda P_{t-1}(1-\lambda)(1-P_{t-1})+(1-\lambda)^{2}(1-P_{t-1})]\\
@@ -430,7 +430,7 @@
         statement follows directly from Proposition~\ref{PropReward2}.
     \end{proof}
 
-    {\color{red}Further we can} calculate the expected position of the walker at a given step $t$ just from the knowledge of the input parameters.
+    Further we can calculate the expected position of the walker at a given step $t$ just from the knowledge of the input parameters.
 
     \begin{prop}
         For all $t\geq1,$
@@ -439,9 +439,9 @@
         \]
     \end{prop}
     \begin{proof}
-    {\color{red}As $EX_{t+1}=E[E(X_{t+1}|P_t)]=E(2P_t -1)$, u}sing the result of Proposition~\ref{PropReward2} we get
+    As $EX_{t+1}=E[E(X_{t+1}|P_t)]=E(2P_t -1)$, using the result of Proposition~\ref{PropReward2} we get
         \[
-            E(S_{t+1})= {\color{red}E(S_{t}+X_{t+1}) = ES_{t}+E(2P_{ \color{red}t}-1)}=
+            E(S_{t+1})= {E(S_{t}+X_{t+1}) = ES_{t}+E(2P_{t}-1)}=
             ES_{t}+(2p_{0}-1)
         \]
 
@@ -730,10 +730,9 @@
     Such
     processes can be found in reliability analysis, medical as well as
     econometric studies, and very often in sports modeling.
-    The authors
-    recently  {\color{blue}presented} a study where the \emph{\color{blue}success rewarding} model was applied
+    The authors recently presented a study where the \emph{success rewarding} model was applied
     to predict the \emph{in-play} development of a Grand Slam tennis matches
-    with compelling results when used for live betting against a bookmaker~{\color{blue}\cite{ ja2019mathsport_proc,ja2019imam}}.
+    with compelling results when used for live betting against a bookmaker~\cite{ ja2019mathsport_proc,ja2019imam}.
 
     The source code containing all functionality mentioned in this article
     is freely available as open source at
